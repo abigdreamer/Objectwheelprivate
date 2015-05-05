@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>pics/back.png</file>
+        <file>pics/back2.png</file>
+        <file>pics/forward.png</file>
+        <file>pics/forward2.png</file>
+        <file>pics/backFalse.png</file>
+        <file>pics/forwardFalse.png</file>
+        <file>pics/save.png</file>
+        <file>pics/save2.png</file>
+        <file>pics/delete.png</file>
+        <file>pics/delete2.png</file>
+        <file>pics/photo.png</file>
+    </qresource>
+</RCC>

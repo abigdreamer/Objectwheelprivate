@@ -6,13 +6,12 @@ ZDesigner::ZDesigner(QObject *parent) :
 	{
 	///Creating ZCouchbaseManager for managing connections
 	cbManager=new ZCouchbaseManager;
-
 	}
 
 void ZDesigner::initSystem(QMainWindow* window, ZLayout* lay,
-				QWidget* backBtn, QWidget* forwardBtn, QListWidget* mstRecList,
-				const QString& bkAddr, const QString& bkPass,
-				const int dbControlMs, const int guiControlMs)
+						   QWidget* backBtn, QWidget* forwardBtn, QListWidget* mstRecList,
+						   const QString& bkAddr, const QString& bkPass,
+						   const int dbControlMs, const int guiControlMs)
 	{
 	/// mainWindow for creating object on MainWindow
 	mainWindow=window;
@@ -78,7 +77,7 @@ void ZDesigner::loadData()
 	sizeOfTemp=0;
 	while(true)
 		{
-        if (*(cbManager->getData( QString(TEMP_ID).arg(sizeOfTemp) )) ==(QByteArray)NULL)
+		if (*(cbManager->getData( QString(TEMP_ID).arg(sizeOfTemp) )) ==(QByteArray)NULL)
 			break;
 		sizeOfTemp++;
 		}
@@ -87,7 +86,7 @@ void ZDesigner::loadData()
 	sizeOfMaster=0;
 	while(true)
 		{
-        if (*(cbManager->getData( QString(MASTER_ID).arg(sizeOfMaster) )) ==(QByteArray)NULL)
+		if (*(cbManager->getData( QString(MASTER_ID).arg(sizeOfMaster) )) ==(QByteArray)NULL)
 			break;
 		sizeOfMaster++;
 		}
@@ -371,7 +370,7 @@ bool ZDesigner::isGuiChanged()
 
 void ZDesigner::hasDatabaseChanged()
 	{
-/*
+	/*
 	for (int i=0;i<createdWidgets.size();i++)
 		createdWidgets.at(i)->close();
 	createdWidgets.clear();

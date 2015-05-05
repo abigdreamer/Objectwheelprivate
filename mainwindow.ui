@@ -71,95 +71,11 @@ QPushButton#forwardButton:pressed {
       <string/>
      </property>
     </widget>
-    <widget class="QGroupBox" name="optionsBox">
-     <property name="geometry">
-      <rect>
-       <x>8</x>
-       <y>400</y>
-       <width>295</width>
-       <height>111</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Bucket Options</string>
-     </property>
-     <widget class="QLabel" name="hostLabel">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>271</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Bucket Address:</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="bucketEdit">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>40</y>
-        <width>276</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>http://184.72.60.78:8091/objectWheel</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="passwLabel">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>60</y>
-        <width>281</width>
-        <height>16</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Password:</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="passwEdit">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>80</y>
-        <width>161</width>
-        <height>20</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>mikemike</string>
-      </property>
-      <property name="echoMode">
-       <enum>QLineEdit::Password</enum>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="getButton">
-      <property name="geometry">
-       <rect>
-        <x>180</x>
-        <y>78</y>
-        <width>106</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="text">
-       <string>Get App</string>
-      </property>
-     </widget>
-    </widget>
     <widget class="Line" name="optionsLine">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>394</y>
+       <y>504</y>
        <width>290</width>
        <height>3</height>
       </rect>
@@ -269,7 +185,7 @@ QPushButton#saveButton:pressed {
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="buttonPage">
        <property name="geometry">
@@ -277,7 +193,7 @@ QPushButton#saveButton:pressed {
          <x>0</x>
          <y>0</y>
          <width>181</width>
-         <height>170</height>
+         <height>164</height>
         </rect>
        </property>
        <attribute name="label">
@@ -290,7 +206,7 @@ QPushButton#saveButton:pressed {
          <x>0</x>
          <y>0</y>
          <width>181</width>
-         <height>170</height>
+         <height>164</height>
         </rect>
        </property>
        <attribute name="label">
@@ -303,7 +219,7 @@ QPushButton#saveButton:pressed {
          <x>0</x>
          <y>0</y>
          <width>181</width>
-         <height>170</height>
+         <height>164</height>
         </rect>
        </property>
        <attribute name="label">
@@ -318,7 +234,7 @@ QPushButton#saveButton:pressed {
        <x>300</x>
        <y>10</y>
        <width>3</width>
-       <height>385</height>
+       <height>495</height>
       </rect>
      </property>
      <property name="orientation">
@@ -344,7 +260,7 @@ QPushButton#saveButton:pressed {
        <x>10</x>
        <y>10</y>
        <width>3</width>
-       <height>384</height>
+       <height>495</height>
       </rect>
      </property>
      <property name="orientation">
@@ -373,6 +289,19 @@ QPushButton#deleteTempButton:pressed {
      </property>
      <property name="text">
       <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="designTitle">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>10</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Design Area</string>
      </property>
     </widget>
    </widget>

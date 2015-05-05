@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "zlayout.h"
-#include "zcouchbasemanager.h"
+
 #include <QMainWindow>
 #include <QTimer>
 #include <QString>
@@ -36,10 +36,7 @@ class ZDesigner : public QObject
 		QWidget* backButton,* forwardButton;
 		/// For holding masterRecord lister
 		QListWidget* masterRecordList;
-		/// For holding host informations
-		QString bucketAddress, bucketPassword;
-		/// For managing Couchbase connections
-		ZCouchbaseManager* cbManager;
+
 		/// For holding last of tempRecord
 		int sizeOfTemp;
 		/// For holding last of masterRecord

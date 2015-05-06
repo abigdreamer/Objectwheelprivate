@@ -5,6 +5,7 @@
 #include "zdragdrop.h"
 #include "zlayout.h"
 #include "zdatabasemanager.h"
+#include <QVector>
 #include <QJsonDocument>
 #include <QJsonObject>
 
@@ -21,6 +22,7 @@ class MainWindow : public QMainWindow
 		Ui::MainWindow *ui;
 		ZDragDrop* dragger; //For drag&drop
 		ZDatabaseManager* databaseManager;
+		QVector<QWidget*> createdObjects;
 	protected:
 		bool eventFilter(QObject *obj, QEvent *event); //For drag&drop control
 
@@ -28,6 +30,7 @@ class MainWindow : public QMainWindow
 		ZLayout* lay; //For ZLayout
 		void resizeEvent(QResizeEvent*); //For ZLayout control
 		void createObjects(const QByteArray& jsonData);
+		QByteArray generateObjects() const;
 		explicit MainWindow(QWidget *parent = 0);
 		~MainWindow();
 	public slots:
@@ -36,6 +39,7 @@ class MainWindow : public QMainWindow
 		void resEvent() const; //For ZLayout control
 	private slots:
 		void databaseChangeHandler();
+		void on_saveButton_clicked();
 	};
 
 #endif // MAINWINDOW_H

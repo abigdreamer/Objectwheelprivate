@@ -102,6 +102,10 @@ void MainWindow::resizeEvent(QResizeEvent *)
 
 void MainWindow::createObjects(const QByteArray& jsonData)
 	{
+	for (int i=0;i<createdObjects.size();i++)
+		createdObjects.at(i)->close();
+
+	createdObjects.clear();
 
 	/// Getting json datas
 	QJsonDocument loadDoc(QJsonDocument::fromJson(jsonData));
@@ -124,6 +128,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
 
+			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
 			/// Adding object to ZLayout
@@ -141,7 +146,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
 			/// Adding object to createdObject
-
+			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
 			/// Adding object to ZLayout
@@ -158,7 +163,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
 			/// Adding object to createdObject
-
+			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
 			/// Adding object to ZLayout
@@ -172,9 +177,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->setText(object["text"].toString());
 			obj->setEnabled(object["enabled"].toBool());
 			if (object["picture"].toString()!="null" && object["picture"].toString()!="")
-				obj->setPixmap(QPixmap(object["picture"].toString()).scaled(
-							object["geometry"].toObject()["width"].toInt(),
-						object["geometry"].toObject()["height"].toInt()));
+				obj->setStyleSheet(QString("border-image: url(%1);").arg(object["picture"].toString()));
 
 			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
 					object["geometry"].toObject()["y"].toInt(),
@@ -182,7 +185,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["height"].toInt());
 
 			/// Adding object to createdObject
-
+			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
 			/// Adding object to ZLayout
@@ -203,7 +206,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["height"].toInt());
 
 			/// Adding object to createdObject
-
+			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
 			/// Adding object to ZLayout
@@ -226,3 +229,134 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 
 	}
 
+QByteArray MainWindow::generateObjects() const
+	{
+	QJsonDocument jsonDoc;
+	QJsonObject mainObject;
+
+	for (int i=0;i<createdObjects.size();i++)
+		{
+		const QString& className = createdObjects.at(i)->metaObject()->className();
+
+		if ( className == "QPushButton")
+			{
+			QPushButton* obj = reinterpret_cast<QPushButton*>(createdObjects.at(i));
+
+			QJsonObject geometry;
+			geometry.insert("x",obj->x());
+			geometry.insert("y",obj->y());
+			geometry.insert("width",obj->width());
+			geometry.insert("height",obj->height());
+
+			QJsonObject object;
+			object.insert("objectClass",className);
+			object.insert("objectName",obj->objectName());
+			object.insert("text",obj->text());
+			object.insert("enabled",obj->isEnabled());
+			object.insert("geometry",geometry);
+
+			mainObject.insert(QString("object%1").arg(i),object);
+			}
+
+		else if ( className == "QLineEdit")
+			{
+			QLineEdit* obj = reinterpret_cast<QLineEdit*>(createdObjects.at(i));
+
+			QJsonObject geometry;
+			geometry.insert("x",obj->x());
+			geometry.insert("y",obj->y());
+			geometry.insert("width",obj->width());
+			geometry.insert("height",obj->height());
+
+			QJsonObject object;
+			object.insert("objectClass",className);
+			object.insert("objectName",obj->objectName());
+			object.insert("text",obj->text());
+			object.insert("enabled",obj->isEnabled());
+			object.insert("geometry",geometry);
+
+			mainObject.insert(QString("object%1").arg(i),object);
+			}
+
+		else if ( className == "QComboBox")
+			{
+			QComboBox* obj = reinterpret_cast<QComboBox*>(createdObjects.at(i));
+
+			QJsonObject geometry;
+			geometry.insert("x",obj->x());
+			geometry.insert("y",obj->y());
+			geometry.insert("width",obj->width());
+			geometry.insert("height",obj->height());
+
+			QJsonObject object;
+			object.insert("objectClass",className);
+			object.insert("objectName",obj->objectName());
+			object.insert("enabled",obj->isEnabled());
+			object.insert("geometry",geometry);
+
+			mainObject.insert(QString("object%1").arg(i),object);
+			}
+
+		else if ( className == "QLabel")
+			{
+			QLabel* obj = reinterpret_cast<QLabel*>(createdObjects.at(i));
+
+			QJsonObject geometry;
+			geometry.insert("x",obj->x());
+			geometry.insert("y",obj->y());
+			geometry.insert("width",obj->width());
+			geometry.insert("height",obj->height());
+
+			QJsonObject object;
+			object.insert("objectClass",className);
+			object.insert("objectName",obj->objectName());
+			object.insert("text",obj->text());
+			object.insert("enabled",obj->isEnabled());
+
+			QString sheet= obj->styleSheet().split("url(").at(1);
+			sheet.remove(sheet.size(),2);
+			object.insert("picture",sheet);
+
+			object.insert("geometry",geometry);
+
+			mainObject.insert(QString("object%1").arg(i),object);
+
+			}
+
+		else if ( className == "QCheckBox")
+			{
+			QCheckBox* obj = reinterpret_cast<QCheckBox*>(createdObjects.at(i));
+
+			QJsonObject geometry;
+			geometry.insert("x",obj->x());
+			geometry.insert("y",obj->y());
+			geometry.insert("width",obj->width());
+			geometry.insert("height",obj->height());
+
+			QJsonObject object;
+			object.insert("objectClass",className);
+			object.insert("objectName",obj->objectName());
+			object.insert("text",obj->text());
+			object.insert("enabled",obj->isEnabled());
+			object.insert("checked",obj->isChecked());
+			object.insert("geometry",geometry);
+
+			mainObject.insert(QString("object%1").arg(i),object);
+
+			}
+
+		else if ( className == "QMainWindow")
+			{
+			/* ... */
+			}
+		}
+	jsonDoc.setObject(mainObject);
+
+	return jsonDoc.toJson();
+	}
+
+
+void MainWindow::on_saveButton_clicked()
+	{
+	databaseManager->addFile(generateObjects());
+	}

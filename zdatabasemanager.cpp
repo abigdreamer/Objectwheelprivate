@@ -8,7 +8,7 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 			if ( !QFile::exists( databaseDirectory + "/" + fileNameBody + "0.json" ) )
 				{
 				/* Hem currentFile işareçi dosyası hem sıfır numaralı record yoksa; Bir adet boş { }
-				 * sıfır numaralı record ekle ve ardından bir currentFile oluşturup bu dosyanın bilgilerini
+				 * sıfır numaralı recordu ekle ve ardından bir currentFile oluşturup bu dosyanın bilgilerini
 				 * ona ekle ve ardından currentFileIndex ini ayarla ve ardından varolan fileHashMap ı temizle
 				 * ve bu yeni oluşturduğumuz recordun bilgilerini içie ekle */
 				fileManager->setFileName( databaseDirectory + "/" + fileNameBody + "0.json" );

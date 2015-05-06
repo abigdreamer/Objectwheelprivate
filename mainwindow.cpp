@@ -312,10 +312,14 @@ QByteArray MainWindow::generateObjects() const
 			object.insert("objectName",obj->objectName());
 			object.insert("text",obj->text());
 			object.insert("enabled",obj->isEnabled());
-
-			QString sheet= obj->styleSheet().split("url(").at(1);
-			sheet.remove(sheet.size(),2);
-			object.insert("picture",sheet);
+			if (!obj->styleSheet().isNull())
+				{
+				QString sheet= obj->styleSheet().split("url(").at(1);
+				sheet.remove(sheet.size(),2);
+				object.insert("picture",sheet);
+				}
+			else
+				object.insert("picture","");
 
 			object.insert("geometry",geometry);
 

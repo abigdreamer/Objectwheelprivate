@@ -288,6 +288,8 @@ void ZDatabaseManager::changeListener()
 				}
 			else if ( fileHashMap.value(indexBuff) != hashBuff )
 				{
+				cerr << fileHashMap.value(indexBuff).toStdString();
+				cerr << hashBuff.toStdString();
 				if (fileManager->isOpen())
 					fileManager->close();
 				databaseChangeEvent(CurrentFileHashChanged);

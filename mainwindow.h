@@ -5,6 +5,8 @@
 #include "zdragdrop.h"
 #include "zlayout.h"
 #include "zdatabasemanager.h"
+#include <QJsonDocument>
+#include <QJsonObject>
 
 namespace Ui
 	{
@@ -25,7 +27,7 @@ class MainWindow : public QMainWindow
 	public:
 		ZLayout* lay; //For ZLayout
 		void resizeEvent(QResizeEvent*); //For ZLayout control
-
+		void createObjects(const QByteArray& jsonData);
 		explicit MainWindow(QWidget *parent = 0);
 		~MainWindow();
 	public slots:

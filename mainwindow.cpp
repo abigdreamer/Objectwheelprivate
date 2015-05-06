@@ -1,6 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug> // For testing
+#include <QPushButton>
+#include <QLineEdit>
+#include <QLabel>
+#include <QCheckBox>
+#include <QComboBox>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -76,11 +81,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::databaseChangeHandler()
 	{
-	QFile yy;
-	yy.setFileName("new2.txt");
-	yy.open(QIODevice::ReadWrite);
-	yy.write(databaseManager->getFile());
-	yy.close();
+
+	this->createObjects(databaseManager->getFile());
+
 	}
 
 bool MainWindow::eventFilter(QObject*, QEvent* event)
@@ -95,5 +98,131 @@ void MainWindow::resizeEvent(QResizeEvent *)
 	/** !Layout! **/
 	//Calling ZLayout
 	emit resEvent();
+	}
+
+void MainWindow::createObjects(const QByteArray& jsonData)
+	{
+
+	/// Getting json datas
+	QJsonDocument loadDoc(QJsonDocument::fromJson(jsonData));
+	QJsonObject allObjects = loadDoc.object();
+
+	/// Iterating and creating all json object by ClassName
+	for (int i=0;i<allObjects.size();i++)
+		{
+		const QJsonObject object = allObjects[QString("object%1").arg(i)].toObject();
+		const QString& className = object["objectClass"].toString();
+
+		if ( className == "QPushButton")
+			{
+			QPushButton* obj = new QPushButton(this);
+			obj->setObjectName(object["objectName"].toString());
+			obj->setText(object["text"].toString());
+			obj->setEnabled(object["enabled"].toBool());
+			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
+					object["geometry"].toObject()["y"].toInt(),
+					object["geometry"].toObject()["width"].toInt(),
+					object["geometry"].toObject()["height"].toInt());
+
+			///  Showing object
+			obj->show();
+			/// Adding object to ZLayout
+
+			}
+
+		else if ( className == "QLineEdit")
+			{
+			QLineEdit* obj = new QLineEdit(this);
+			obj->setObjectName(object["objectName"].toString());
+			obj->setText(object["text"].toString());
+			obj->setEnabled(object["enabled"].toBool());
+			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
+					object["geometry"].toObject()["y"].toInt(),
+					object["geometry"].toObject()["width"].toInt(),
+					object["geometry"].toObject()["height"].toInt());
+			/// Adding object to createdObject
+
+			///  Showing object
+			obj->show();
+			/// Adding object to ZLayout
+
+			}
+
+		else if ( className == "QComboBox")
+			{
+			QComboBox* obj = new QComboBox(this);
+			obj->setObjectName(object["objectName"].toString());
+			obj->setEnabled(object["enabled"].toBool());
+			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
+					object["geometry"].toObject()["y"].toInt(),
+					object["geometry"].toObject()["width"].toInt(),
+					object["geometry"].toObject()["height"].toInt());
+			/// Adding object to createdObject
+
+			///  Showing object
+			obj->show();
+			/// Adding object to ZLayout
+
+			}
+
+		else if ( className == "QLabel")
+			{
+			QLabel* obj = new QLabel(this);
+			obj->setObjectName(object["objectName"].toString());
+			obj->setText(object["text"].toString());
+			obj->setEnabled(object["enabled"].toBool());
+			if (object["picture"].toString()!="null" && object["picture"].toString()!="")
+				obj->setPixmap(QPixmap(object["picture"].toString()).scaled(
+							object["geometry"].toObject()["width"].toInt(),
+						object["geometry"].toObject()["height"].toInt()));
+
+			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
+					object["geometry"].toObject()["y"].toInt(),
+					object["geometry"].toObject()["width"].toInt(),
+					object["geometry"].toObject()["height"].toInt());
+
+			/// Adding object to createdObject
+
+			///  Showing object
+			obj->show();
+			/// Adding object to ZLayout
+
+			}
+
+		else if ( className == "QCheckBox")
+			{
+			QCheckBox* obj = new QCheckBox(this);
+			obj->setObjectName(object["objectName"].toString());
+			obj->setText(object["text"].toString());
+			obj->setEnabled(object["enabled"].toBool());
+			if (object["checked"].toBool())
+				obj->setChecked(true);
+			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
+					object["geometry"].toObject()["y"].toInt(),
+					object["geometry"].toObject()["width"].toInt(),
+					object["geometry"].toObject()["height"].toInt());
+
+			/// Adding object to createdObject
+
+			///  Showing object
+			obj->show();
+			/// Adding object to ZLayout
+
+			}
+
+		else if ( className == "QMainWindow")
+			{
+			/*
+				mainWindow->setWindowTitle(object["windowTitle"].toString());
+				mainWindow->setEnabled(object["enabled"].toBool());
+
+				mainWindow->centralWidget()->resize(object["geometry"].toObject()["width"].toInt(),
+						object["geometry"].toObject()["height"].toInt());
+				mainWindow->resize(object["geometry"].toObject()["width"].toInt(),
+						object["geometry"].toObject()["height"].toInt());
+				*/
+			}
+		}
+
 	}
 

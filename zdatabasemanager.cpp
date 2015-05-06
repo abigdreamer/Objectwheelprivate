@@ -18,7 +18,7 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 					break;
 					}
 				fileManager->write( QByteArray().append("{ }") );
-				QString hashBuff = QCryptographicHash::hash(fileManager->readAll(), QCryptographicHash::Md5);
+				QString hashBuff = QCryptographicHash::hash(fileManager->readAll(), QCryptographicHash::Md5).toHex();
 				fileManager->close();
 
 				fileManager->setFileName( databaseDirectory + "/" + QString(CURRENTFILE));
@@ -55,7 +55,7 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 						cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 						break;
 						}
-					fileHashMap.insert( i, QCryptographicHash::hash(fileManager->readAll(), QCryptographicHash::Md5) );
+					fileHashMap.insert( i, QCryptographicHash::hash(fileManager->readAll(), QCryptographicHash::Md5).toHex() );
 					fileManager->close();
 					}
 
@@ -121,7 +121,7 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 				cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 				break;
 				}
-			fileHashMap[currentFileIndex]=QCryptographicHash::hash(fileManager->readAll(), QCryptographicHash::Md5);
+			fileHashMap[currentFileIndex]=QCryptographicHash::hash(fileManager->readAll(), QCryptographicHash::Md5).toHex();
 			fileManager->close();
 			break;
 		}
@@ -161,7 +161,7 @@ bool ZDatabaseManager::addFile(const QByteArray& file)
 		}
 	currentFileIndex+=1;
 
-	fileHashMap.insert( currentFileIndex, QCryptographicHash::hash(file, QCryptographicHash::Md5) );
+	fileHashMap.insert( currentFileIndex, QCryptographicHash::hash(file, QCryptographicHash::Md5).toHex() );
 	fileManager->setFileName( databaseDirectory + "/" + fileNameBody + QString::number(currentFileIndex) + ".json" );
 	if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
 		{ cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
@@ -176,7 +176,7 @@ bool ZDatabaseManager::addFile(const QByteArray& file)
 	if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
 		{ cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
 	fileManager->write( QByteArray().append( QString("%1\n").arg(currentFileIndex) ) );
-	fileManager->write( QCryptographicHash::hash(file, QCryptographicHash::Md5) );
+	fileManager->write( QCryptographicHash::hash(file, QCryptographicHash::Md5).toHex() );
 	fileManager->close();
 	return true;
 	}
@@ -264,7 +264,6 @@ void ZDatabaseManager::changeListener()
 			{
 			int indexBuff = fileManager->readLine().toInt();
 			QString hashBuff = fileManager->readLine();
-
 			if ( hashBuff.isNull() )
 				{
 				if (fileManager->isOpen())
@@ -288,8 +287,6 @@ void ZDatabaseManager::changeListener()
 				}
 			else if ( fileHashMap.value(indexBuff) != hashBuff )
 				{
-				cerr << fileHashMap.value(indexBuff).toStdString();
-				cerr << hashBuff.toStdString();
 				if (fileManager->isOpen())
 					fileManager->close();
 				databaseChangeEvent(CurrentFileHashChanged);
@@ -316,7 +313,7 @@ void ZDatabaseManager::changeListener()
 					}
 				else
 					{
-					if ( fileHashMap.value(indexBuff) != QCryptographicHash::hash(fileManager->readAll(), QCryptographicHash::Md5) )
+					if ( fileHashMap.value(indexBuff) != QCryptographicHash::hash(fileManager->readAll(), QCryptographicHash::Md5).toHex() )
 						{
 						if (fileManager->isOpen())
 							fileManager->close();

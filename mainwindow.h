@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "zdragdrop.h"
 #include "zlayout.h"
-#include "zdesigner.h"
+#include "zdatabasemanager.h"
 
 namespace Ui
 	{
@@ -18,8 +18,7 @@ class MainWindow : public QMainWindow
 	private:
 		Ui::MainWindow *ui;
 		ZDragDrop* dragger; //For drag&drop
-		ZDesigner* designer; //For design
-
+		ZDatabaseManager* databaseManager;
 	protected:
 		bool eventFilter(QObject *obj, QEvent *event); //For drag&drop control
 
@@ -30,11 +29,11 @@ class MainWindow : public QMainWindow
 		explicit MainWindow(QWidget *parent = 0);
 		~MainWindow();
 	public slots:
-		void on_getButton_clicked();
+
 	signals:
 		void resEvent() const; //For ZLayout control
 	private slots:
-
+		void databaseChangeHandler();
 	};
 
 #endif // MAINWINDOW_H

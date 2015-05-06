@@ -18,6 +18,7 @@ class ZDragDrop : public QObject
 		QVector<QWidget*>  withoutWidgets;
 		QPoint startingPos, widgetPos;
 		bool pressed;
+
 	public:
 		explicit ZDragDrop(QObject *parent = 0);
 		bool updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mainWindow);

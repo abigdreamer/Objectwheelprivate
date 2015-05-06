@@ -10,11 +10,11 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 				/* Hem currentFile işareçi dosyası hem sıfır numaralı record yoksa; Bir adet boş { }
 				 * sıfır numaralı recordu ekle ve ardından bir currentFile oluşturup bu dosyanın bilgilerini
 				 * ona ekle ve ardından currentFileIndex ini ayarla ve ardından varolan fileHashMap ı temizle
-				 * ve bu yeni oluşturduğumuz recordun bilgilerini içie ekle */
+				 * ve bu yeni oluşturduğumuz recordun bilgilerini içine ekle */
 				fileManager->setFileName( databaseDirectory + "/" + fileNameBody + "0.json" );
 				if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
 					{
-					qWarning("databaseChangeEvent() : File can't open!");
+					cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 					break;
 					}
 				fileManager->write( QByteArray().append("{ }") );
@@ -24,7 +24,7 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 				fileManager->setFileName( databaseDirectory + "/" + QString(CURRENTFILE));
 				if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
 					{
-					qWarning("databaseChangeEvent() : File can't open!");
+					cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 					break;
 					}
 				fileManager->write( QByteArray().append("0\n") );
@@ -52,7 +52,7 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 					fileManager->setFileName( databaseDirectory + "/" + fileNameBody + QString("%1.json").arg(i) );
 					if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
 						{
-						qWarning("databaseChangeEvent() : File can't open!");
+						cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 						break;
 						}
 					fileHashMap.insert( i, QCryptographicHash::hash(fileManager->readAll(), QCryptographicHash::Md5) );
@@ -62,7 +62,7 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 				fileManager->setFileName( databaseDirectory + "/" + QString(CURRENTFILE) );
 				if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
 					{
-					qWarning("databaseChangeEvent() : File can't open!");
+					cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 					break;
 					}
 				fileManager->write( QByteArray().append( QString("%1\n").arg(lastIndex) ) );
@@ -73,23 +73,23 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 
 			break;
 		case CurrentFileCantOpen:
-			qWarning("databaseChangeEvent() : File can't open!");
+			cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 			break;
 		case CurrentFileHashIsNull:
 			if ( QFile::exists( databaseDirectory + "/" + QString(CURRENTFILE) ) )
 				if ( !QFile::remove( databaseDirectory + "/" + QString(CURRENTFILE) ) )
-					qWarning("databaseChangeEvent() : File can't delete!");
+					cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 			break;
 		case CurrentFileIndexIsNull:
 			if ( QFile::exists( databaseDirectory + "/" + QString(CURRENTFILE) ) )
 				if ( !QFile::remove( databaseDirectory + "/" + QString(CURRENTFILE) ) )
-					qWarning("databaseChangeEvent() : File can't delete!");
+					cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 			break;
 		case CurrenFileIndexChanged:
 			fileManager->setFileName( databaseDirectory + "/" + QString(CURRENTFILE) );
 			if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
 				{
-				qWarning("databaseChangeEvent() : File can't open!");
+				cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 				break;
 				}
 			currentFileIndex = fileManager->readLine().toInt();
@@ -99,7 +99,7 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 			fileManager->setFileName( databaseDirectory + "/" + QString(CURRENTFILE) );
 			if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
 				{
-				qWarning("databaseChangeEvent() : File can't open!");
+				cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 				break;
 				}
 			fileManager->readLine().toInt();
@@ -109,22 +109,24 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 		case CurrentRecordDoesntExist:
 			if ( QFile::exists( databaseDirectory + "/" + QString(CURRENTFILE) ) )
 				if ( !QFile::remove( databaseDirectory + "/" + QString(CURRENTFILE) ) )
-					qWarning("databaseChangeEvent() : File can't delete!");
+					cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 			break;
 		case CurrentRecordCantOpen:
-			qWarning("databaseChangeEvent() : File can't open!");
+			cerr << ("databaseChangeEvent() : File can't open!");
 			break;
 		case CurrenRecordHashChanged:
 			fileManager->setFileName( databaseDirectory + "/" + fileNameBody + QString::number(currentFileIndex) + ".json" );
 			if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
 				{
-				qWarning("databaseChangeEvent() : File can't open!");
+				cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 				break;
 				}
 			fileHashMap[currentFileIndex]=QCryptographicHash::hash(fileManager->readAll(), QCryptographicHash::Md5);
 			fileManager->close();
 			break;
 		}
+
+	emit databaseChanged();
 	}
 
 ZDatabaseManager::ZDatabaseManager(QObject *parent) : QObject(parent)
@@ -155,24 +157,24 @@ bool ZDatabaseManager::addFile(const QByteArray& file)
 		fileHashMap.remove(i);
 		if ( QFile::exists( databaseDirectory + "/" + fileNameBody + QString::number(i) + ".json" ) )
 			if ( !QFile::remove( databaseDirectory + "/" + fileNameBody + QString::number(i) + ".json" ) )
-				{ qWarning("addFile() : File can't delete!"); return false; }
+				{ cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
 		}
 	currentFileIndex+=1;
 
 	fileHashMap.insert( currentFileIndex, QCryptographicHash::hash(file, QCryptographicHash::Md5) );
 	fileManager->setFileName( databaseDirectory + "/" + fileNameBody + QString::number(currentFileIndex) + ".json" );
 	if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
-		{ qWarning("addFile() : File can't open!"); return false; }
+		{ cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
 	fileManager->write(file);
 	fileManager->close();
 
 	if ( QFile::exists( databaseDirectory + "/" + QString(CURRENTFILE) ) )
 		if ( !QFile::remove( databaseDirectory + "/" + QString(CURRENTFILE) ) )
-			{ qWarning("addFile() : File can't delete!"); return false; }
+			{ cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
 
 	fileManager->setFileName( databaseDirectory + "/" + QString(CURRENTFILE) );
 	if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
-		{ qWarning("addFile() : File can't open!"); return false; }
+		{ cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
 	fileManager->write( QByteArray().append( QString("%1\n").arg(currentFileIndex) ) );
 	fileManager->write( QCryptographicHash::hash(file, QCryptographicHash::Md5) );
 	fileManager->close();
@@ -186,17 +188,17 @@ bool ZDatabaseManager::removeFile()
 		fileHashMap.remove(i);
 		if ( QFile::exists( databaseDirectory + "/" + fileNameBody + QString::number(i) + ".json" ) )
 			if ( !QFile::remove( databaseDirectory + "/" + fileNameBody + QString::number(i) + ".json" ) )
-				{ qWarning("removeFile() : File can't delete!"); return false; }
+				{ cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
 		}
 	currentFileIndex-=1;
 
 	if ( QFile::exists( databaseDirectory + "/" + QString(CURRENTFILE) ) )
 		if ( !QFile::remove( databaseDirectory + "/" + QString(CURRENTFILE) ) )
-			{ qWarning("removeFile() : File can't delete!"); return false; }
+			{ cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
 
 	fileManager->setFileName( databaseDirectory + "/" + QString(CURRENTFILE) );
 	if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
-		{ qWarning("removeFile() : File can't open!"); return false; }
+		{ cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
 	fileManager->write( QByteArray().append( QString("%1\n").arg(currentFileIndex) ) );
 	fileManager->write( QByteArray().append( fileHashMap.value(currentFileIndex) ) );
 	fileManager->close();
@@ -211,7 +213,7 @@ void ZDatabaseManager::startChangeListener()
 		changeListenerTimer->start(checkTimeout);
 		}
 	else
-		qWarning("startChangeListener() : Timer doesn't start.");
+		cerr << (QString("%1:%2 Timer doesn't start!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 	}
 
 const QString&ZDatabaseManager::getFileName() const
@@ -227,7 +229,7 @@ QByteArray ZDatabaseManager::getFile() const
 	{
 	fileManager->setFileName( databaseDirectory + "/" + fileNameBody + QString::number(currentFileIndex) + ".json" );
 	if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
-		{ qWarning("getFile() : File can't open!"); return 0; }
+		{ cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return 0; }
 	QByteArray dataBuff = fileManager->readAll();
 	fileManager->close();
 	return dataBuff;

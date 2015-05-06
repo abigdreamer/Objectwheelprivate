@@ -61,14 +61,26 @@ MainWindow::MainWindow(QWidget *parent) :
 	lay->addItem(ui->deleteTempButton);
 	lay->addItem(ui->designTitle);
 
-	/** !Designer! **/
-	//Creating designer
-	designer = new ZDesigner;
+	databaseManager = new ZDatabaseManager;
+	databaseManager->setCheckTimeout(1000);
+	databaseManager->setFileName("..","objectRecord");
+	connect(databaseManager,SIGNAL(databaseChanged()),this,SLOT(databaseChangeHandler()));
+	databaseManager->startChangeListener();
+
 	}
 
 MainWindow::~MainWindow()
 	{
 	delete ui;
+	}
+
+void MainWindow::databaseChangeHandler()
+	{
+	QFile yy;
+	yy.setFileName("new2.txt");
+	yy.open(QIODevice::ReadWrite);
+	yy.write(databaseManager->getFile());
+	yy.close();
 	}
 
 bool MainWindow::eventFilter(QObject*, QEvent* event)
@@ -83,12 +95,5 @@ void MainWindow::resizeEvent(QResizeEvent *)
 	/** !Layout! **/
 	//Calling ZLayout
 	emit resEvent();
-	}
-
-void MainWindow::on_getButton_clicked()
-	{
-		designer->initSystem(this,lay,ui->backButton,ui->forwardButton, ui->masterRecordList);
-		//designer->loadData();
-		designer->startControlling();
 	}
 

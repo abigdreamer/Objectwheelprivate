@@ -9,6 +9,8 @@
 #include <QFile>
 #include <QCryptographicHash>
 #include <QStringList>
+#include <iostream>
+using namespace std;
 
 #define CURRENTFILE "currentFile.ix"
 
@@ -61,7 +63,7 @@ class ZDatabaseManager : public QObject
 		void changeListener();
 
 	signals:
-
+		void databaseChanged();
 	};
 
 #endif // ZDATABASEMANAGER_H

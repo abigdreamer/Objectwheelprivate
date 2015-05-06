@@ -75,7 +75,7 @@ QPushButton#forwardButton:pressed {
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>394</y>
+       <y>510</y>
        <width>290</width>
        <height>3</height>
       </rect>
@@ -192,8 +192,8 @@ QPushButton#saveButton:pressed {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>98</width>
-         <height>28</height>
+         <width>181</width>
+         <height>164</height>
         </rect>
        </property>
        <attribute name="label">
@@ -218,8 +218,8 @@ QPushButton#saveButton:pressed {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>98</width>
-         <height>28</height>
+         <width>181</width>
+         <height>164</height>
         </rect>
        </property>
        <attribute name="label">
@@ -234,7 +234,7 @@ QPushButton#saveButton:pressed {
        <x>300</x>
        <y>10</y>
        <width>3</width>
-       <height>385</height>
+       <height>500</height>
       </rect>
      </property>
      <property name="orientation">
@@ -260,7 +260,7 @@ QPushButton#saveButton:pressed {
        <x>10</x>
        <y>10</y>
        <width>3</width>
-       <height>384</height>
+       <height>500</height>
       </rect>
      </property>
      <property name="orientation">
@@ -294,14 +294,17 @@ QPushButton#deleteTempButton:pressed {
     <widget class="QLabel" name="designTitle">
      <property name="geometry">
       <rect>
-       <x>108</x>
-       <y>20</y>
-       <width>81</width>
+       <x>8</x>
+       <y>10</y>
+       <width>291</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
       <string>Design Area</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </widget>

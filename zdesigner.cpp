@@ -4,20 +4,20 @@
 ZDesigner::ZDesigner(QObject *parent) :
 	QObject(parent)
 	{
-	///Creating ZCouchbaseManager for managing connections
-	cbManager=new ZCouchbaseManager;
+	/** !QFile! **/
+	//Creating QFile for managing connections
+	fileManager=new QFile;
 	}
 
 void ZDesigner::initSystem(QMainWindow* window, ZLayout* lay,
 						   QWidget* backBtn, QWidget* forwardBtn, QListWidget* mstRecList,
-						   const QString& bkAddr, const QString& bkPass,
 						   const int dbControlMs, const int guiControlMs)
-	{
+	{/*
 	/// mainWindow for creating object on MainWindow
 	mainWindow=window;
 	/// layout for controlling ZLayout for created objects
 	layout=lay;
-	/// Dviding with two because each timer will start respectively
+	/// Dividing with two because each timer will start respectively
 	/// Setting controllingTimers
 	dbControlMsec=dbControlMs/2;
 	guiControlMsec=guiControlMs/2;
@@ -26,44 +26,43 @@ void ZDesigner::initSystem(QMainWindow* window, ZLayout* lay,
 	forwardButton=forwardBtn;
 	/// Holding master record list info for adding master records to that
 	masterRecordList=mstRecList;
-	/// Holding bucketAddress and bucketPassword
-	bucketAddress=bkAddr;
-	bucketPassword=bkPass;
 	/// Creating controllor timers
 	dbController= new QTimer(this);
 	guiController= new QTimer(this);
 	/// Connecting controllor timers to necessary funcs
 	connect(dbController, SIGNAL(timeout()), this, SLOT(dbControl()));
-	connect(guiController, SIGNAL(timeout()), this, SLOT(guiControl()));
+	connect(guiController, SIGNAL(timeout()), this, SLOT(guiControl()));*/
 	}
-
 void ZDesigner::startControlling()
-	{
+	{/*
 	/// Starting controller timers
 
 	if (sizeOfMaster>0)
 		dbController->start(dbControlMsec);
 	else
-		qWarning("ZDesigner::startControlling() : Couldn't have any master record");
+		qWarning("ZDesigner::startControlling() : Couldn't have any master record");*/
 
 	}
-
-void ZDesigner::loadData()
-	{
+void ZDesigner::firstLoad()
+	{/*
 	if (dbController->isActive())
 		dbController->stop();
 	if (guiController->isActive())
 		guiController->stop();
+
 	///Deleting objects for ZLayout which are created before.
 	if (layout->size()>0)
 		for (int i=0;i<createdObjects.size();i++)
 			layout->removeWidgetOf(createdObjects.at(i));
+
 	///Deleting objects which are created before.
 	for (int i=0;i<createdObjects.size();i++)
 		createdObjects.at(i)->close();
+
 	/// Clearing created object list.
 	if (createdObjects.size()>0)
 		createdObjects.clear();
+
 	sizeOfTemp=0;
 	sizeOfMaster=0;
 	tempRecords.clear();
@@ -121,12 +120,11 @@ void ZDesigner::loadData()
 
 	/// Creating object on mainwindow
 	if (sizeOfMaster>0)
-		createObjects(tempRecords.last());
+		createObjects(tempRecords.last());*/
 
 	}
-
 void ZDesigner::createObjects(const QByteArray& jsonData)
-	{
+	{/*
 	///Deleting objects for ZLayout which are created before.
 	if (layout->size()>0)
 		for (int i=0;i<createdObjects.size();i++)
@@ -258,30 +256,30 @@ void ZDesigner::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["height"].toInt());
 			mainWindow->resize(object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
-			*/
+
 			}
-		}
+		}*/
 	}
 
 void ZDesigner::setCurrentRecord(const int crtRecord)
-	{
+	{/*
 	/// If currentRecord file is exist remove and set them
 	if (cbManager->isIdExist(CURRENT_ID,bucketAddress,bucketPassword)){
 		cbManager->removeData(CURRENT_ID);
 		cbManager->setData(CURRENT_ID, QByteArray::number(crtRecord));
 		}
 	else /// otherwise only set currentRecord
-		cbManager->setData(CURRENT_ID,QByteArray::number(crtRecord));
+		cbManager->setData(CURRENT_ID,QByteArray::number(crtRecord));*/
 	}
 
 int ZDesigner::getCurrentRecord()
-	{
+	{/*
 	/// get currentRecord number and return it, if it is exist.
 	if (cbManager->isIdExist(CURRENT_ID,bucketAddress,bucketPassword)){
 		return cbManager->getData(CURRENT_ID)->toInt();
 		}
 	else /// otherwise return -1
-		return -1;
+		return -1;*/
 	}
 
 bool ZDesigner::isDatabaseChanged()
@@ -348,6 +346,7 @@ bool ZDesigner::isDatabaseChanged()
 		}
 
 */
+	/*
 	QFile loadFile("objects.json");
 	if (!loadFile.open(QIODevice::ReadOnly)) {
 		qWarning("Couldn't open objects file.");
@@ -360,7 +359,7 @@ bool ZDesigner::isDatabaseChanged()
 		oldHash = QCryptographicHash::hash(docData, QCryptographicHash::Md5);
 		return true;
 		}
-	return false;
+	return false;*/
 	}
 
 bool ZDesigner::isGuiChanged()
@@ -396,7 +395,7 @@ void ZDesigner::hasGuiChanged()
 	}
 
 void ZDesigner::dbControl()
-	{
+	{/*
 	dbController->stop();
 
 	/// Controlling db for changing
@@ -404,14 +403,14 @@ void ZDesigner::dbControl()
 		hasDatabaseChanged();
 	else
 		layout->updateWidgets(); /// Look That!!!! (or that Will maybe in guiControl)
-	guiController->start(guiControlMsec);
+	guiController->start(guiControlMsec);*/
 	}
 
 void ZDesigner::guiControl()
-	{
+	{/*
 	guiController->stop();
 
 	// ...
 
-	dbController->start(dbControlMsec);
+	dbController->start(dbControlMsec);*/
 	}

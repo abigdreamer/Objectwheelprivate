@@ -29,13 +29,12 @@ class MainWindow : public QMainWindow
 
 		explicit MainWindow(QWidget *parent = 0);
 		~MainWindow();
+	public slots:
+		void on_getButton_clicked();
 	signals:
 		void resEvent() const; //For ZLayout control
 	private slots:
-		void on_backButton_clicked();
-		void on_forwardButton_clicked();
-		void on_getButton_clicked();
-		void on_loadMasterButton_clicked();
+
 	};
 
 #endif // MAINWINDOW_H

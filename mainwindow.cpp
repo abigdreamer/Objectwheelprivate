@@ -87,17 +87,8 @@ void MainWindow::resizeEvent(QResizeEvent *)
 
 void MainWindow::on_getButton_clicked()
 	{
-	if (!ui->bucketEdit->text().isEmpty() && !ui->passwEdit->text().isEmpty())
-		{
 		designer->initSystem(this,lay,ui->backButton,ui->forwardButton, ui->masterRecordList);
-		designer->loadData();
+		//designer->loadData();
 		designer->startControlling();
-		}
-	else
-		qWarning("MainWindow::on_getButton_clicked() : You not have host! Please add a host.");
 	}
 
-void MainWindow::on_loadMasterButton_clicked()
-{
-
-}

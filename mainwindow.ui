@@ -75,7 +75,7 @@ QPushButton#forwardButton:pressed {
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>504</y>
+       <y>394</y>
        <width>290</width>
        <height>3</height>
       </rect>
@@ -192,8 +192,8 @@ QPushButton#saveButton:pressed {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>181</width>
-         <height>164</height>
+         <width>98</width>
+         <height>28</height>
         </rect>
        </property>
        <attribute name="label">
@@ -218,8 +218,8 @@ QPushButton#saveButton:pressed {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>181</width>
-         <height>164</height>
+         <width>98</width>
+         <height>28</height>
         </rect>
        </property>
        <attribute name="label">
@@ -234,7 +234,7 @@ QPushButton#saveButton:pressed {
        <x>300</x>
        <y>10</y>
        <width>3</width>
-       <height>495</height>
+       <height>385</height>
       </rect>
      </property>
      <property name="orientation">
@@ -260,7 +260,7 @@ QPushButton#saveButton:pressed {
        <x>10</x>
        <y>10</y>
        <width>3</width>
-       <height>495</height>
+       <height>384</height>
       </rect>
      </property>
      <property name="orientation">
@@ -294,10 +294,10 @@ QPushButton#deleteTempButton:pressed {
     <widget class="QLabel" name="designTitle">
      <property name="geometry">
       <rect>
-       <x>120</x>
-       <y>10</y>
+       <x>108</x>
+       <y>20</y>
        <width>81</width>
-       <height>16</height>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">

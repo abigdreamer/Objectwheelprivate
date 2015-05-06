@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "zlayout.h"
+#include <QFile>
 
 #include <QMainWindow>
 #include <QTimer>
@@ -37,6 +38,8 @@ class ZDesigner : public QObject
 		/// For holding masterRecord lister
 		QListWidget* masterRecordList;
 
+		// For controlling files
+		QFile* fileManager;
 		/// For holding last of tempRecord
 		int sizeOfTemp;
 		/// For holding last of masterRecord
@@ -55,12 +58,11 @@ class ZDesigner : public QObject
 		/// For initializing necessary information
 		void initSystem(QMainWindow* window, ZLayout* lay,
 						QWidget* backBtn, QWidget* forwardBtn, QListWidget* mstRecList,
-						const QString& bkAddr, const QString& bkPass,
 						const int dbControlMs=1000, const int guiControlMs=1000);
 		/// db and gui controlling was starting
 		void startControlling();
 		/// For loading data at first
-		void loadData();
+		void firstLoad();
 		/// For creating object from a json data to on mainwindow
 		void createObjects(const QByteArray& jsonData);
 		/// For setting current temp record to on couchbase server
@@ -72,6 +74,7 @@ class ZDesigner : public QObject
 		bool isGuiChanged();
 		void hasDatabaseChanged();
 		void hasGuiChanged();
+
 	signals:
 
 	public slots:

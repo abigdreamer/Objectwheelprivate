@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     zdragdrop.cpp \
     zlayout.cpp \
-    zdesigner.cpp
+    zdesigner.cpp \
+    zdatabasemanager.cpp
 
 HEADERS  += mainwindow.h \
     zdragdrop.h \
     zlayout.h \
-    zdesigner.h
+    zdesigner.h \
+    zdatabasemanager.h
 
 FORMS    += mainwindow.ui
 

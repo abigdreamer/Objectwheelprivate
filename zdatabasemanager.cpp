@@ -92,7 +92,7 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 				cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 				break;
 				}
-			currentFileIndex = fileManager->readLine().toInt();
+			currentFileIndex = QString(fileManager->readLine().at(0)).toInt();
 			fileManager->close();
 			break;
 		case CurrentFileHashChanged:
@@ -102,7 +102,7 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 				cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
 				break;
 				}
-			fileManager->readLine().toInt();
+			fileManager->readLine();
 			fileHashMap[currentFileIndex] = fileManager->readLine();
 			fileManager->close();
 			break;
@@ -262,7 +262,7 @@ void ZDatabaseManager::changeListener()
 			}
 		else
 			{
-			int indexBuff = fileManager->readLine().toInt();
+			int indexBuff = QString(fileManager->readLine().at(0)).toInt();
 			QString hashBuff = fileManager->readLine();
 			if ( hashBuff.isNull() )
 				{

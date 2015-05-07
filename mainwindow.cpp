@@ -177,7 +177,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->setText(object["text"].toString());
 			obj->setEnabled(object["enabled"].toBool());
 			if (object["picture"].toString()!="null" && object["picture"].toString()!="")
-				obj->setStyleSheet(QString("border-image: url(%1);").arg(object["picture"].toString()));
+				obj->setStyleSheet(QString("border-image: url(%1").arg(object["picture"].toString()));
 
 			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
 					object["geometry"].toObject()["y"].toInt(),

@@ -368,10 +368,14 @@ void MainWindow::on_saveButton_clicked()
 
 void MainWindow::on_backButton_clicked()
 	{
-	databaseManager->setCurrentFileIndex(databaseManager->getCurrentFileIndex()-1);
+	int backIndex = databaseManager->getCurrentFileIndex()-1;
+	if ( backIndex >= 0 )
+		databaseManager->setCurrentFileIndex(backIndex);
 	}
 
 void MainWindow::on_forwardButton_clicked()
 	{
-	databaseManager->setCurrentFileIndex(databaseManager->getCurrentFileIndex()+1);
+	int nextIndex = databaseManager->getCurrentFileIndex()+1;
+	if (nextIndex < databaseManager->getSize() )
+		databaseManager->setCurrentFileIndex(nextIndex);
 	}

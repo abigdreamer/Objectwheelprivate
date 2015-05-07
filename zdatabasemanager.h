@@ -57,7 +57,7 @@ class ZDatabaseManager : public QObject
 		const int& getCurrentFileIndex() const;
 		QByteArray getFile() const;
 		bool isChangeListenerActive() const;
-
+		int getSize() const;
 
 		~ZDatabaseManager();
 

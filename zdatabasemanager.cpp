@@ -275,6 +275,11 @@ bool ZDatabaseManager::isChangeListenerActive() const
 	return changeListenerTimer->isActive();
 	}
 
+int ZDatabaseManager::getSize() const
+	{
+	return fileHashMap.size();
+	}
+
 ZDatabaseManager::~ZDatabaseManager()
 	{ }
 

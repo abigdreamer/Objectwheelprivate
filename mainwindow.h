@@ -31,6 +31,7 @@ class MainWindow : public QMainWindow
 		void resizeEvent(QResizeEvent*); //For ZLayout control
 		void createObjects(const QByteArray& jsonData);
 		QByteArray generateObjects() const;
+		void updateRecordList();
 		explicit MainWindow(QWidget *parent = 0);
 		~MainWindow();
 	public slots:
@@ -42,6 +43,7 @@ class MainWindow : public QMainWindow
 		void on_saveButton_clicked();
 		void on_backButton_clicked();
 		void on_forwardButton_clicked();
+		void on_deleteTempButton_clicked();
 	};
 
 #endif // MAINWINDOW_H

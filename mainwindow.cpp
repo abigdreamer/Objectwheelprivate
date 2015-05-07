@@ -80,11 +80,7 @@ MainWindow::~MainWindow()
 	}
 
 void MainWindow::databaseChangeHandler()
-	{
-
-	this->createObjects(databaseManager->getFile());
-
-	}
+	{ this->createObjects(databaseManager->getFile()); updateRecordList(); }
 
 bool MainWindow::eventFilter(QObject*, QEvent* event)
 	{
@@ -359,11 +355,20 @@ QByteArray MainWindow::generateObjects() const
 	return jsonDoc.toJson();
 	}
 
+void MainWindow::updateRecordList()
+	{
+	int sz=databaseManager->getSize();
+	ui->masterRecordList->clear();
+	for (int i=0;i<sz;i++)
+		{
+		ui->masterRecordList->addItem(QString("Record-%1").arg(i));
+		}
+	ui->masterRecordList->setCurrentRow(databaseManager->getCurrentFileIndex());
+	}
+
 
 void MainWindow::on_saveButton_clicked()
-	{
-	databaseManager->addFile(generateObjects());
-	}
+	{ databaseManager->addFile(generateObjects()); updateRecordList(); }
 
 void MainWindow::on_backButton_clicked()
 	{
@@ -378,3 +383,8 @@ void MainWindow::on_forwardButton_clicked()
 	if (nextIndex < databaseManager->getSize() )
 		databaseManager->setCurrentFileIndex(nextIndex);
 	}
+
+void MainWindow::on_deleteTempButton_clicked()
+{
+	databaseManager->removeFile();
+}

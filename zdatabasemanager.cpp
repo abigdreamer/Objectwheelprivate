@@ -219,7 +219,8 @@ bool ZDatabaseManager::addFile(const QByteArray& file)
 
 bool ZDatabaseManager::removeFile()
 	{
-	for (int i=currentFileIndex;i<fileHashMap.size();i++)
+	int sz=getSize();
+	for (int i=currentFileIndex;i<sz;i++)
 		{
 		fileHashMap.remove(i);
 		if ( QFile::exists( databaseDirectory + "/" + fileNameBody + QString::number(i) + ".json" ) )
@@ -227,17 +228,6 @@ bool ZDatabaseManager::removeFile()
 				{ cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
 		}
 	currentFileIndex-=1;
-
-	if ( QFile::exists( databaseDirectory + "/" + QString(CURRENTFILE) ) )
-		if ( !QFile::remove( databaseDirectory + "/" + QString(CURRENTFILE) ) )
-			{ cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
-
-	fileManager->setFileName( databaseDirectory + "/" + QString(CURRENTFILE) );
-	if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
-		{ cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return false; }
-	fileManager->write( QByteArray().append( QString("%1\n").arg(currentFileIndex) ) );
-	fileManager->write( QByteArray().append( fileHashMap.value(currentFileIndex) ) );
-	fileManager->close();
 	return true;
 	}
 

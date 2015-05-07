@@ -40,6 +40,8 @@ class MainWindow : public QMainWindow
 	private slots:
 		void databaseChangeHandler();
 		void on_saveButton_clicked();
+		void on_backButton_clicked();
+		void on_forwardButton_clicked();
 	};
 
 #endif // MAINWINDOW_H

@@ -140,7 +140,6 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 			fileManager->write( QByteArray().append( QString("%1\n").arg(currentFileIndex) ) );
 			fileManager->write( QByteArray().append( fileHashMap.value(currentFileIndex) ) );
 			fileManager->close();
-
 			break;
 		}
 
@@ -166,7 +165,25 @@ void ZDatabaseManager::setCheckTimeout(const int msecond)
 	{ checkTimeout=msecond; }
 
 void ZDatabaseManager::setCurrentFileIndex(const int index)
-	{ currentFileIndex=index; }
+	{
+	currentFileIndex=index;
+	if ( QFile::exists( databaseDirectory + "/" + QString(CURRENTFILE) ) )
+		if ( !QFile::remove( databaseDirectory + "/" + QString(CURRENTFILE) ) )
+			{
+			cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
+			return;
+			}
+
+	fileManager->setFileName( databaseDirectory + "/" + QString(CURRENTFILE) );
+	if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
+		{
+		cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
+		return;
+		}
+	fileManager->write( QByteArray().append( QString("%1\n").arg(index) ) );
+	fileManager->write( QByteArray().append(  "null" ) );
+	fileManager->close();
+	}
 
 bool ZDatabaseManager::addFile(const QByteArray& file)
 	{

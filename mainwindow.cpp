@@ -177,7 +177,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->setText(object["text"].toString());
 			obj->setEnabled(object["enabled"].toBool());
 			if (object["picture"].toString()!="null" && object["picture"].toString()!="")
-				obj->setStyleSheet(QString("border-image: url(%1").arg(object["picture"].toString()));
+				obj->setStyleSheet(QString("border-image: url(%1);").arg(object["picture"].toString()));
 
 			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
 					object["geometry"].toObject()["y"].toInt(),
@@ -315,7 +315,8 @@ QByteArray MainWindow::generateObjects() const
 			if (!obj->styleSheet().isNull())
 				{
 				QString sheet= obj->styleSheet().split("url(").at(1);
-				sheet.remove(sheet.size(),2);
+				sheet.remove(")");
+				sheet.remove(";");
 				object.insert("picture",sheet);
 				}
 			else
@@ -363,4 +364,14 @@ QByteArray MainWindow::generateObjects() const
 void MainWindow::on_saveButton_clicked()
 	{
 	databaseManager->addFile(generateObjects());
+	}
+
+void MainWindow::on_backButton_clicked()
+	{
+	databaseManager->setCurrentFileIndex(databaseManager->getCurrentFileIndex()-1);
+	}
+
+void MainWindow::on_forwardButton_clicked()
+	{
+	databaseManager->setCurrentFileIndex(databaseManager->getCurrentFileIndex()+1);
 	}

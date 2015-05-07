@@ -11,5 +11,6 @@
         <file>pics/delete.png</file>
         <file>pics/delete2.png</file>
         <file>pics/photo.png</file>
+        <file>objectRecord0.json</file>
     </qresource>
 </RCC>

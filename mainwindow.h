@@ -44,6 +44,7 @@ class MainWindow : public QMainWindow
 		void on_backButton_clicked();
 		void on_forwardButton_clicked();
 		void on_deleteTempButton_clicked();
+		void on_loadMasterButton_clicked();
 	};
 
 #endif // MAINWINDOW_H

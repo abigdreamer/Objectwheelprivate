@@ -123,6 +123,24 @@ void ZDatabaseManager::databaseChangeEvent(const DatabaseChangeEvents event)
 				}
 			fileHashMap[currentFileIndex]=QCryptographicHash::hash(fileManager->readAll(), QCryptographicHash::Md5).toHex();
 			fileManager->close();
+
+			if ( QFile::exists( databaseDirectory + "/" + QString(CURRENTFILE) ) )
+				if ( !QFile::remove( databaseDirectory + "/" + QString(CURRENTFILE) ) )
+					{
+					cerr << (QString("%1:%2 File can't delete!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
+					break;
+					}
+
+			fileManager->setFileName( databaseDirectory + "/" + QString(CURRENTFILE) );
+			if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
+				{
+				cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str());
+				break;
+				}
+			fileManager->write( QByteArray().append( QString("%1\n").arg(currentFileIndex) ) );
+			fileManager->write( QByteArray().append( fileHashMap.value(currentFileIndex) ) );
+			fileManager->close();
+
 			break;
 		}
 

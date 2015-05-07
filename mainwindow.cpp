@@ -356,7 +356,6 @@ QByteArray MainWindow::generateObjects() const
 			}
 		}
 	jsonDoc.setObject(mainObject);
-
 	return jsonDoc.toJson();
 	}
 

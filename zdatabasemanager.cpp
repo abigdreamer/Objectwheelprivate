@@ -187,7 +187,8 @@ void ZDatabaseManager::setCurrentFileIndex(const int index)
 
 bool ZDatabaseManager::addFile(const QByteArray& file)
 	{
-	for (int i=currentFileIndex+1;i<fileHashMap.size();i++)
+	int sz=getSize();
+	for (int i=currentFileIndex+1;i<sz;i++)
 		{
 		fileHashMap.remove(i);
 		if ( QFile::exists( databaseDirectory + "/" + fileNameBody + QString::number(i) + ".json" ) )
@@ -263,6 +264,8 @@ const int&ZDatabaseManager::getCurrentFileIndex() const
 QByteArray ZDatabaseManager::getFile() const
 	{
 	fileManager->setFileName( databaseDirectory + "/" + fileNameBody + QString::number(currentFileIndex) + ".json" );
+	if (!QFile::exists( databaseDirectory + "/" + fileNameBody + QString::number(currentFileIndex) + ".json" ))
+		return 0;
 	if ( !fileManager->open(QIODevice::ReadWrite | QIODevice::Text) )
 		{ cerr << (QString("%1:%2 File can't open!").arg(__FILE__).arg(__LINE__).toStdString().c_str()); return 0; }
 	QByteArray dataBuff = fileManager->readAll();
@@ -277,7 +280,10 @@ bool ZDatabaseManager::isChangeListenerActive() const
 
 int ZDatabaseManager::getSize() const
 	{
-	return fileHashMap.size();
+	int lastIndex=0;
+	for ( ;QFile::exists( databaseDirectory + "/" + fileNameBody + QString("%1.json").arg(lastIndex) ); lastIndex++ );
+
+	return lastIndex;
 	}
 
 ZDatabaseManager::~ZDatabaseManager()

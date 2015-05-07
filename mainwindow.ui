@@ -118,7 +118,7 @@ QPushButton#saveButton:pressed {
       </rect>
      </property>
      <property name="title">
-      <string>Master Recors</string>
+      <string>Master Records</string>
      </property>
      <widget class="QListWidget" name="masterRecordList">
       <property name="geometry">
@@ -135,7 +135,7 @@ QPushButton#saveButton:pressed {
        <rect>
         <x>10</x>
         <y>230</y>
-        <width>81</width>
+        <width>91</width>
         <height>23</height>
        </rect>
       </property>
@@ -149,9 +149,9 @@ QPushButton#saveButton:pressed {
      <widget class="QPushButton" name="deleteMasterButton">
       <property name="geometry">
        <rect>
-        <x>114</x>
+        <x>104</x>
         <y>230</y>
-        <width>81</width>
+        <width>91</width>
         <height>23</height>
        </rect>
       </property>

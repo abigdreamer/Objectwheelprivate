@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "zdragdrop.h"
-#include "zlayout.h"
 #include "zdatabasemanager.h"
 #include <QVector>
 #include <QJsonDocument>
@@ -27,7 +26,6 @@ class MainWindow : public QMainWindow
 		bool eventFilter(QObject *obj, QEvent *event); //For drag&drop control
 
 	public:
-		ZLayout* lay; //For ZLayout
 		void resizeEvent(QResizeEvent*); //For ZLayout control
 		void createObjects(const QByteArray& jsonData);
 		QByteArray generateObjects() const;

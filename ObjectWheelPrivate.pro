@@ -15,15 +15,24 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     zdragdrop.cpp \
-    zlayout.cpp \
     zdatabasemanager.cpp
 
 HEADERS  += mainwindow.h \
     zdragdrop.h \
-    zlayout.h \
     zdatabasemanager.h
 
 FORMS    += mainwindow.ui
 
 RESOURCES += \
     resource.qrc
+
+DISTFILES += \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/AndroidManifest.xml \
+    android/gradlew.bat \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

@@ -22,38 +22,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	//Adding without object to dragger
 	dragger->addWithoutObject(ui->backButton);
 	dragger->addWithoutObject(ui->forwardButton);
-	dragger->addWithoutObject(ui->optionsLine);
 	dragger->addWithoutObject(ui->saveButton);
-	dragger->addWithoutObject(ui->masterBox);
+	//dragger->addWithoutObject(ui->masterBox);
 	dragger->addWithoutObject(ui->masterRecordList);
-	dragger->addWithoutObject(ui->toolboxLine);
-	dragger->addWithoutObject(ui->hortLine);
-	dragger->addWithoutObject(ui->vertLine);
-	dragger->addWithoutObject(ui->deleteTempButton);
-	dragger->addWithoutObject(ui->loadMasterButton);
-	dragger->addWithoutObject(ui->deleteTempButton);
-	dragger->addWithoutObject(ui->designTitle);
-
-	/** !Layout! **/
-	//Creating ZLayout and connecting resizeEvent
-	lay = new ZLayout;
-	connect(this,SIGNAL(resEvent()),lay,SLOT(updateWidgets()));
-	//Initing centralWidget and widget to ZLayout for controllig widgets
-	lay->initMainWidgets(ui->centralWidget,ui->widget);
-	//Adding stabile object to ZLayout(ing)
-	lay->addItem(ui->backButton);
-	lay->addItem(ui->forwardButton);
-	lay->addItem(ui->optionsLine);
-	lay->addItem(ui->saveButton);
-	lay->addItem(ui->masterBox);
-	lay->addItem(ui->masterRecordList);
-	lay->addItem(ui->toolboxLine);
-	lay->addItem(ui->hortLine);
-	lay->addItem(ui->vertLine);
-	lay->addItem(ui->deleteTempButton);
-	lay->addItem(ui->loadMasterButton);
-	lay->addItem(ui->deleteTempButton);
-	lay->addItem(ui->designTitle);
+//	dragger->addWithoutObject(ui->deleteTempButton);
+	//dragger->addWithoutObject(ui->loadMasterButton);
+	//dragger->addWithoutObject(ui->deleteTempButton);
 
 	QFile* fil= new QFile;
 	fil->setFileName(":/objectRecord0.json");
@@ -117,7 +91,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 
 		if ( className == "QPushButton")
 			{
-			QPushButton* obj = new QPushButton(this);
+			QPushButton* obj = new QPushButton(ui->widget);
 			obj->setObjectName(object["objectName"].toString());
 			obj->setText(object["text"].toString());
 			obj->setEnabled(object["enabled"].toBool());
@@ -135,7 +109,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 
 		else if ( className == "QLineEdit")
 			{
-			QLineEdit* obj = new QLineEdit(this);
+			QLineEdit* obj = new QLineEdit(ui->widget);
 			obj->setObjectName(object["objectName"].toString());
 			obj->setText(object["text"].toString());
 			obj->setEnabled(object["enabled"].toBool());
@@ -153,7 +127,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 
 		else if ( className == "QComboBox")
 			{
-			QComboBox* obj = new QComboBox(this);
+			QComboBox* obj = new QComboBox(ui->widget);
 			obj->setObjectName(object["objectName"].toString());
 			obj->setEnabled(object["enabled"].toBool());
 			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
@@ -170,7 +144,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 
 		else if ( className == "QLabel")
 			{
-			QLabel* obj = new QLabel(this);
+			QLabel* obj = new QLabel(ui->widget);
 			obj->setObjectName(object["objectName"].toString());
 			obj->setText(object["text"].toString());
 			obj->setEnabled(object["enabled"].toBool());
@@ -192,7 +166,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 
 		else if ( className == "QCheckBox")
 			{
-			QCheckBox* obj = new QCheckBox(this);
+			QCheckBox* obj = new QCheckBox(ui->widget);
 			obj->setObjectName(object["objectName"].toString());
 			obj->setText(object["text"].toString());
 			obj->setEnabled(object["enabled"].toBool());

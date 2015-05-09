@@ -6,14 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>630</width>
-    <height>515</height>
+    <width>703</width>
+    <height>470</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>ObjectWheel</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -27,8 +30,8 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>47</width>
-          <height>342</height>
+          <width>20</width>
+          <height>40</height>
          </size>
         </property>
        </spacer>
@@ -165,12 +168,6 @@ QPushButton#backButton:pressed {
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <zorder>layoutWidget</zorder>
-           <zorder>backButton</zorder>
-           <zorder>saveButton</zorder>
-           <zorder>forwardButton</zorder>
-           <zorder>verticalSpacer</zorder>
-           <zorder>horizontalLayoutWidget</zorder>
           </widget>
          </item>
         </layout>
@@ -242,7 +239,7 @@ QPushButton#backButton:pressed {
               <x>0</x>
               <y>0</y>
               <width>16</width>
-              <height>137</height>
+              <height>114</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -261,7 +258,7 @@ QPushButton#backButton:pressed {
               <x>0</x>
               <y>0</y>
               <width>16</width>
-              <height>161</height>
+              <height>114</height>
              </rect>
             </property>
             <property name="sizePolicy">

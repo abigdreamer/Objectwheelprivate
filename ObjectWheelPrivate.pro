@@ -15,13 +15,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     zdragdrop.cpp \
-    zdatabasemanager.cpp
+    zdatabasemanager.cpp \
+    loginwindow.cpp
 
 HEADERS  += mainwindow.h \
     zdragdrop.h \
-    zdatabasemanager.h
+    zdatabasemanager.h \
+    loginwindow.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    loginwindow.ui
 
 RESOURCES += \
     resource.qrc

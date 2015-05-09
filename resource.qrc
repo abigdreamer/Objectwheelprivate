@@ -14,5 +14,10 @@
         <file>objectRecord0.json</file>
         <file>pics/reload.png</file>
         <file>pics/reload2.png</file>
+        <file>pics/background.jpg</file>
+        <file>pics/down.png</file>
+        <file>pics/go.png</file>
+        <file>pics/go2.png</file>
+        <file>pics/up.png</file>
     </qresource>
 </RCC>

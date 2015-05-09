@@ -30,6 +30,7 @@ class MainWindow : public QMainWindow
 		void createObjects(const QByteArray& jsonData);
 		QByteArray generateObjects() const;
 		void updateRecordList();
+		void setDatabaseFolderName(const QString& name);
 		explicit MainWindow(QWidget *parent = 0);
 		~MainWindow();
 	public slots:

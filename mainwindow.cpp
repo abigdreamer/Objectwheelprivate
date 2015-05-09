@@ -23,31 +23,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	dragger->addWithoutObject(ui->backButton);
 	dragger->addWithoutObject(ui->forwardButton);
 	dragger->addWithoutObject(ui->saveButton);
-	//dragger->addWithoutObject(ui->masterBox);
+	dragger->addWithoutObject(ui->masterBox);
 	dragger->addWithoutObject(ui->masterRecordList);
-//	dragger->addWithoutObject(ui->deleteTempButton);
-	//dragger->addWithoutObject(ui->loadMasterButton);
-	//dragger->addWithoutObject(ui->deleteTempButton);
-
-	QFile* fil= new QFile;
-	fil->setFileName(":/objectRecord0.json");
-	if (!fil->open(QIODevice::ReadOnly))
-		return;
-	QByteArray buff = fil->readAll();
-	fil->close();
-
-	fil->setFileName(QDir::currentPath() + "/objectRecord0.json");
-	if (!fil->open(QIODevice::WriteOnly))
-			return;
-	fil->write(buff);
-	fil->close();
-
-	databaseManager = new ZDatabaseManager;
-	databaseManager->setCheckTimeout(1000);
-	databaseManager->setFileName(QDir::currentPath(),"objectRecord");
-	connect(databaseManager,SIGNAL(databaseChanged()),this,SLOT(databaseChangeHandler()));
-	databaseManager->startChangeListener();
-
+	dragger->addWithoutObject(ui->deleteTempButton);
+	dragger->addWithoutObject(ui->loadMasterButton);
+	dragger->addWithoutObject(ui->deleteTempButton);
 	}
 
 MainWindow::~MainWindow()
@@ -340,6 +320,28 @@ void MainWindow::updateRecordList()
 		ui->masterRecordList->addItem(QString("Record-%1").arg(i));
 		}
 	ui->masterRecordList->setCurrentRow(databaseManager->getCurrentFileIndex());
+	}
+
+void MainWindow::setDatabaseFolderName(const QString& name)
+	{
+	QFile* fil= new QFile;
+	fil->setFileName(":/objectRecord0.json");
+	if (!fil->open(QIODevice::ReadOnly))
+		return;
+	QByteArray buff = fil->readAll();
+	fil->close();
+
+	fil->setFileName(QDir::currentPath()+"/"+name + "/objectRecord0.json");
+	if (!fil->open(QIODevice::WriteOnly))
+			return;
+	fil->write(buff);
+	fil->close();
+
+	databaseManager = new ZDatabaseManager;
+	databaseManager->setCheckTimeout(1000);
+	databaseManager->setFileName(QDir::currentPath()+"/"+name,"objectRecord");
+	connect(databaseManager,SIGNAL(databaseChanged()),this,SLOT(databaseChangeHandler()));
+	databaseManager->startChangeListener();
 	}
 
 

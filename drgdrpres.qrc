@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>drgdrpres/burn-icon.png</file>
+        <file>drgdrpres/pause-icon.png</file>
+        <file>drgdrpres/play-icon.png</file>
+        <file>drgdrpres/resize-diag-2-icon.png</file>
+        <file>drgdrpres/burn-icon2.png</file>
+        <file>drgdrpres/pause-icon2.png</file>
+        <file>drgdrpres/play-icon2.png</file>
+        <file>drgdrpres/resize-diag-2-icon2.png</file>
+    </qresource>
+</RCC>

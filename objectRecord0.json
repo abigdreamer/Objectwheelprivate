@@ -1,4 +1,16 @@
 {
+  "object1": {
+    "objectClass": "QLineEdit",
+    "objectName": "nameBox",
+    "text": "",
+    "enabled": true,
+    "geometry": {
+      "x": 30,
+      "y": 60,
+      "width": 110,
+      "height": 20
+    }
+  },
   "object2": {
     "objectClass": "QLineEdit",
     "objectName": "addressBox",

@@ -27,7 +27,8 @@ FORMS    += mainwindow.ui \
     loginwindow.ui
 
 RESOURCES += \
-    resource.qrc
+    resource.qrc \
+    drgdrpres.qrc
 
 DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.jar \

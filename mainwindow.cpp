@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	/** !DragDrop! **/
 	//Creating dragger
-	dragger = new ZDragDrop;
+	dragger = new ZDragDrop(this);
 	//For eventFilter
 	qApp->installEventFilter(this);
 	//Adding without object to dragger
@@ -38,11 +38,11 @@ MainWindow::~MainWindow()
 void MainWindow::databaseChangeHandler()
 	{ this->createObjects(databaseManager->getFile()); updateRecordList(); }
 
-bool MainWindow::eventFilter(QObject*, QEvent* event)
+bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 	{
 	/** !DragDrop! **/
 	//Calling dragger
-	return dragger->updateWidget(event,ui,this);
+	return dragger->updateWidget(event,ui,this,obj);
 	}
 
 void MainWindow::resizeEvent(QResizeEvent *)

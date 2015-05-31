@@ -1,16 +1,68 @@
 #include "zdragdrop.h"
+#include <QDebug>
 
 ZDragDrop::ZDragDrop(QObject *parent) :
 	QObject(parent)
 	{
+	resizeButton= new QPushButton((QWidget*)parent);
+	burnButton= new QPushButton((QWidget*)parent);
+	disableButton= new QPushButton((QWidget*)parent);
+
+	addWithoutObject(disableButton);
+	addWithoutObject(burnButton);
+
+	disableButton->hide();
+	burnButton->hide();
+	resizeButton->hide();
+
+	disableButton->setCursor(Qt::PointingHandCursor);
+	burnButton->setCursor(Qt::PointingHandCursor);
+	resizeButton->setCursor(Qt::PointingHandCursor);
+
+	disableButton->setObjectName("__disableButton");
+	burnButton->setObjectName("__burnButton");
+	resizeButton->setObjectName("__resizeButton");
+
+	disableButton->setGeometry(0,0,20,20);
+	burnButton->setGeometry(0,0,20,20);
+	resizeButton->setGeometry(0,0,20,20);
+
+	disableButton->setStyleSheet("QPushButton#__disableButton {"
+								 "border-image: url(:/drgdrpres/pause-icon.png);}"
+								 "QPushButton#__disableButton:pressed {"
+								 "border-image: url(:/drgdrpres/pause-icon2.png);}");
+	burnButton->setStyleSheet("QPushButton#__burnButton {"
+								 "border-image: url(:/drgdrpres/burn-icon.png);}"
+								 "QPushButton#__burnButton:pressed {"
+								 "border-image: url(:/drgdrpres/burn-icon2.png);}");
+	resizeButton->setStyleSheet("QPushButton#__resizeButton {"
+								 "border-image: url(:/drgdrpres/resize-diag-2-icon.png);}"
+								 "QPushButton#__resizeButton:pressed {"
+								 "border-image: url(:/drgdrpres/resize-diag-2-icon2.png);}");
 	}
 
-bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mainWindow)
+bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mainWindow, QObject* )
 	{
+
+	QMouseEvent *mouseEvent = (QMouseEvent *)event;
+	QWidget* widget = static_cast<QWidget*>(mainWindow->childAt(mouseEvent->pos()));
+
+	if (mouseEvent->type() == QEvent::MouseButtonPress &&
+		widget!=ui->centralWidget && widget!=ui->widget && widget!=mainWindow)
+		{
+		if ((widget->objectName() != "__disableButton" &&
+			widget->objectName() != "__burnButton" &&
+			widget->objectName() != "__resizeButton"))
+			{
+
+			disableButton->hide();
+			burnButton->hide();
+			resizeButton->hide();
+
+			}
+		}
 	if (event->type() == QEvent::MouseMove || event->type() == QEvent::MouseButtonPress || event->type() == QEvent::MouseButtonRelease)
 		{
-		QMouseEvent *mouseEvent = (QMouseEvent *)event;
-		QWidget* widget = static_cast<QWidget*>(mainWindow->childAt(mouseEvent->pos()));
 		if (mouseEvent->type()==QMouseEvent::MouseButtonPress &&
 			widget!=ui->centralWidget && widget!=ui->widget && widget!=mainWindow)
 			{
@@ -41,6 +93,18 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 			}
 		}
 
+	if (event->type() == QEvent::MouseButtonDblClick &&
+		widget!=ui->centralWidget && widget!=ui->widget && widget!=mainWindow)
+		{
+
+		resizeButton->move(widget->mapTo(mainWindow,QPoint(widget->width(),widget->height()-disableButton->height())));
+		disableButton->move(widget->mapTo(mainWindow,QPoint(widget->width()+25,widget->height()-disableButton->height())));
+		burnButton->move(widget->mapTo(mainWindow,QPoint(widget->width()+50,widget->height()-disableButton->height())));
+
+		disableButton->show();
+		burnButton->show();
+		resizeButton->show();
+		}
 	return false;
 	}
 

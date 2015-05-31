@@ -9,6 +9,7 @@
 #include <QMainWindow>
 #include "ui_mainwindow.h"
 #include <QVector>
+#include <QPushButton>
 
 class ZDragDrop : public QObject
 	{
@@ -19,9 +20,11 @@ class ZDragDrop : public QObject
 		QPoint startingPos, widgetPos;
 		bool pressed;
 
+		QPushButton* resizeButton,* burnButton,* disableButton;
+
 	public:
 		explicit ZDragDrop(QObject *parent = 0);
-		bool updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mainWindow);
+		bool updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mainWindow, QObject* obj);
 		void addWithoutObject(QWidget* obj);
 	signals:
 

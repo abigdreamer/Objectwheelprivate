@@ -39,6 +39,10 @@ ZDragDrop::ZDragDrop(QObject *parent) :
 								 "border-image: url(:/drgdrpres/resize-diag-2-icon.png);}"
 								 "QPushButton#__resizeButton:pressed {"
 								 "border-image: url(:/drgdrpres/resize-diag-2-icon2.png);}");
+
+	connect(resizeButton,SIGNAL(clicked()),this,SLOT(resizeButton_clicked()));
+	connect(burnButton,SIGNAL(clicked()),this,SLOT(burnButton_clicked()));
+	connect(disableButton,SIGNAL(clicked()),this,SLOT(disableButton_clicked()));
 	}
 
 bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mainWindow, QObject* )
@@ -96,11 +100,21 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 	if (event->type() == QEvent::MouseButtonDblClick &&
 		widget!=ui->centralWidget && widget!=ui->widget && widget!=mainWindow)
 		{
-
+		lastSelected=widget;
 		resizeButton->move(widget->mapTo(mainWindow,QPoint(widget->width(),widget->height()-disableButton->height())));
 		disableButton->move(widget->mapTo(mainWindow,QPoint(widget->width()+25,widget->height()-disableButton->height())));
 		burnButton->move(widget->mapTo(mainWindow,QPoint(widget->width()+50,widget->height()-disableButton->height())));
 
+		if (widget->isEnabled())
+			disableButton->setStyleSheet("QPushButton#__disableButton {"
+										 "border-image: url(:/drgdrpres/pause-icon.png);}"
+										 "QPushButton#__disableButton:pressed {"
+										 "border-image: url(:/drgdrpres/pause-icon2.png);}");
+		else
+			disableButton->setStyleSheet("QPushButton#__disableButton {"
+										 "border-image: url(:/drgdrpres/play-icon.png);}"
+										 "QPushButton#__disableButton:pressed {"
+										 "border-image: url(:/drgdrpres/play-icon2.png);}");
 		disableButton->show();
 		burnButton->show();
 		resizeButton->show();
@@ -111,4 +125,40 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 void ZDragDrop::addWithoutObject(QWidget* obj)
 	{
 	withoutWidgets.append(obj);
+	}
+
+void ZDragDrop::setObjectList(QVector<QWidget*>* list)
+	{
+	createdObjects=list;
+	}
+
+void ZDragDrop::resizeButton_clicked()
+	{
+
+	}
+
+void ZDragDrop::burnButton_clicked()
+	{
+	lastSelected->close();
+	disableButton->hide();
+	burnButton->hide();
+	resizeButton->hide();
+
+	createdObjects->removeOne(lastSelected);
+	}
+
+void ZDragDrop::disableButton_clicked()
+	{
+	if (lastSelected->isEnabled())
+		{
+		lastSelected->setEnabled(false);
+		}
+	else
+		{
+		lastSelected->setEnabled(true);
+		}
+
+	disableButton->hide();
+	burnButton->hide();
+	resizeButton->hide();
 	}

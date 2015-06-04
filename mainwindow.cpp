@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	/** !DragDrop! **/
 	//Creating dragger
 	dragger = new ZDragDrop(this);
+	dragger->setObjectList(&createdObjects);
 	//For eventFilter
 	qApp->installEventFilter(this);
 	//Adding without object to dragger

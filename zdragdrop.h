@@ -19,17 +19,21 @@ class ZDragDrop : public QObject
 		QVector<QWidget*>  withoutWidgets;
 		QPoint startingPos, widgetPos;
 		bool pressed;
-
+		QWidget* lastSelected;
 		QPushButton* resizeButton,* burnButton,* disableButton;
+		QVector<QWidget*>* createdObjects;
 
 	public:
 		explicit ZDragDrop(QObject *parent = 0);
 		bool updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mainWindow, QObject* obj);
 		void addWithoutObject(QWidget* obj);
+		void setObjectList(QVector<QWidget*>* list);
 	signals:
 
 	public slots:
-
+		void resizeButton_clicked();
+		void burnButton_clicked();
+		void disableButton_clicked();
 	};
 
 #endif // ZDRAGDROP_H

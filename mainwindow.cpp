@@ -22,6 +22,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	qApp->installEventFilter(this);
 	//Adding without object to dragger
 	dragger->addWithoutObject(ui->backButton);
+
+	dragger->addWithoutObject(ui->groupBox_2);
+	dragger->addWithoutObject(ui->frame_2);
+	dragger->addWithoutObject(ui->frame_3);
+
 	dragger->addWithoutObject(ui->forwardButton);
 	dragger->addWithoutObject(ui->saveButton);
 	dragger->addWithoutObject(ui->masterBox);
@@ -29,6 +34,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	dragger->addWithoutObject(ui->deleteTempButton);
 	dragger->addWithoutObject(ui->loadMasterButton);
 	dragger->addWithoutObject(ui->deleteTempButton);
+
+	dragger->addWithoutObject(ui->label_6);
+	dragger->addWithoutObject(ui->widget);
+	dragger->addWithoutObject(this);
+	dragger->addWithoutObject(ui->centralWidget);
 	}
 
 MainWindow::~MainWindow()
@@ -136,6 +146,13 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["y"].toInt(),
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
+
+			QPalette palette = obj->palette();
+			palette.setColor(obj->foregroundRole(), qRgba(object["color"].toObject()["r"].toInt(),
+					object["color"].toObject()["g"].toInt(),
+					object["color"].toObject()["b"].toInt(),
+					object["color"].toObject()["a"].toInt()));
+			obj->setPalette(palette);
 
 			/// Adding object to createdObject
 			createdObjects.append(obj);
@@ -260,6 +277,13 @@ QByteArray MainWindow::generateObjects() const
 			geometry.insert("width",obj->width());
 			geometry.insert("height",obj->height());
 
+			QJsonObject color;
+			QRgb rgb = obj->palette().foreground().color().rgba();
+			color.insert("r",qRed(rgb));
+			color.insert("g",qGreen(rgb));
+			color.insert("b",qBlue(rgb));
+			color.insert("a",qAlpha(rgb));
+
 			QJsonObject object;
 			object.insert("objectClass",className);
 			object.insert("objectName",obj->objectName());
@@ -276,7 +300,7 @@ QByteArray MainWindow::generateObjects() const
 				object.insert("picture","");
 
 			object.insert("geometry",geometry);
-
+			object.insert("color",color);
 			mainObject.insert(QString("object%1").arg(i),object);
 
 			}
@@ -334,7 +358,7 @@ void MainWindow::setDatabaseFolderName(const QString& name)
 
 	fil->setFileName(QDir::currentPath()+"/"+name + "/objectRecord0.json");
 	if (!fil->open(QIODevice::WriteOnly))
-			return;
+		return;
 	fil->write(buff);
 	fil->close();
 

@@ -31,7 +31,6 @@ class ZDragDrop : public QObject
 	signals:
 
 	public slots:
-		void resizeButton_clicked();
 		void burnButton_clicked();
 		void disableButton_clicked();
 	};

@@ -19,5 +19,7 @@
         <file>pics/go.png</file>
         <file>pics/go2.png</file>
         <file>pics/up.png</file>
+        <file>pics/background2.jpg</file>
+        <file>pics/title.png</file>
     </qresource>
 </RCC>

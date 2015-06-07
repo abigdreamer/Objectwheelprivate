@@ -22,5 +22,7 @@
         <file>pics/background2.jpg</file>
         <file>pics/title.png</file>
         <file>pics/plain.png</file>
+        <file>pics/landscape.png</file>
+        <file>pics/portrait.png</file>
     </qresource>
 </RCC>

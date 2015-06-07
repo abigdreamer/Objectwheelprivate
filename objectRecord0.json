@@ -238,8 +238,8 @@
         "objectClass": "QWidget",
         "objectName": "__cW",
         "geometry": {
-            "width": 600,
-            "height": 360
+            "width": 610,
+            "height": 350
         }
     }
 }

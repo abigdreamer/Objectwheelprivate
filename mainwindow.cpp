@@ -93,6 +93,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
+			QFont fnt("Arial",8);
+			obj->setFont(fnt);
 			/// Adding object to ZLayout
 			lay->addItem(obj);
 			obj->setStyleSheet("background-color:transparent;");
@@ -117,6 +119,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
+			QFont fnt("Arial",8);
+			obj->setFont(fnt);
 			/// Adding object to ZLayout
 			lay->addItem(obj);
 			obj->setStyleSheet("border-image:url(:/pics/plain.png);");
@@ -135,6 +139,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
+			QFont fnt("Arial",8);
+			obj->setFont(fnt);
 			/// Adding object to ZLayout
 			lay->addItem(obj);
 			//obj->setStyleSheet("background-color:transparent;");
@@ -161,6 +167,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["color"].toObject()["b"].toInt(),
 					object["color"].toObject()["a"].toInt()));
 			obj->setPalette(palette);
+			QFont fnt("Arial",8);
+			obj->setFont(fnt);
 			/// Adding object to createdObject
 			createdObjects.append(obj);
 			///  Showing object
@@ -186,6 +194,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
+			QFont fnt("Arial",8);
+			obj->setFont(fnt);
 			/// Adding object to ZLayout
 			lay->addItem(obj);
 			obj->setStyleSheet("background-color:transparent;");

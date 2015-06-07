@@ -75,7 +75,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>ObjectWheel</string>
+   <string>ObjectWheel v1.1 Beta</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -483,6 +483,12 @@ QPushButton#forwardButton:pressed {
         </disabled>
        </palette>
       </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
       <property name="styleSheet">
        <string notr="true">
 background-color:transparent;</string>
@@ -666,6 +672,11 @@ background-color: rgba(0, 0, 0, 70);
             </colorrole>
            </disabled>
           </palette>
+         </property>
+         <property name="font">
+          <font>
+           <family>Arial</family>
+          </font>
          </property>
          <property name="styleSheet">
           <string notr="true">#masterRecordList{
@@ -900,6 +911,12 @@ QPushButton#deleteTempButton:pressed {
          </colorrole>
         </disabled>
        </palette>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
       </property>
       <property name="styleSheet">
        <string notr="true">

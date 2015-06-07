@@ -1,5 +1,6 @@
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
+#include <QDesktopWidget>
 
 LoginWindow::LoginWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -23,6 +24,7 @@ void LoginWindow::on_forwardButton_clicked()
 			{
 			mainScreen = new MainWindow;
 			mainScreen->setDatabaseFolderName(generatedHash);
+			mainScreen->move( QApplication::desktop()->availableGeometry().center() - mainScreen->rect().center() );
 			mainScreen->show();
 			this->close();
 			}
@@ -39,6 +41,7 @@ void LoginWindow::on_forwardButton_clicked()
 				case QMessageBox::Ok :
 					dir.mkpath(QDir::currentPath()+"/"+generatedHash);
 					mainScreen->setDatabaseFolderName(generatedHash);
+					mainScreen->move( QApplication::desktop()->availableGeometry().center() - mainScreen->rect().center() );
 					mainScreen->show();
 					this->close();
 				break;

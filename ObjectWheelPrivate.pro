@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     zdragdrop.cpp \
     zdatabasemanager.cpp \
-    loginwindow.cpp
+    loginwindow.cpp \
+    zlayout.cpp
 
 HEADERS  += mainwindow.h \
     zdragdrop.h \
     zdatabasemanager.h \
-    loginwindow.h
+    loginwindow.h \
+    zlayout.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui
@@ -31,6 +33,12 @@ RESOURCES += \
     drgdrpres.qrc
 
 DISTFILES += \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew.bat \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
     android/gradle/wrapper/gradle-wrapper.jar \
     android/AndroidManifest.xml \
     android/gradlew.bat \

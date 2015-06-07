@@ -10,6 +10,7 @@
 #include "ui_mainwindow.h"
 #include <QVector>
 #include <QPushButton>
+#include "zlayout.h"
 
 class ZDragDrop : public QObject
 	{
@@ -22,12 +23,13 @@ class ZDragDrop : public QObject
 		QWidget* lastSelected;
 		QPushButton* resizeButton,* burnButton,* disableButton;
 		QVector<QWidget*>* createdObjects;
-
+		ZLayout* lay;
 	public:
 		explicit ZDragDrop(QObject *parent = 0);
 		bool updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mainWindow, QObject* obj);
 		void addWithoutObject(QWidget* obj);
 		void setObjectList(QVector<QWidget*>* list);
+		void setLay(ZLayout* layout);
 	signals:
 
 	public slots:

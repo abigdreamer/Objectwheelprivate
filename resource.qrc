@@ -21,5 +21,6 @@
         <file>pics/up.png</file>
         <file>pics/background2.jpg</file>
         <file>pics/title.png</file>
+        <file>pics/plain.png</file>
     </qresource>
 </RCC>

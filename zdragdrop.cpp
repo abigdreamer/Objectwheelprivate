@@ -24,9 +24,9 @@ ZDragDrop::ZDragDrop(QObject *parent) :
 	burnButton->setObjectName("__burnButton");
 	resizeButton->setObjectName("__resizeButton");
 
-	disableButton->setGeometry(0,0,20,20);
-	burnButton->setGeometry(0,0,20,20);
-	resizeButton->setGeometry(0,0,20,20);
+	disableButton->setGeometry(0,0,35,35);
+	burnButton->setGeometry(0,0,35,35);
+	resizeButton->setGeometry(0,0,35,35);
 
 	disableButton->setStyleSheet("QPushButton#__disableButton {"
 								 "border-image: url(:/drgdrpres/pause-icon.png);}"
@@ -77,19 +77,28 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 
 		if (olderWidget!=NULL)
 			{
+
+			/* Drag Event */
 			if (olderWidget->isEnabled()){
 				if (olderWidget->objectName() != "__disableButton" &&
 					olderWidget->objectName() != "__burnButton" &&
 					olderWidget->objectName() != "__resizeButton")
-					{
+					{ /* Drag Normal objects  */
 					olderWidget->move( ui->widget->mapFrom(mainWindow,mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos)));
 					disableButton->hide();
 					burnButton->hide();
 					resizeButton->hide();
+
+					lay->removeWidgetOf(olderWidget);
+					lay->addItem(olderWidget);
 					}
 				else if(lastSelected->isEnabled())
+					{ /* Drag Resize_button  */
 					olderWidget->move( mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos) );
+					}
 				}
+
+			/* Resize Event */
 			if (resizeButton->isDown() && lastSelected->isEnabled())
 				{
 				lastSelected->setGeometry(lastSelected->x(),
@@ -97,8 +106,11 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 										  resizeButton->x()-lastSelected->mapTo(mainWindow,QPoint(0,0)).x(),
 										  resizeButton->y()-lastSelected->mapTo(mainWindow,QPoint(0,0)).y()+resizeButton->height());
 
-				burnButton->move(resizeButton->x()+25,resizeButton->y());
-				disableButton->move(resizeButton->x()+50,resizeButton->y());
+				lay->removeWidgetOf(lastSelected);
+				lay->addItem(lastSelected);
+
+				burnButton->move(resizeButton->x()+40,resizeButton->y());
+				disableButton->move(resizeButton->x()+80,resizeButton->y());
 				}
 
 			}
@@ -122,12 +134,12 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 		}
 	if (olderWidget!=NULL)
 		if (event->type() == QEvent::MouseButtonDblClick
-			&& olderWidget!=resizeButton && olderWidget->parent() == ui->widget )
+			&& olderWidget!=resizeButton && olderWidget->objectName()!="__cW" &&olderWidget->parent() == ui->widget )
 			{
 			lastSelected=olderWidget;
 			resizeButton->move(olderWidget->mapTo(mainWindow,QPoint(olderWidget->width(),olderWidget->height()-disableButton->height())));
-			disableButton->move(olderWidget->mapTo(mainWindow,QPoint(olderWidget->width()+25,olderWidget->height()-disableButton->height())));
-			burnButton->move(olderWidget->mapTo(mainWindow,QPoint(olderWidget->width()+50,olderWidget->height()-disableButton->height())));
+			disableButton->move(olderWidget->mapTo(mainWindow,QPoint(olderWidget->width()+40,olderWidget->height()-disableButton->height())));
+			burnButton->move(olderWidget->mapTo(mainWindow,QPoint(olderWidget->width()+80,olderWidget->height()-disableButton->height())));
 
 			if (olderWidget->isEnabled())
 				disableButton->setStyleSheet("QPushButton#__disableButton {"
@@ -157,6 +169,11 @@ void ZDragDrop::setObjectList(QVector<QWidget*>* list)
 	createdObjects=list;
 	}
 
+void ZDragDrop::setLay(ZLayout* layout)
+	{
+	lay=layout;
+	}
+
 void ZDragDrop::burnButton_clicked()
 	{
 	lastSelected->close();
@@ -164,6 +181,7 @@ void ZDragDrop::burnButton_clicked()
 	burnButton->hide();
 	resizeButton->hide();
 
+	lay->removeWidgetOf(lastSelected);
 	createdObjects->removeOne(lastSelected);
 	}
 

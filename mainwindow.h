@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "zdragdrop.h"
+#include "zlayout.h"
 #include "zdatabasemanager.h"
 #include <QVector>
 #include <QJsonDocument>
@@ -20,6 +21,7 @@ class MainWindow : public QMainWindow
 	private:
 		Ui::MainWindow *ui;
 		ZDragDrop* dragger; //For drag&drop
+		ZLayout* lay;
 		ZDatabaseManager* databaseManager;
 		QVector<QWidget*> createdObjects;
 	protected:

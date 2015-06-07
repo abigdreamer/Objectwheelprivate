@@ -215,7 +215,7 @@
             "height": 590
         }
     },
-    "object15": {
+    "object14": {
         "objectClass": "QLabel",
         "objectName": "pictureBox",
         "text": "Picture:",
@@ -232,6 +232,14 @@
             "g":120,
             "b":180,
             "a":255
+        }
+    },
+    "object15": {
+        "objectClass": "QWidget",
+        "objectName": "__cW",
+        "geometry": {
+            "width": 600,
+            "height": 360
         }
     }
 }

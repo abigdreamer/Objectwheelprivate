@@ -18,18 +18,22 @@ MainWindow::MainWindow(QWidget *parent) :
 	//Creating dragger
 	dragger = new ZDragDrop(this);
 	dragger->setObjectList(&createdObjects);
+
+
+	lay = new ZLayout;
+	lay->setAspectRatioProtected(true);
+	connect(this,SIGNAL(resEvent()),lay,SLOT(updateWidgets()));
+	dragger->setLay(lay);
 	//For eventFilter
 	qApp->installEventFilter(this);
 	//Adding without object to dragger
 	dragger->addWithoutObject(ui->backButton);
 
-	dragger->addWithoutObject(ui->groupBox_2);
 	dragger->addWithoutObject(ui->frame_2);
 	dragger->addWithoutObject(ui->frame_3);
 
 	dragger->addWithoutObject(ui->forwardButton);
 	dragger->addWithoutObject(ui->saveButton);
-	dragger->addWithoutObject(ui->masterBox);
 	dragger->addWithoutObject(ui->masterRecordList);
 	dragger->addWithoutObject(ui->deleteTempButton);
 	dragger->addWithoutObject(ui->loadMasterButton);
@@ -56,15 +60,10 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 	return dragger->updateWidget(event,ui,this,obj);
 	}
 
-void MainWindow::resizeEvent(QResizeEvent *)
-	{
-	/** !Layout! **/
-	//Calling ZLayout
-	emit resEvent();
-	}
-
 void MainWindow::createObjects(const QByteArray& jsonData)
 	{
+
+	lay->clearAllItem();
 	for (int i=0;i<createdObjects.size();i++)
 		createdObjects.at(i)->close();
 
@@ -95,7 +94,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			///  Showing object
 			obj->show();
 			/// Adding object to ZLayout
-
+			lay->addItem(obj);
+			obj->setStyleSheet("background-color:transparent;");
 			}
 
 		else if ( className == "QLineEdit")
@@ -108,12 +108,18 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["y"].toInt(),
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
+
+			QPalette palette = obj->palette();
+			palette.setColor(obj->foregroundRole(), qRgb(255,255,255));
+			obj->setPalette(palette);
+
 			/// Adding object to createdObject
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
 			/// Adding object to ZLayout
-
+			lay->addItem(obj);
+			obj->setStyleSheet("border-image:url(:/pics/plain.png);");
 			}
 
 		else if ( className == "QComboBox")
@@ -130,7 +136,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			///  Showing object
 			obj->show();
 			/// Adding object to ZLayout
-
+			lay->addItem(obj);
+			//obj->setStyleSheet("background-color:transparent;");
 			}
 
 		else if ( className == "QLabel")
@@ -141,7 +148,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->setEnabled(object["enabled"].toBool());
 			if (object["picture"].toString()!="null" && object["picture"].toString()!="")
 				obj->setStyleSheet(QString("border-image: url(%1);").arg(object["picture"].toString()));
-
+			else
+				obj->setStyleSheet("background:transparent;");
 			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
 					object["geometry"].toObject()["y"].toInt(),
 					object["geometry"].toObject()["width"].toInt(),
@@ -153,13 +161,12 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["color"].toObject()["b"].toInt(),
 					object["color"].toObject()["a"].toInt()));
 			obj->setPalette(palette);
-
 			/// Adding object to createdObject
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
 			/// Adding object to ZLayout
-
+			lay->addItem(obj);
 			}
 
 		else if ( className == "QCheckBox")
@@ -180,7 +187,26 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			///  Showing object
 			obj->show();
 			/// Adding object to ZLayout
+			lay->addItem(obj);
+			obj->setStyleSheet("background-color:transparent;");
+			}
+		else if ( className == "QWidget")
+			{
+			QWidget* obj = new QWidget(ui->widget);
+			obj->setObjectName(object["objectName"].toString());
+			obj->setGeometry(obj->x(),
+					obj->y(),
+					object["geometry"].toObject()["width"].toInt(),
+					object["geometry"].toObject()["height"].toInt());
 
+			/// Adding object to createdObject
+			createdObjects.append(obj);
+			///  Showing object
+			obj->show();
+			/// Adding object to ZLayout
+			lay->initMainWidgets(ui->widget,obj);
+			obj->lower();
+			obj->setStyleSheet("background-color:transparent;");
 			}
 
 		else if ( className == "QMainWindow")
@@ -196,7 +222,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 				*/
 			}
 		}
-
+	this->resizeEvent(0);
 	}
 
 QByteArray MainWindow::generateObjects() const
@@ -291,7 +317,9 @@ QByteArray MainWindow::generateObjects() const
 			object.insert("enabled",obj->isEnabled());
 			if (!obj->styleSheet().isNull())
 				{
-				QString sheet= obj->styleSheet().split("url(").at(1);
+				QString sheet;
+				if (obj->styleSheet().split("url(").size()>1)
+					sheet= obj->styleSheet().split("url(").at(1);
 				sheet.remove(")");
 				sheet.remove(";");
 				object.insert("picture",sheet);
@@ -321,6 +349,22 @@ QByteArray MainWindow::generateObjects() const
 			object.insert("text",obj->text());
 			object.insert("enabled",obj->isEnabled());
 			object.insert("checked",obj->isChecked());
+			object.insert("geometry",geometry);
+
+			mainObject.insert(QString("object%1").arg(i),object);
+
+			}
+		else if ( className == "QWidget")
+			{
+			QWidget* obj = reinterpret_cast<QWidget*>(createdObjects.at(i));
+
+			QJsonObject geometry;
+			geometry.insert("width",obj->width());
+			geometry.insert("height",obj->height());
+
+			QJsonObject object;
+			object.insert("objectClass",className);
+			object.insert("objectName",obj->objectName());
 			object.insert("geometry",geometry);
 
 			mainObject.insert(QString("object%1").arg(i),object);
@@ -392,3 +436,9 @@ void MainWindow::on_deleteTempButton_clicked()
 
 void MainWindow::on_loadMasterButton_clicked()
 	{ databaseManager->setCurrentFileIndex(ui->masterRecordList->currentRow()); }
+void MainWindow::resizeEvent(QResizeEvent *)
+	{
+	/** !Layout! **/
+	//Calling ZLayout
+	emit resEvent();
+	}

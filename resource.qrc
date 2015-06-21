@@ -24,5 +24,8 @@
         <file>pics/plain.png</file>
         <file>pics/landscape.png</file>
         <file>pics/portrait.png</file>
+        <file>pics/app.png</file>
+        <file>pics/exit.png</file>
+        <file>pics/exit2.png</file>
     </qresource>
 </RCC>

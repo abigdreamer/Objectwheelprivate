@@ -77,6 +77,10 @@
   <property name="windowTitle">
    <string>ObjectWheel v1.1 Beta</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/pics/app.png</normaloff>:/pics/app.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
@@ -1032,6 +1036,8 @@ border-radius: 5px;
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -241,5 +241,16 @@
             "width": 610,
             "height": 350
         }
+    },
+    "object16": {
+        "objectClass": "QWebView",
+        "objectName": "webww",
+        "enabled": true,
+        "geometry": {
+            "x": 340,
+            "y": 10,
+            "width": 250,
+            "height": 320
+        }
     }
 }

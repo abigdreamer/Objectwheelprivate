@@ -182,7 +182,7 @@ void ZDragDrop::burnButton_clicked()
 	resizeButton->hide();
 
 	lay->removeWidgetOf(lastSelected);
-	createdObjects->removeOne(lastSelected);
+	createdObjects->remove(createdObjects->indexOf(lastSelected));
 	}
 
 void ZDragDrop::disableButton_clicked()

@@ -11,19 +11,23 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ObjectWheelPrivate
 TEMPLATE = app
 
-
+RC_ICONS = app.ico
 SOURCES += main.cpp\
         mainwindow.cpp \
     zdragdrop.cpp \
     zdatabasemanager.cpp \
     loginwindow.cpp \
-    zlayout.cpp
+    zlayout.cpp \
+    AndroidNativeCallsSender.cpp \
+    QtCustomAndroidWebView.cpp
 
 HEADERS  += mainwindow.h \
     zdragdrop.h \
     zdatabasemanager.h \
     loginwindow.h \
-    zlayout.h
+    zlayout.h \
+    AndroidNativeCallsSender.h \
+    QtCustomAndroidWebView.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui
@@ -48,3 +52,7 @@ DISTFILES += \
     android/gradlew
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+!contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+	QT += webkitwidgets
+}

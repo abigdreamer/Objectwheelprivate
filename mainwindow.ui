@@ -75,7 +75,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>ObjectWheel v1.1 Beta</string>
+   <string>Objectwheel v1.1 Beta</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resource.qrc">

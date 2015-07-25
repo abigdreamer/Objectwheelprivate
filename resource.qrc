@@ -27,5 +27,6 @@
         <file>pics/app.png</file>
         <file>pics/exit.png</file>
         <file>pics/exit2.png</file>
+        <file>main.qml</file>
     </qresource>
 </RCC>

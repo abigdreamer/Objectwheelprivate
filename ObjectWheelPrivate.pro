@@ -8,6 +8,13 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+qtHaveModule(webengine) {
+		QT += webengine quickwidgets
+		DEFINES += QT_WEBVIEW_WEBENGINE_BACKEND
+}else{
+QT += quickwidgets
+}
+
 TARGET = ObjectWheelPrivate
 TEMPLATE = app
 
@@ -18,16 +25,16 @@ SOURCES += main.cpp\
     zdatabasemanager.cpp \
     loginwindow.cpp \
     zlayout.cpp \
-    AndroidNativeCallsSender.cpp \
-    QtCustomAndroidWebView.cpp
+    zwebwidget.cpp \
+    zwebbrowser.cpp
 
 HEADERS  += mainwindow.h \
     zdragdrop.h \
     zdatabasemanager.h \
     loginwindow.h \
     zlayout.h \
-    AndroidNativeCallsSender.h \
-    QtCustomAndroidWebView.h
+    zwebwidget.h \
+    zwebbrowser.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui
@@ -49,7 +56,21 @@ DISTFILES += \
     android/res/values/libs.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew
+    android/gradlew \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 

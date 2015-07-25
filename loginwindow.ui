@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>649</width>
-    <height>405</height>
+    <width>636</width>
+    <height>398</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Objectwheel v1.1 Beta</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resource.qrc">
+   <iconset>
     <normaloff>:/pics/app.png</normaloff>:/pics/app.png</iconset>
   </property>
   <property name="styleSheet">
@@ -772,8 +772,6 @@ QPushButton#forwardButton:pressed {
    </layout>
   </widget>
  </widget>
- <resources>
-  <include location="resource.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>784</width>
-    <height>510</height>
+    <width>787</width>
+    <height>457</height>
    </rect>
   </property>
   <property name="palette">
@@ -219,7 +219,7 @@ border-image: url(:/pics/background2.jpg);
       </property>
       <property name="styleSheet">
        <string notr="true">#widget{
-border: 1px solid rgba(0,0,0,190);
+border: 1px solid rgba(0,0,0,110);
 border-radius: 5px;
 background-color: rgba(0, 0, 0, 90);
 }</string>
@@ -518,7 +518,7 @@ background-color:transparent;</string>
       </property>
       <property name="styleSheet">
        <string notr="true">#frame_2{
-border: 1px solid rgba(0,0,0,190);
+border: 1px solid rgba(0,0,0,110);
 border-radius: 5px;
 background-color: rgba(0, 0, 0, 70);
 }</string>
@@ -684,7 +684,7 @@ background-color: rgba(0, 0, 0, 70);
          </property>
          <property name="styleSheet">
           <string notr="true">#masterRecordList{
-border: 1px solid rgba(0,0,0,190);
+border: 1px solid rgba(0,0,0,110);
 border-radius: 5px;
 background-color: rgba(0, 0, 0, 70);
 }</string>
@@ -943,7 +943,7 @@ background-color:transparent;</string>
        <string notr="true">#frame_3 {
 	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
 ));
-border: 1px solid rgba(0,0,0,190);
+border: 1px solid rgba(0,0,0,110);
 border-radius: 5px;
 }</string>
       </property>

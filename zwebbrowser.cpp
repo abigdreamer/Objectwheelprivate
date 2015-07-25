@@ -3,14 +3,14 @@
 ZWebBrowser::ZWebBrowser(QWidget *parent) : QWidget(parent)
 	{
 	QFont arial("Arial", 8, QFont::Normal);
+	firstStarted = false;
 
 	parent->installEventFilter(this);
 
 	webWidget = new ZWebWidget(this);
-	setObjectName("__zwebBrowser");
-	setStyleSheet("#__zwebBrowser {border: 1px solid rgba(0,0,0,190);"
-				  "border-radius: 5px;"
-				  "background-color: rgba(0, 0, 0, 90);}");
+
+	connect(webWidget,SIGNAL(urlChanged(QString)),this,SLOT(urlChanging(QString)));
+	connect(webWidget,SIGNAL(loadingChanged(int)),this,SLOT(loadingChanging(int)));
 
 	backButton = new QPushButton(this);
 	backButton->setText("Back");
@@ -59,14 +59,19 @@ void ZWebBrowser::paintEvent(QPaintEvent*)
 
 void ZWebBrowser::resizeEvent(QResizeEvent*)
 	{
-
-		backButton->setGeometry(5,5, (this->width()-70)/7 , 20 );
-		forwardButton->setGeometry(backButton->x()+backButton->width()+5,5,backButton->width(),20 );
-		addressLine->setGeometry(forwardButton->x()+forwardButton->width()+5,5,forwardButton->width()*2 + 35,20 );
-		goButton->setGeometry(addressLine->x()+addressLine->width()+5,5,backButton->width(),20 );
-		stopButton->setGeometry(goButton->x()+goButton->width()+5,5,goButton->width(),20 );
-		reloadButton->setGeometry(stopButton->x()+stopButton->width()+5,5,stopButton->width(),20 );
-		webWidget->setGeometry(5,30,this->width()-10,this->height()-75);
-		loadingBar->setGeometry(5,webWidget->y()+webWidget->height()+5,this->width()-10,20);
-
+	if (firstStarted==false)
+		{
+		firstStarted=true;
+		setStyleSheet(QString("#%1 {border: 1px solid rgba(0,0,0,190);"
+							  "border-radius: 5px;"
+							  "background-color: rgba(0, 0, 0, 90);}").arg(objectName()));
+		}
+	backButton->setGeometry(5,5, (this->width()-70)/7 , 20 );
+	forwardButton->setGeometry(backButton->x()+backButton->width()+5,5,backButton->width(),20 );
+	addressLine->setGeometry(forwardButton->x()+forwardButton->width()+5,5,forwardButton->width()*2 + 35,20 );
+	goButton->setGeometry(addressLine->x()+addressLine->width()+5,5,backButton->width(),20 );
+	stopButton->setGeometry(goButton->x()+goButton->width()+5,5,goButton->width(),20 );
+	reloadButton->setGeometry(stopButton->x()+stopButton->width()+5,5,stopButton->width(),20 );
+	webWidget->setGeometry(5,30,this->width()-10,this->height()-75);
+	loadingBar->setGeometry(5,webWidget->y()+webWidget->height()+5,this->width()-10,20);
 	}

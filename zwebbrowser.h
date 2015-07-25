@@ -9,6 +9,7 @@
 #include <QProgressBar>
 #include <QEvent>
 #include "zwebwidget.h"
+#include "zlayout.h"
 
 class ZWebBrowser : public QWidget
 	{
@@ -16,6 +17,7 @@ class ZWebBrowser : public QWidget
 	public:
 		explicit ZWebBrowser(QWidget *parent = 0);
 		ZWebWidget* webWidget;
+		ZLayout* lay;
 
 		QPushButton* backButton;
 		QPushButton* forwardButton;
@@ -25,6 +27,7 @@ class ZWebBrowser : public QWidget
 		QLineEdit* addressLine;
 		QProgressBar* loadingBar;
 
+		bool firstStarted;
 		void paintEvent(QPaintEvent *);
 		void resizeEvent(QResizeEvent *);
 

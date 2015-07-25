@@ -27,7 +27,7 @@ ZWebWidget::ZWebWidget(QWidget* parent) : QQuickWidget(parent)
 
 	setGeometry(QRect(70, 70, 300, 200));
 	setResizeMode(QQuickWidget::SizeRootObjectToView);
-	setSource(QUrl("qrc:/source.qml"));
+	setSource(QUrl::fromLocalFile(QDir::currentPath() + "/source.qml"));
 
 	qmlRootObject = reinterpret_cast<QObject*>(rootObject());
 

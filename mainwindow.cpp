@@ -195,7 +195,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->setStyleSheet("background-color:transparent;");
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.6);
+			regulateWidgetGetometryMnorm(obj,1.2);
 #else
 			regulateWidgetGetometry(obj);
 #endif
@@ -226,7 +226,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->setStyleSheet("border-image:url(:/pics/plain.png);");
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.6);
+			regulateWidgetGetometryMnorm(obj,1.2);
 #else
 			regulateWidgetGetometry(obj);
 #endif
@@ -252,7 +252,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			//obj->setStyleSheet("background-color:transparent;");
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.6);
+			regulateWidgetGetometryMnorm(obj,1.2);
 #else
 			regulateWidgetGetometry(obj);
 #endif
@@ -289,7 +289,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->show();
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.6);
+			regulateWidgetGetometryMnorm(obj,1.2);
 #else
 			regulateWidgetGetometry(obj);
 #endif
@@ -319,7 +319,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->setStyleSheet("background-color:transparent;");
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.6);
+			regulateWidgetGetometryMnorm(obj,1.2);
 #else
 			regulateWidgetGetometry(obj);
 #endif
@@ -368,7 +368,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 				}
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.6);
+			regulateWidgetGetometryMnorm(obj,1.2);
 #else
 			regulateWidgetGetometry(obj);
 #endif

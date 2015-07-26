@@ -35,11 +35,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	dragger = new ZDragDrop(this);
 	dragger->setObjectList(&createdObjects);
 
-
-	lay = new ZLayout;
-	lay->setAspectRatioProtected(true);
-	connect(this,SIGNAL(resEvent()),lay,SLOT(updateWidgets()));
-	dragger->setLay(lay);
 	//For eventFilter
 	qApp->installEventFilter(this);
 	//Adding without object to dragger
@@ -80,8 +75,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	dragger->addWithoutObject(ui->page);
 	dragger->addWithoutObject(ui->page_2);
 
-
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+	ui->tabButton->setIconSize(QSize(36,36));
+	ui->tabButton_2->setIconSize(QSize(36,36));
+	ui->tabButton_3->setIconSize(QSize(36,36));
+
 	regulateWidgetGetometryM(ui->frame_3,1.4);
 	regulateWidgetGetometryM(ui->label_6,1.4);
 	regulateWidgetGetometryM(ui->tabButton);
@@ -138,7 +136,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 #endif
 
-
 	}
 
 MainWindow::~MainWindow()
@@ -159,7 +156,6 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 void MainWindow::createObjects(const QByteArray& jsonData)
 	{
 
-	lay->clearAllItem();
 	for (int i=0;i<createdObjects.size();i++){
 		createdObjects.at(i)->close();
 		createdObjects.at(i)->deleteLater();
@@ -196,9 +192,13 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->show();
 			QFont fnt("Arial",8);
 			obj->setFont(fnt);
-			/// Adding object to ZLayout
-			lay->addItem(obj);
 			obj->setStyleSheet("background-color:transparent;");
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			regulateWidgetGetometryMnorm(obj,1.6);
+#else
+			regulateWidgetGetometry(obj);
+#endif
 			}
 
 		else if ( className == "QLineEdit")
@@ -223,9 +223,13 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->raise();
 			obj->show();			QFont fnt("Arial",8);
 			obj->setFont(fnt);
-			/// Adding object to ZLayout
-			lay->addItem(obj);
 			obj->setStyleSheet("border-image:url(:/pics/plain.png);");
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			regulateWidgetGetometryMnorm(obj,1.6);
+#else
+			regulateWidgetGetometry(obj);
+#endif
 			}
 
 		else if ( className == "QComboBox")
@@ -245,9 +249,13 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->show();
 			QFont fnt("Arial",8);
 			obj->setFont(fnt);
-			/// Adding object to ZLayout
-			lay->addItem(obj);
 			//obj->setStyleSheet("background-color:transparent;");
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			regulateWidgetGetometryMnorm(obj,1.6);
+#else
+			regulateWidgetGetometry(obj);
+#endif
 			}
 
 		else if ( className == "QLabel")
@@ -279,8 +287,12 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->show();
 			obj->raise();
 			obj->show();
-			/// Adding object to ZLayout
-			lay->addItem(obj);
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			regulateWidgetGetometryMnorm(obj,1.6);
+#else
+			regulateWidgetGetometry(obj);
+#endif
 			}
 
 		else if ( className == "QCheckBox")
@@ -304,29 +316,13 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->show();
 			QFont fnt("Arial",8);
 			obj->setFont(fnt);
-			/// Adding object to ZLayout
-			lay->addItem(obj);
 			obj->setStyleSheet("background-color:transparent;");
-			}
-		else if ( className == "QWidget")
-			{
-			QWidget* obj = new QWidget(ui->widget);
-			obj->setObjectName(object["objectName"].toString());
-			obj->setGeometry(obj->x(),
-							 obj->y(),
-							 object["geometry"].toObject()["width"].toInt(),
-					object["geometry"].toObject()["height"].toInt());
 
-			/// Adding object to createdObject
-			createdObjects.append(obj);
-			///  Showing object
-			obj->show();
-			/// Adding object to ZLayout
-			lay->initMainWidgets(ui->widget,obj);
-			obj->lower();
-			obj->show();
-			obj->lower();
-			obj->setStyleSheet("background-color:transparent;");
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			regulateWidgetGetometryMnorm(obj,1.6);
+#else
+			regulateWidgetGetometry(obj);
+#endif
 			}
 
 		else if ( className == "ZWebBrowser")
@@ -345,33 +341,41 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->show();
 			obj->raise();
 			obj->show();
-			/// Adding object to ZLayout
-			lay->addItem(obj);
 
 			for (int i=0;i<obj->children().size();i++)
 				{
 				dragger->removeWithoutObjectOf((QWidget*)obj->children().at(i));
 				dragger->addWithoutObject((QWidget*)obj->children().at(i));
+				((QWidget*)obj->children().at(i))->setObjectName(QString("__zwebbrowserbtn%1").arg(i));
+				((QWidget*)obj->children().at(i))->setFocusPolicy(Qt::NoFocus);
+				((QWidget*)obj->children().at(i))->setStyleSheet(QString("#%1 {"
+																		 "background-color: qlineargradient("
+																		 "spread:pad, x1:0.5, y1:1, "
+																		 "x2:0.488636, y2:0, stop:0.238636 "
+																		 "rgba(80, 80, 80, 120), stop:1 "
+																		 "rgba(189, 189, 189, 5"
+																		 "));"
+																		 "border: 1px solid rgba(50,50,50,80);"
+																		 "border-radius: 5px;"
+																		 "color:white;"
+																		 " }"
+																		 "#%1:pressed {"
+																		 "background-color: rgba(30, 30, 30,200);"
+																		 "border: 1px solid rgba(0,0,0,80);"
+																		 "border-radius: 5px;"
+																		 "color:white;"
+																		 " }").arg(((QWidget*)obj->children().at(i))->objectName()));
 				}
-			}
 
-		else if ( className == "QMainWindow")
-			{
-			/*
-				mainWindow->setWindowTitle(object["windowTitle"].toString());
-				mainWindow->setEnabled(object["enabled"].toBool());
-
-				mainWindow->centralWidget()->resize(object["geometry"].toObject()["width"].toInt(),
-						object["geometry"].toObject()["height"].toInt());
-				mainWindow->resize(object["geometry"].toObject()["width"].toInt(),
-						object["geometry"].toObject()["height"].toInt());
-				*/
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			regulateWidgetGetometryMnorm(obj,1.6);
+#else
+			regulateWidgetGetometry(obj);
+#endif
 			}
 		}
-	lay->start();
-	lay->updateWidgets();
+
 	this->resizeEvent(0);
-	lay->stop();
 	}
 
 QByteArray MainWindow::generateObjects() const
@@ -604,14 +608,6 @@ void MainWindow::on_deleteTempButton_clicked()
 
 void MainWindow::on_loadMasterButton_clicked()
 	{ databaseManager->setCurrentFileIndex(ui->masterRecordList->currentRow()); }
-void MainWindow::resizeEvent(QResizeEvent *)
-	{
-	/** !Layout! **/
-	//Calling ZLayout
-	emit resEvent();
-	}
-
-
 
 void MainWindow::on_tabButton_clicked()
 	{
@@ -728,15 +724,15 @@ void MainWindow::on_pushButton_8_clicked()
 	if (!fileName.isEmpty())
 		{
 		ui->centralWidget->setStyleSheet(QString("#centralWidget{"
-										 "border-image: url(%1);"
-										 "}").arg(fileName));
+												 "border-image: url(%1);"
+												 "}").arg(fileName));
 		}
 	}
 
 void MainWindow::regulateWidgetGetometry(QWidget* widget)
 	{
-	#define MYRESW 1366
-	#define MYRESH 768
+#define MYRESW 1366
+#define MYRESH 768
 
 	QDesktopWidget dwidget;
 	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
@@ -755,10 +751,10 @@ void MainWindow::regulateWidgetGetometry(QWidget* widget)
 	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH);
 	}
 
-void MainWindow::regulateWidgetGetometryM(QWidget* widget, int exSize)
+void MainWindow::regulateWidgetGetometryM(QWidget* widget, float exSize)
 	{
-	#define MYRESW 1366
-	#define MYRESH 768
+#define MYRESW 1366
+#define MYRESH 768
 
 	QDesktopWidget dwidget;
 	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
@@ -775,4 +771,24 @@ void MainWindow::regulateWidgetGetometryM(QWidget* widget, int exSize)
 	widget->setMaximumHeight(widget->maximumHeight()*ratioConstantH*exSize);
 	widget->setMinimumWidth(widget->minimumWidth()*ratioConstantH*exSize);
 	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH*exSize);
+	}
+
+void MainWindow::regulateWidgetGetometryMnorm(QWidget* widget, float exSize)
+	{
+#define MYRESW 1366
+#define MYRESH 768
+
+	QDesktopWidget dwidget;
+	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
+
+	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
+	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
+
+	if (ratioConstantH>ratioConstantV)
+		ratioConstantH=ratioConstantV;
+	else
+		ratioConstantV=ratioConstantH;
+
+	widget->setGeometry(widget->x()*ratioConstantH*exSize , widget->y()*ratioConstantH*exSize,
+						widget->width()*ratioConstantH*exSize, widget->height()*ratioConstantH*exSize);
 	}

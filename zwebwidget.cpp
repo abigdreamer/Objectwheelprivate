@@ -70,6 +70,7 @@ void ZWebWidget::goUrl(const QString& url)
 	{
 	QString localUrl=url;
 	localUrl.remove("http://");
+	localUrl.remove("https://");
 	localUrl.push_front("http://");
 	if (qmlRootObject)
 		qmlRootObject->setProperty("url", localUrl);

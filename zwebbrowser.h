@@ -10,7 +10,6 @@
 #include <QEvent>
 #include <QTimer>
 #include "zwebwidget.h"
-#include "zlayout.h"
 
 class ZWebBrowser : public QWidget
 	{
@@ -18,7 +17,6 @@ class ZWebBrowser : public QWidget
 	public:
 		explicit ZWebBrowser(QWidget *parent = 0);
 		ZWebWidget* webWidget;
-		ZLayout* lay;
 
 		QTimer* resizer;
 

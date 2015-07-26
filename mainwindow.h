@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "zdragdrop.h"
-#include "zlayout.h"
 #include "zdatabasemanager.h"
 #include "zwebbrowser.h"
 #include <QVector>
@@ -24,26 +23,23 @@ class MainWindow : public QMainWindow
 	private:
 		Ui::MainWindow *ui;
 		ZDragDrop* dragger; //For drag&drop
-		ZLayout* lay;
 		ZDatabaseManager* databaseManager;
 		QVector<QWidget*> createdObjects;
 	protected:
 		bool eventFilter(QObject *obj, QEvent *event); //For drag&drop control
 
 	public:
-		void resizeEvent(QResizeEvent*); //For ZLayout control
 		void createObjects(const QByteArray& jsonData);
 		QByteArray generateObjects() const;
 		void updateRecordList();
 		void setDatabaseFolderName(const QString& name);
 		void regulateWidgetGetometry(QWidget* widget);
-		void regulateWidgetGetometryM(QWidget* widget, int exSize=2.0);
+		void regulateWidgetGetometryM(QWidget* widget, float exSize=2.0);
+		void regulateWidgetGetometryMnorm(QWidget* widget, float exSize=2.0);
 		explicit MainWindow(QWidget *parent = 0);
 		~MainWindow();
 	public slots:
 
-	signals:
-		void resEvent() const; //For ZLayout control
 	private slots:
 		void databaseChangeHandler();
 		void on_saveButton_clicked();

@@ -3,9 +3,9 @@
         "enabled": true,
         "geometry": {
             "height": 23,
-            "width": 118,
-            "x": 23,
-            "y": 47
+            "width": 134,
+            "x": 13,
+            "y": 27
         },
         "objectClass": "QLineEdit",
         "objectName": "nameBox",
@@ -15,9 +15,9 @@
         "enabled": true,
         "geometry": {
             "height": 23,
-            "width": 118,
-            "x": 23,
-            "y": 84
+            "width": 134,
+            "x": 13,
+            "y": 64
         },
         "objectClass": "QLineEdit",
         "objectName": "addressBox",
@@ -27,9 +27,9 @@
         "enabled": true,
         "geometry": {
             "height": 23,
-            "width": 118,
-            "x": 23,
-            "y": 161
+            "width": 134,
+            "x": 13,
+            "y": 140
         },
         "objectClass": "QLineEdit",
         "objectName": "stateBox",
@@ -39,9 +39,9 @@
         "enabled": true,
         "geometry": {
             "height": 23,
-            "width": 118,
-            "x": 23,
-            "y": 200
+            "width": 134,
+            "x": 13,
+            "y": 180
         },
         "objectClass": "QLineEdit",
         "objectName": "zipBox",
@@ -51,9 +51,9 @@
         "enabled": true,
         "geometry": {
             "height": 23,
-            "width": 118,
-            "x": 23,
-            "y": 238
+            "width": 134,
+            "x": 13,
+            "y": 218
         },
         "objectClass": "QLineEdit",
         "objectName": "phoneBox",
@@ -70,21 +70,13 @@
         "geometry": {
             "height": 12,
             "width": 47,
-            "x": 186,
-            "y": 31
+            "x": 166,
+            "y": 10
         },
         "objectClass": "QLabel",
         "objectName": "pictureBox",
         "picture": "",
         "text": "Picture:"
-    },
-    "object14": {
-        "geometry": {
-            "height": 269,
-            "width": 470
-        },
-        "objectClass": "QWidget",
-        "objectName": "__cW"
     },
     "object2": {
         "color": {
@@ -97,8 +89,8 @@
         "geometry": {
             "height": 12,
             "width": 39,
-            "x": 23,
-            "y": 30
+            "x": 13,
+            "y": 10
         },
         "objectClass": "QLabel",
         "objectName": "nameLabel",
@@ -116,8 +108,8 @@
         "geometry": {
             "height": 12,
             "width": 39,
-            "x": 23,
-            "y": 69
+            "x": 13,
+            "y": 50
         },
         "objectClass": "QLabel",
         "objectName": "addressLabel",
@@ -135,8 +127,8 @@
         "geometry": {
             "height": 12,
             "width": 39,
-            "x": 23,
-            "y": 107
+            "x": 13,
+            "y": 87
         },
         "objectClass": "QLabel",
         "objectName": "cityLabel",
@@ -154,8 +146,8 @@
         "geometry": {
             "height": 12,
             "width": 39,
-            "x": 23,
-            "y": 146
+            "x": 13,
+            "y": 126
         },
         "objectClass": "QLabel",
         "objectName": "stateLabel",
@@ -173,8 +165,8 @@
         "geometry": {
             "height": 12,
             "width": 39,
-            "x": 23,
-            "y": 184
+            "x": 13,
+            "y": 164
         },
         "objectClass": "QLabel",
         "objectName": "zipLabel",
@@ -192,8 +184,8 @@
         "geometry": {
             "height": 12,
             "width": 39,
-            "x": 23,
-            "y": 223
+            "x": 13,
+            "y": 203
         },
         "objectClass": "QLabel",
         "objectName": "phoneLabel",
@@ -211,8 +203,8 @@
         "geometry": {
             "height": 90,
             "width": 80,
-            "x": 185,
-            "y": 48
+            "x": 166,
+            "y": 28
         },
         "objectClass": "QLabel",
         "objectName": "pictureLabel",
@@ -223,12 +215,24 @@
         "enabled": true,
         "geometry": {
             "height": 23,
-            "width": 118,
-            "x": 23,
-            "y": 123
+            "width": 134,
+            "x": 13,
+            "y": 103
         },
         "objectClass": "QLineEdit",
         "objectName": "cityBox",
         "text": ""
+    },
+    "object14": {
+        "objectClass": "ZWebBrowser",
+        "objectName": "__webwb",
+        "enabled": true,
+        "url":"m.facebook.com",
+        "geometry": {
+            "x": 270,
+            "y": 10,
+            "width": 380,
+            "height": 330
+        }
     }
 }

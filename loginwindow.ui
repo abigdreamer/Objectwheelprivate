@@ -83,13 +83,13 @@ border-image: url(:/pics/backgrounds/solid_gray.jpg);
           </property>
           <property name="minimumSize">
            <size>
-            <width>147</width>
+            <width>145</width>
             <height>65</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>147</width>
+            <width>145</width>
             <height>65</height>
            </size>
           </property>

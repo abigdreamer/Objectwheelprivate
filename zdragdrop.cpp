@@ -11,6 +11,11 @@ ZDragDrop::ZDragDrop(QObject *parent) :
 	burnButton= new QPushButton((QWidget*)parent);
 	disableButton= new QPushButton((QWidget*)parent);
 
+	resizeButton->setFocusPolicy(Qt::NoFocus);
+	burnButton->setFocusPolicy(Qt::NoFocus);
+	disableButton->setFocusPolicy(Qt::NoFocus);
+
+
 	addWithoutObject(disableButton);
 	addWithoutObject(burnButton);
 
@@ -96,8 +101,6 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 					burnButton->hide();
 					resizeButton->hide();
 
-					lay->removeWidgetOf(olderWidget);
-					lay->addItem(olderWidget);
 					}
 				else if(lastSelected->isEnabled())
 					{ /* Drag Resize_button  */
@@ -112,9 +115,6 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 										  lastSelected->y(),
 										  resizeButton->x()-lastSelected->mapTo(mainWindow,QPoint(0,0)).x(),
 										  resizeButton->y()-lastSelected->mapTo(mainWindow,QPoint(0,0)).y()+resizeButton->height());
-
-				lay->removeWidgetOf(lastSelected);
-				lay->addItem(lastSelected);
 
 				burnButton->move(resizeButton->x()+20,resizeButton->y());
 				disableButton->move(resizeButton->x()+40,resizeButton->y());
@@ -182,11 +182,6 @@ void ZDragDrop::setObjectList(QVector<QWidget*>* list)
 	createdObjects=list;
 	}
 
-void ZDragDrop::setLay(ZLayout* layout)
-	{
-	lay=layout;
-	}
-
 void ZDragDrop::burnButton_clicked()
 	{
 	lastSelected->close();
@@ -194,7 +189,6 @@ void ZDragDrop::burnButton_clicked()
 	burnButton->hide();
 	resizeButton->hide();
 
-	lay->removeWidgetOf(lastSelected);
 	createdObjects->remove(createdObjects->indexOf(lastSelected));
 	}
 

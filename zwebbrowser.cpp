@@ -2,7 +2,7 @@
 
 ZWebBrowser::ZWebBrowser(QWidget *parent) : QWidget(parent)
 	{
-	QFont arial("Arial", 8, QFont::Normal);
+	QFont arial("Arial", 6, QFont::Normal);
 	firstStarted = false;
 
 	parent->installEventFilter(this);
@@ -47,6 +47,7 @@ ZWebBrowser::ZWebBrowser(QWidget *parent) : QWidget(parent)
 	loadingBar = new QProgressBar(this);
 	loadingBar->setFont(arial);
 	connect(webWidget,SIGNAL(loadingChanged(int)),loadingBar,SLOT(setValue(int)));
+
 	}
 
 void ZWebBrowser::paintEvent(QPaintEvent*)
@@ -75,3 +76,4 @@ void ZWebBrowser::resizeEvent(QResizeEvent*)
 	webWidget->setGeometry(5,30,this->width()-10,this->height()-75);
 	loadingBar->setGeometry(5,webWidget->y()+webWidget->height()+5,this->width()-10,20);
 	}
+

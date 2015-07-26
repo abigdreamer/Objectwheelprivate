@@ -9,6 +9,7 @@
 #include <QVector>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QFileDialog>
 
 namespace Ui
 	{
@@ -48,6 +49,17 @@ class MainWindow : public QMainWindow
 		void on_deleteTempButton_clicked();
 		void on_loadMasterButton_clicked();
 
+		void on_tabButton_clicked();
+		void on_tabButton_2_clicked();
+		void on_tabButton_3_clicked();
+		void on_pushButton_3_clicked();
+		void on_pushButton_2_clicked();
+		void on_pushButton_4_clicked();
+		void on_pushButton_clicked();
+		void on_pushButton_6_clicked();
+		void on_pushButton_5_clicked();
+		void on_pushButton_7_clicked();
+		void on_pushButton_8_clicked();
 	};
 
 #endif // MAINWINDOW_H

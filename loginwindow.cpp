@@ -7,11 +7,73 @@ LoginWindow::LoginWindow(QWidget *parent) :
 	ui(new Ui::LoginWindow)
 	{
 	ui->setupUi(this);
+	connect(ui->emailEdit, SIGNAL(returnPressed()),ui->forwardButton,SIGNAL(clicked()));
+	connect(ui->passEdit, SIGNAL(returnPressed()),ui->forwardButton,SIGNAL(clicked()));
+
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+	regulateWidgetGetometryM(this);
+	regulateWidgetGetometryM(ui->emailEdit);
+	regulateWidgetGetometryM(ui->forwardButton);
+	regulateWidgetGetometryM(ui->passEdit);
+	regulateWidgetGetometryM(ui->label);
+#else
+	regulateWidgetGetometry(this);
+	regulateWidgetGetometry(ui->emailEdit);
+	regulateWidgetGetometry(ui->forwardButton);
+	regulateWidgetGetometry(ui->passEdit);
+	regulateWidgetGetometryM(ui->label);
+#endif
+
 	}
 
 LoginWindow::~LoginWindow()
 	{
 	delete ui;
+	}
+
+void LoginWindow::regulateWidgetGetometry(QWidget* widget)
+	{
+	#define MYRESW 1366
+	#define MYRESH 768
+
+	QDesktopWidget dwidget;
+	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
+
+	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
+	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
+
+	if (ratioConstantH>ratioConstantV)
+		ratioConstantH=ratioConstantV;
+	else
+		ratioConstantV=ratioConstantH;
+
+	widget->setMinimumHeight(widget->minimumHeight()*ratioConstantH);
+	widget->setMaximumHeight(widget->maximumHeight()*ratioConstantH);
+	widget->setMinimumWidth(widget->minimumWidth()*ratioConstantH);
+	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH);
+	}
+
+void LoginWindow::regulateWidgetGetometryM(QWidget* widget)
+	{
+	#define MYRESW 1366
+	#define MYRESH 768
+
+	QDesktopWidget dwidget;
+	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
+
+	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
+	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
+
+	if (ratioConstantH>ratioConstantV)
+		ratioConstantH=ratioConstantV;
+	else
+		ratioConstantV=ratioConstantH;
+
+	widget->setMinimumHeight(widget->minimumHeight()*ratioConstantH*2);
+	widget->setMaximumHeight(widget->maximumHeight()*ratioConstantH*2);
+	widget->setMinimumWidth(widget->minimumWidth()*ratioConstantH*2);
+	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH*2);
 	}
 
 void LoginWindow::on_forwardButton_clicked()

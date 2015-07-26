@@ -8,6 +8,7 @@
 #include <QLineEdit>
 #include <QProgressBar>
 #include <QEvent>
+#include <QTimer>
 #include "zwebwidget.h"
 #include "zlayout.h"
 
@@ -18,6 +19,8 @@ class ZWebBrowser : public QWidget
 		explicit ZWebBrowser(QWidget *parent = 0);
 		ZWebWidget* webWidget;
 		ZLayout* lay;
+
+		QTimer* resizer;
 
 		QPushButton* backButton;
 		QPushButton* forwardButton;
@@ -62,6 +65,7 @@ class ZWebBrowser : public QWidget
 
 		void urlChanging(QString s)
 			{emit urlChanged(s);}
+
 	};
 
 #endif // ZWEBBROWSER_H

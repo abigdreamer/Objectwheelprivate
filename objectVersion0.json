@@ -1,0 +1,234 @@
+{
+    "object0": {
+        "enabled": true,
+        "geometry": {
+            "height": 23,
+            "width": 118,
+            "x": 23,
+            "y": 47
+        },
+        "objectClass": "QLineEdit",
+        "objectName": "nameBox",
+        "text": ""
+    },
+    "object1": {
+        "enabled": true,
+        "geometry": {
+            "height": 23,
+            "width": 118,
+            "x": 23,
+            "y": 84
+        },
+        "objectClass": "QLineEdit",
+        "objectName": "addressBox",
+        "text": ""
+    },
+    "object10": {
+        "enabled": true,
+        "geometry": {
+            "height": 23,
+            "width": 118,
+            "x": 23,
+            "y": 161
+        },
+        "objectClass": "QLineEdit",
+        "objectName": "stateBox",
+        "text": ""
+    },
+    "object11": {
+        "enabled": true,
+        "geometry": {
+            "height": 23,
+            "width": 118,
+            "x": 23,
+            "y": 200
+        },
+        "objectClass": "QLineEdit",
+        "objectName": "zipBox",
+        "text": ""
+    },
+    "object12": {
+        "enabled": true,
+        "geometry": {
+            "height": 23,
+            "width": 118,
+            "x": 23,
+            "y": 238
+        },
+        "objectClass": "QLineEdit",
+        "objectName": "phoneBox",
+        "text": ""
+    },
+    "object13": {
+        "color": {
+            "a": 255,
+            "b": 180,
+            "g": 120,
+            "r": 0
+        },
+        "enabled": true,
+        "geometry": {
+            "height": 12,
+            "width": 47,
+            "x": 186,
+            "y": 31
+        },
+        "objectClass": "QLabel",
+        "objectName": "pictureBox",
+        "picture": "",
+        "text": "Picture:"
+    },
+    "object14": {
+        "geometry": {
+            "height": 269,
+            "width": 470
+        },
+        "objectClass": "QWidget",
+        "objectName": "__cW"
+    },
+    "object2": {
+        "color": {
+            "a": 255,
+            "b": 180,
+            "g": 120,
+            "r": 0
+        },
+        "enabled": true,
+        "geometry": {
+            "height": 12,
+            "width": 39,
+            "x": 23,
+            "y": 30
+        },
+        "objectClass": "QLabel",
+        "objectName": "nameLabel",
+        "picture": "",
+        "text": "Name:"
+    },
+    "object3": {
+        "color": {
+            "a": 255,
+            "b": 180,
+            "g": 120,
+            "r": 0
+        },
+        "enabled": true,
+        "geometry": {
+            "height": 12,
+            "width": 39,
+            "x": 23,
+            "y": 69
+        },
+        "objectClass": "QLabel",
+        "objectName": "addressLabel",
+        "picture": "",
+        "text": "Address:"
+    },
+    "object4": {
+        "color": {
+            "a": 255,
+            "b": 180,
+            "g": 120,
+            "r": 0
+        },
+        "enabled": true,
+        "geometry": {
+            "height": 12,
+            "width": 39,
+            "x": 23,
+            "y": 107
+        },
+        "objectClass": "QLabel",
+        "objectName": "cityLabel",
+        "picture": "",
+        "text": "City:"
+    },
+    "object5": {
+        "color": {
+            "a": 255,
+            "b": 180,
+            "g": 120,
+            "r": 0
+        },
+        "enabled": true,
+        "geometry": {
+            "height": 12,
+            "width": 39,
+            "x": 23,
+            "y": 146
+        },
+        "objectClass": "QLabel",
+        "objectName": "stateLabel",
+        "picture": "",
+        "text": "State:"
+    },
+    "object6": {
+        "color": {
+            "a": 255,
+            "b": 180,
+            "g": 120,
+            "r": 0
+        },
+        "enabled": true,
+        "geometry": {
+            "height": 12,
+            "width": 39,
+            "x": 23,
+            "y": 184
+        },
+        "objectClass": "QLabel",
+        "objectName": "zipLabel",
+        "picture": "",
+        "text": "Zip:"
+    },
+    "object7": {
+        "color": {
+            "a": 255,
+            "b": 180,
+            "g": 120,
+            "r": 0
+        },
+        "enabled": true,
+        "geometry": {
+            "height": 12,
+            "width": 39,
+            "x": 23,
+            "y": 223
+        },
+        "objectClass": "QLabel",
+        "objectName": "phoneLabel",
+        "picture": "",
+        "text": "Phone:"
+    },
+    "object8": {
+        "color": {
+            "a": 255,
+            "b": 180,
+            "g": 120,
+            "r": 0
+        },
+        "enabled": true,
+        "geometry": {
+            "height": 90,
+            "width": 80,
+            "x": 185,
+            "y": 48
+        },
+        "objectClass": "QLabel",
+        "objectName": "pictureLabel",
+        "picture": ":/pics/photo.png",
+        "text": ""
+    },
+    "object9": {
+        "enabled": true,
+        "geometry": {
+            "height": 23,
+            "width": 118,
+            "x": 23,
+            "y": 123
+        },
+        "objectClass": "QLineEdit",
+        "objectName": "cityBox",
+        "text": ""
+    }
+}

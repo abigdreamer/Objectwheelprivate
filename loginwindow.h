@@ -20,6 +20,8 @@ class LoginWindow : public QMainWindow
 	public:
 		explicit LoginWindow(QWidget *parent = 0);
 		~LoginWindow();
+		void regulateWidgetGetometry(QWidget* widget);
+		void regulateWidgetGetometryM(QWidget* widget);
 
 	private slots:
 		void on_forwardButton_clicked();

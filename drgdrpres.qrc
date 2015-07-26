@@ -8,5 +8,12 @@
         <file>drgdrpres/pause-icon2.png</file>
         <file>drgdrpres/play-icon2.png</file>
         <file>drgdrpres/resize-diag-2-icon2.png</file>
+        <file>pics/backgrounds/solid_gray.jpg</file>
+        <file>pics/backgrounds/sea_blur.jpg</file>
+        <file>pics/backgrounds/red_blur.jpg</file>
+        <file>pics/backgrounds/purple_blur.jpg</file>
+        <file>pics/backgrounds/green_blur.jpg</file>
+        <file>pics/backgrounds/blue_blur.jpg</file>
+        <file>pics/backgrounds/blue_clear.jpg</file>
     </qresource>
 </RCC>

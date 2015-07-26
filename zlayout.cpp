@@ -24,12 +24,15 @@
 ****************************************************************************/
 
 #include "zlayout.h"
+float ZLayout::ratioConstantH = 0;
+float ZLayout::ratioConstantV = 0;
 
 ZLayout::ZLayout()
 	{
 	cW=0;
 	mW=0;
 	aspectRatioProtected=false;
+	started=false;
 	}
 
 void ZLayout::addItem(QWidget *widget, int mode, int align)
@@ -45,6 +48,19 @@ void ZLayout::initMainWidgets(QWidget *centralWidget, QWidget *middleWidget)
 	cW=centralWidget;
 	mW=middleWidget;
 	mwRect=mW->frameGeometry();
+
+	if (ratioConstantH <= 0)
+		{
+		ratioConstantH = ((float)(cW->width()))/mwRect.width();
+		ratioConstantV = ((float)(cW->height()))/mwRect.height();
+		if (aspectRatioProtected)
+			{
+			if (ratioConstantH>ratioConstantV)
+				ratioConstantH=ratioConstantV;
+			else
+				ratioConstantV=ratioConstantH;
+			}
+		}
 	}
 
 void ZLayout::removeWidgetOf(QWidget* widget)
@@ -101,78 +117,72 @@ bool ZLayout::isNull()
 
 void ZLayout::updateWidgets()
 	{
-	if (!this->isNull())
+	if (started)
 		{
-		float ratioConstantH = ((float)(cW->width()))/mwRect.width();
-		float ratioConstantV = ((float)(cW->height()))/mwRect.height();
-		if (aspectRatioProtected)
+		if (!this->isNull())
 			{
-			if (ratioConstantH>ratioConstantV)
-				ratioConstantH=ratioConstantV;
-			else
-				ratioConstantV=ratioConstantH;
+
+			for (int i=0;i<widgetList.size();i++)
+				///
+				if (modeList[i]==KeepOnlyWidth && alignList[i]==AlignRight)
+					widgetList[i]->setGeometry((widgetRects[i].x()+widgetRects[i].width())*ratioConstantH-widgetRects[i].width(),
+											   widgetRects[i].y()*ratioConstantV,
+											   widgetRects[i].width(),
+											   widgetRects[i].height()*ratioConstantV);
+
+				else if (modeList[i]==KeepOnlyWidth && alignList[i]==AlignLeft)
+					widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
+											   widgetRects[i].y()*ratioConstantV,
+											   widgetRects[i].width(),
+											   widgetRects[i].height()*ratioConstantV);
+			///
+				else if (modeList[i]==KeepOnlyHeigt && alignList[i]==AlignTop)
+					widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
+											   widgetRects[i].y()*ratioConstantV,
+											   widgetRects[i].width()*ratioConstantH,
+											   widgetRects[i].height());
+
+				else if (modeList[i]==KeepOnlyHeigt && alignList[i]==AlignBottom)
+					widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
+											   (widgetRects[i].y()+widgetRects[i].height())*ratioConstantV-widgetRects[i].height(),
+											   widgetRects[i].width()*ratioConstantH,
+											   widgetRects[i].height());
+			///
+				else if (modeList[i]==KeepWidthHeight && alignList[i]==AlignTopLeft)
+					widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
+											   widgetRects[i].y()*ratioConstantV,
+											   widgetRects[i].width(),
+											   widgetRects[i].height());
+
+				else if (modeList[i]==KeepWidthHeight && alignList[i]==AlignTopRight)
+					widgetList[i]->setGeometry((widgetRects[i].x()+widgetRects[i].width())*ratioConstantH-widgetRects[i].width(),
+											   widgetRects[i].y()*ratioConstantV,
+											   widgetRects[i].width(),
+											   widgetRects[i].height());
+
+				else if (modeList[i]==KeepWidthHeight && alignList[i]==AlignBottomLeft)
+					widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
+											   (widgetRects[i].y()+widgetRects[i].height())*ratioConstantV-widgetRects[i].height(),
+											   widgetRects[i].width(),
+											   widgetRects[i].height());
+
+				else if (modeList[i]==KeepWidthHeight && alignList[i]==AlignBottomRight)
+					widgetList[i]->setGeometry((widgetRects[i].x()+widgetRects[i].width())*ratioConstantH-widgetRects[i].width(),
+											   (widgetRects[i].y()+widgetRects[i].height())*ratioConstantV-widgetRects[i].height(),
+											   widgetRects[i].width(),
+											   widgetRects[i].height());
+			///
+				else if (modeList[i]==KeepNot)
+					widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
+											   widgetRects[i].y()*ratioConstantV,
+											   widgetRects[i].width()*ratioConstantH,
+											   widgetRects[i].height()*ratioConstantV);
+
+			mW->setGeometry(mwRect.x()*ratioConstantH,
+							mwRect.y()*ratioConstantV,
+							mwRect.width()*ratioConstantH,
+							mwRect.height()*ratioConstantV);
+
 			}
-
-		for (int i=0;i<widgetList.size();i++)
-			///
-			if (modeList[i]==KeepOnlyWidth && alignList[i]==AlignRight)
-				widgetList[i]->setGeometry((widgetRects[i].x()+widgetRects[i].width())*ratioConstantH-widgetRects[i].width(),
-										   widgetRects[i].y()*ratioConstantV,
-										   widgetRects[i].width(),
-										   widgetRects[i].height()*ratioConstantV);
-
-			else if (modeList[i]==KeepOnlyWidth && alignList[i]==AlignLeft)
-				widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
-										   widgetRects[i].y()*ratioConstantV,
-										   widgetRects[i].width(),
-										   widgetRects[i].height()*ratioConstantV);
-			///
-			else if (modeList[i]==KeepOnlyHeigt && alignList[i]==AlignTop)
-				widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
-										   widgetRects[i].y()*ratioConstantV,
-										   widgetRects[i].width()*ratioConstantH,
-										   widgetRects[i].height());
-
-			else if (modeList[i]==KeepOnlyHeigt && alignList[i]==AlignBottom)
-				widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
-										   (widgetRects[i].y()+widgetRects[i].height())*ratioConstantV-widgetRects[i].height(),
-										   widgetRects[i].width()*ratioConstantH,
-										   widgetRects[i].height());
-			///
-			else if (modeList[i]==KeepWidthHeight && alignList[i]==AlignTopLeft)
-				widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
-										   widgetRects[i].y()*ratioConstantV,
-										   widgetRects[i].width(),
-										   widgetRects[i].height());
-
-			else if (modeList[i]==KeepWidthHeight && alignList[i]==AlignTopRight)
-				widgetList[i]->setGeometry((widgetRects[i].x()+widgetRects[i].width())*ratioConstantH-widgetRects[i].width(),
-										   widgetRects[i].y()*ratioConstantV,
-										   widgetRects[i].width(),
-										   widgetRects[i].height());
-
-			else if (modeList[i]==KeepWidthHeight && alignList[i]==AlignBottomLeft)
-				widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
-										   (widgetRects[i].y()+widgetRects[i].height())*ratioConstantV-widgetRects[i].height(),
-										   widgetRects[i].width(),
-										   widgetRects[i].height());
-
-			else if (modeList[i]==KeepWidthHeight && alignList[i]==AlignBottomRight)
-				widgetList[i]->setGeometry((widgetRects[i].x()+widgetRects[i].width())*ratioConstantH-widgetRects[i].width(),
-										   (widgetRects[i].y()+widgetRects[i].height())*ratioConstantV-widgetRects[i].height(),
-										   widgetRects[i].width(),
-										   widgetRects[i].height());
-			///
-			else if (modeList[i]==KeepNot)
-				widgetList[i]->setGeometry(widgetRects[i].x()*ratioConstantH,
-										   widgetRects[i].y()*ratioConstantV,
-										   widgetRects[i].width()*ratioConstantH,
-										   widgetRects[i].height()*ratioConstantV);
-
-		mW->setGeometry(mwRect.x()*ratioConstantH,
-						mwRect.y()*ratioConstantV,
-						mwRect.width()*ratioConstantH,
-						mwRect.height()*ratioConstantV);
-
 		}
 	}

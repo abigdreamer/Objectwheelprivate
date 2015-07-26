@@ -45,6 +45,9 @@ class ZLayout : public QObject
 		QWidget *cW, *mW;
 		bool aspectRatioProtected;
 		bool isNull();
+		bool started;
+		static float ratioConstantH;
+		static float ratioConstantV;
 
 	public:
 		/// if a property keeped, it don't change in runtime
@@ -62,6 +65,11 @@ class ZLayout : public QObject
 		void setAspectRatioProtected(bool boolean);
 		int indexOf(QWidget *widget) const;
 		int size() const;
+
+		void stop()
+			{started=false;}
+		void start()
+			{started=true;}
 	public slots:
 		void updateWidgets();
 

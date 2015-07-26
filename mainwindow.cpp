@@ -19,6 +19,16 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui(new Ui::MainWindow)
 	{
 	ui->setupUi(this);
+	ui->frame_2->setMinimumWidth(0);
+	ui->frame_2->setMaximumWidth(0);
+
+	ui->frame->setMinimumWidth(0);
+	ui->frame->setMaximumWidth(0);
+
+
+	ui->frame_4->setMinimumWidth(0);
+	ui->frame_4->setMaximumWidth(0);
+
 
 	/** !DragDrop! **/
 	//Creating dragger
@@ -35,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	//Adding without object to dragger
 	dragger->addWithoutObject(ui->backButton);
 
+
 	dragger->addWithoutObject(ui->frame_2);
 	dragger->addWithoutObject(ui->frame_3);
 
@@ -49,6 +60,27 @@ MainWindow::MainWindow(QWidget *parent) :
 	dragger->addWithoutObject(ui->widget);
 	dragger->addWithoutObject(this);
 	dragger->addWithoutObject(ui->centralWidget);
+
+	dragger->addWithoutObject(ui->tabButton);
+	dragger->addWithoutObject(ui->tabButton_2);
+	dragger->addWithoutObject(ui->tabButton_3);
+
+	dragger->addWithoutObject(ui->frame_4);
+	dragger->addWithoutObject(ui->pushButton);
+	dragger->addWithoutObject(ui->pushButton_2);
+	dragger->addWithoutObject(ui->pushButton_3);
+	dragger->addWithoutObject(ui->pushButton_4);
+	dragger->addWithoutObject(ui->pushButton_5);
+	dragger->addWithoutObject(ui->pushButton_6);
+	dragger->addWithoutObject(ui->pushButton_7);
+	dragger->addWithoutObject(ui->pushButton_8);
+
+	dragger->addWithoutObject(ui->frame);
+	dragger->addWithoutObject(ui->toolBox);
+	dragger->addWithoutObject(ui->page);
+	dragger->addWithoutObject(ui->page_2);
+
+
 	}
 
 MainWindow::~MainWindow()
@@ -102,6 +134,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
+			obj->raise();
+			obj->show();
 			QFont fnt("Arial",8);
 			obj->setFont(fnt);
 			/// Adding object to ZLayout
@@ -128,7 +162,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
-			QFont fnt("Arial",8);
+			obj->raise();
+			obj->show();			QFont fnt("Arial",8);
 			obj->setFont(fnt);
 			/// Adding object to ZLayout
 			lay->addItem(obj);
@@ -147,6 +182,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			/// Adding object to createdObject
 			createdObjects.append(obj);
 			///  Showing object
+			obj->show();
+			obj->raise();
 			obj->show();
 			QFont fnt("Arial",8);
 			obj->setFont(fnt);
@@ -182,6 +219,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
+			obj->raise();
+			obj->show();
 			/// Adding object to ZLayout
 			lay->addItem(obj);
 			}
@@ -203,6 +242,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
+			obj->raise();
+			obj->show();
 			QFont fnt("Arial",8);
 			obj->setFont(fnt);
 			/// Adding object to ZLayout
@@ -216,7 +257,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->setGeometry(obj->x(),
 							 obj->y(),
 							 object["geometry"].toObject()["width"].toInt(),
-							 object["geometry"].toObject()["height"].toInt());
+					object["geometry"].toObject()["height"].toInt());
 
 			/// Adding object to createdObject
 			createdObjects.append(obj);
@@ -224,6 +265,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->show();
 			/// Adding object to ZLayout
 			lay->initMainWidgets(ui->widget,obj);
+			obj->lower();
+			obj->show();
 			obj->lower();
 			obj->setStyleSheet("background-color:transparent;");
 			}
@@ -242,8 +285,16 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
+			obj->raise();
+			obj->show();
 			/// Adding object to ZLayout
 			lay->addItem(obj);
+
+			for (int i=0;i<obj->children().size();i++)
+				{
+				dragger->removeWithoutObjectOf((QWidget*)obj->children().at(i));
+				dragger->addWithoutObject((QWidget*)obj->children().at(i));
+				}
 			}
 
 		else if ( className == "QMainWindow")
@@ -259,7 +310,10 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 				*/
 			}
 		}
+	lay->start();
+	lay->updateWidgets();
 	this->resizeEvent(0);
+	lay->stop();
 	}
 
 QByteArray MainWindow::generateObjects() const
@@ -442,7 +496,7 @@ void MainWindow::updateRecordList()
 	ui->masterRecordList->clear();
 	for (int i=0;i<sz;i++)
 		{
-		ui->masterRecordList->addItem(QString("Record-%1").arg(i));
+		ui->masterRecordList->addItem(QString("Version-%1").arg(i));
 		}
 	ui->masterRecordList->setCurrentRow(databaseManager->getCurrentFileIndex());
 	}
@@ -450,13 +504,13 @@ void MainWindow::updateRecordList()
 void MainWindow::setDatabaseFolderName(const QString& name)
 	{
 	QFile* fil= new QFile;
-	fil->setFileName(":/objectRecord0.json");
+	fil->setFileName(":/objectVersion0.json");
 	if (!fil->open(QIODevice::ReadOnly))
 		return;
 	QByteArray buff = fil->readAll();
 	fil->close();
 
-	fil->setFileName(QDir::currentPath()+"/"+name + "/objectRecord0.json");
+	fil->setFileName(QDir::currentPath()+"/"+name + "/objectVersion0.json");
 	if (!fil->open(QIODevice::WriteOnly))
 		return;
 	fil->write(buff);
@@ -464,7 +518,7 @@ void MainWindow::setDatabaseFolderName(const QString& name)
 
 	databaseManager = new ZDatabaseManager;
 	databaseManager->setCheckTimeout(1000);
-	databaseManager->setFileName(QDir::currentPath()+"/"+name,"objectRecord");
+	databaseManager->setFileName(QDir::currentPath()+"/"+name,"objectVersion");
 	connect(databaseManager,SIGNAL(databaseChanged()),this,SLOT(databaseChangeHandler()));
 	databaseManager->startChangeListener();
 	}
@@ -500,3 +554,123 @@ void MainWindow::resizeEvent(QResizeEvent *)
 	}
 
 
+
+void MainWindow::on_tabButton_clicked()
+	{
+	if (ui->frame_2->minimumWidth() != 0)
+		{
+		ui->frame_2->setMinimumWidth(0);
+		ui->frame_2->setMaximumWidth(0);
+		}
+	else
+		{
+		ui->frame->setMinimumWidth(0);
+		ui->frame->setMaximumWidth(0);
+		ui->frame_4->setMinimumWidth(0);
+		ui->frame_4->setMaximumWidth(0);
+
+		ui->frame_2->setMinimumWidth(150);
+		ui->frame_2->setMaximumWidth(150);
+		}
+	}
+
+void MainWindow::on_tabButton_2_clicked()
+	{
+	if (ui->frame->minimumWidth() != 0)
+		{
+		ui->frame->setMinimumWidth(0);
+		ui->frame->setMaximumWidth(0);
+		}
+	else
+		{
+		ui->frame_2->setMinimumWidth(0);
+		ui->frame_2->setMaximumWidth(0);
+		ui->frame_4->setMinimumWidth(0);
+		ui->frame_4->setMaximumWidth(0);
+
+
+		ui->frame->setMinimumWidth(120);
+		ui->frame->setMaximumWidth(120);
+		}
+	}
+
+void MainWindow::on_tabButton_3_clicked()
+	{
+	if (ui->frame_4->minimumWidth() != 0)
+		{
+		ui->frame_4->setMinimumWidth(0);
+		ui->frame_4->setMaximumWidth(0);
+		}
+	else
+		{
+		ui->frame->setMinimumWidth(0);
+		ui->frame->setMaximumWidth(0);
+		ui->frame_2->setMinimumWidth(0);
+		ui->frame_2->setMaximumWidth(0);
+
+
+		ui->frame_4->setMinimumWidth(100);
+		ui->frame_4->setMaximumWidth(100);
+		}
+	}
+
+void MainWindow::on_pushButton_3_clicked()
+	{
+	ui->centralWidget->setStyleSheet("#centralWidget{"
+									 "border-image: url(:/pics/backgrounds/blue_blur.jpg);"
+									 "}");
+	}
+
+void MainWindow::on_pushButton_2_clicked()
+	{
+	ui->centralWidget->setStyleSheet("#centralWidget{"
+									 "border-image: url(:/pics/backgrounds/blue_clear.jpg);"
+									 "}");
+	}
+
+void MainWindow::on_pushButton_4_clicked()
+	{
+	ui->centralWidget->setStyleSheet("#centralWidget{"
+									 "border-image: url(:/pics/backgrounds/green_blur.jpg);"
+									 "}");
+	}
+
+void MainWindow::on_pushButton_clicked()
+	{
+	ui->centralWidget->setStyleSheet("#centralWidget{"
+									 "border-image: url(:/pics/backgrounds/purple_blur.jpg);"
+									 "}");
+	}
+
+void MainWindow::on_pushButton_6_clicked()
+	{
+	ui->centralWidget->setStyleSheet("#centralWidget{"
+									 "border-image: url(:/pics/backgrounds/red_blur.jpg);"
+									 "}");
+	}
+
+void MainWindow::on_pushButton_5_clicked()
+	{
+	ui->centralWidget->setStyleSheet("#centralWidget{"
+									 "border-image: url(:/pics/backgrounds/sea_blur.jpg);"
+									 "}");
+	}
+
+void MainWindow::on_pushButton_7_clicked()
+	{
+	ui->centralWidget->setStyleSheet("#centralWidget{"
+									 "border-image: url(:/pics/backgrounds/solid_gray.jpg);"
+									 "}");
+	}
+
+void MainWindow::on_pushButton_8_clicked()
+	{
+	QString fileName = QFileDialog::getOpenFileName(this,
+													tr("Open Image"), "/home/jana", tr("Image Files (*.png *.jpg *.bmp)"));
+	if (!fileName.isEmpty())
+		{
+		ui->centralWidget->setStyleSheet(QString("#centralWidget{"
+										 "border-image: url(%1);"
+										 "}").arg(fileName));
+		}
+	}

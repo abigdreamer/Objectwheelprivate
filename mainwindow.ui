@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
+    <width>740</width>
     <height>480</height>
    </rect>
   </property>
@@ -100,15 +100,18 @@ border-image: url(:/pics/backgrounds/solid_gray.jpg);
        <widget class="QPushButton" name="tabButton">
         <property name="minimumSize">
          <size>
-          <width>20</width>
-          <height>34</height>
+          <width>26</width>
+          <height>44</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>10</width>
-          <height>17</height>
+          <width>26</width>
+          <height>44</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -140,15 +143,18 @@ QPushButton#tabButton:pressed {
        <widget class="QPushButton" name="tabButton_2">
         <property name="minimumSize">
          <size>
-          <width>20</width>
-          <height>34</height>
+          <width>26</width>
+          <height>44</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>10</width>
-          <height>17</height>
+          <width>26</width>
+          <height>44</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -174,15 +180,18 @@ QPushButton#tabButton_2:pressed {
        <widget class="QPushButton" name="tabButton_3">
         <property name="minimumSize">
          <size>
-          <width>20</width>
-          <height>34</height>
+          <width>26</width>
+          <height>44</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>10</width>
-          <height>17</height>
+          <width>26</width>
+          <height>44</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="layoutDirection">
          <enum>Qt::LeftToRight</enum>
@@ -399,6 +408,12 @@ background-color: rgba(0, 0, 0, 70);
        </property>
        <item>
         <widget class="QToolBox" name="toolBox">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">color:white;
 border: 1px solid rgba(0,0,0,80);
@@ -407,7 +422,7 @@ background-color: rgba(0, 0, 0, 70);
 </string>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page">
           <property name="geometry">
@@ -415,8 +430,14 @@ background-color: rgba(0, 0, 0, 70);
             <x>0</x>
             <y>0</y>
             <width>108</width>
-            <height>339</height>
+            <height>343</height>
            </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>8</pointsize>
+           </font>
           </property>
           <attribute name="label">
            <string>Widgets</string>
@@ -428,8 +449,14 @@ background-color: rgba(0, 0, 0, 70);
             <x>0</x>
             <y>0</y>
             <width>108</width>
-            <height>339</height>
+            <height>343</height>
            </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>8</pointsize>
+           </font>
           </property>
           <attribute name="label">
            <string>Browser</string>
@@ -612,6 +639,7 @@ background-color: rgba(0, 0, 0, 70);
          <property name="font">
           <font>
            <family>Arial</family>
+           <pointsize>8</pointsize>
           </font>
          </property>
          <property name="styleSheet">
@@ -664,6 +692,9 @@ background-color: rgba(0, 0, 0, 70);
            <property name="cursor">
             <cursorShape>ArrowCursor</cursorShape>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">QPushButton#loadMasterButton {
 	border-image: url(:/pics/reload.png);
@@ -699,6 +730,9 @@ QPushButton#loadMasterButton:pressed {
            </property>
            <property name="cursor">
             <cursorShape>ArrowCursor</cursorShape>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton#deleteTempButton {
@@ -772,6 +806,9 @@ QPushButton#deleteTempButton:pressed {
         <property name="cursor">
          <cursorShape>ArrowCursor</cursorShape>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton#backButton {
 	border-image: url(:/pics/back.png);
@@ -808,6 +845,9 @@ QPushButton#backButton:pressed {
         <property name="cursor">
          <cursorShape>ArrowCursor</cursorShape>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton#saveButton {
 	border-image: url(:/pics/save.png);
@@ -843,6 +883,9 @@ QPushButton#saveButton:pressed {
         </property>
         <property name="cursor">
          <cursorShape>ArrowCursor</cursorShape>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton#forwardButton {
@@ -896,19 +939,19 @@ border-radius: 5px;
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="spacing">
-        <number>5</number>
+        <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>5</number>
+        <number>0</number>
        </property>
        <property name="topMargin">
-        <number>5</number>
+        <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>5</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>5</number>
+        <number>0</number>
        </property>
        <item>
         <spacer name="horizontalSpacer_12">
@@ -936,18 +979,18 @@ border-radius: 5px;
          </property>
          <property name="minimumSize">
           <size>
-           <width>150</width>
-           <height>35</height>
+           <width>100</width>
+           <height>45</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>150</width>
-           <height>35</height>
+           <width>100</width>
+           <height>45</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">border-image: url(:/pics/title.png);</string>
+          <string notr="true">border-image: url(:/pics/owlogo2.png);</string>
          </property>
          <property name="text">
           <string/>
@@ -1024,13 +1067,31 @@ background-color: rgba(0, 0, 0, 70);
            <height>30</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
-          <string notr="true">
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
+          <string notr="true">QPushButton#pushButton_3 {
+		background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
 ));
 border: 1px solid rgba(0,0,0,80);
 border-radius: 5px;
-color:white;</string>
+color:white;
+ }
+QPushButton#pushButton_3:pressed {
+background-color: rgba(30, 30, 30,200);
+border: 1px solid rgba(0,0,0,80);
+border-radius: 5px;
+color:white;
+ }
+
+</string>
          </property>
          <property name="text">
           <string>Blue Blur</string>
@@ -1055,13 +1116,31 @@ color:white;</string>
            <height>30</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
-          <string notr="true">
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
+          <string notr="true">QPushButton#pushButton_2{
+		background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
 ));
 border: 1px solid rgba(0,0,0,80);
 border-radius: 5px;
-color:white;</string>
+color:white;
+ }
+QPushButton#pushButton_2:pressed {
+background-color: rgba(30, 30, 30,200);
+border: 1px solid rgba(0,0,0,80);
+border-radius: 5px;
+color:white;
+ }
+
+</string>
          </property>
          <property name="text">
           <string>Blue Clear</string>
@@ -1086,13 +1165,31 @@ color:white;</string>
            <height>30</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
-          <string notr="true">
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
+          <string notr="true">QPushButton#pushButton_4 {
+		background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
 ));
 border: 1px solid rgba(0,0,0,80);
 border-radius: 5px;
-color:white;</string>
+color:white;
+ }
+QPushButton#pushButton_4:pressed {
+background-color: rgba(30, 30, 30,200);
+border: 1px solid rgba(0,0,0,80);
+border-radius: 5px;
+color:white;
+ }
+
+</string>
          </property>
          <property name="text">
           <string>Green Blur</string>
@@ -1117,13 +1214,31 @@ color:white;</string>
            <height>30</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
-          <string notr="true">
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
+          <string notr="true">QPushButton#pushButton {
+		background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
 ));
 border: 1px solid rgba(0,0,0,80);
 border-radius: 5px;
-color:white;</string>
+color:white;
+ }
+QPushButton#pushButton:pressed {
+background-color: rgba(30, 30, 30,200);
+border: 1px solid rgba(0,0,0,80);
+border-radius: 5px;
+color:white;
+ }
+
+</string>
          </property>
          <property name="text">
           <string>Purple Blur</string>
@@ -1148,13 +1263,31 @@ color:white;</string>
            <height>30</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
-          <string notr="true">
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
+          <string notr="true">QPushButton#pushButton_6 {
+		background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
 ));
 border: 1px solid rgba(0,0,0,80);
 border-radius: 5px;
-color:white;</string>
+color:white;
+ }
+QPushButton#pushButton_6:pressed {
+background-color: rgba(30, 30, 30,200);
+border: 1px solid rgba(0,0,0,80);
+border-radius: 5px;
+color:white;
+ }
+
+</string>
          </property>
          <property name="text">
           <string>Red Blur</string>
@@ -1179,13 +1312,31 @@ color:white;</string>
            <height>30</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
-          <string notr="true">
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
+          <string notr="true">QPushButton#pushButton_5 {
+		background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
 ));
 border: 1px solid rgba(0,0,0,80);
 border-radius: 5px;
-color:white;</string>
+color:white;
+ }
+QPushButton#pushButton_5:pressed {
+background-color: rgba(30, 30, 30,200);
+border: 1px solid rgba(0,0,0,80);
+border-radius: 5px;
+color:white;
+ }
+
+</string>
          </property>
          <property name="text">
           <string>Sea Blur</string>
@@ -1210,13 +1361,31 @@ color:white;</string>
            <height>30</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
-          <string notr="true">
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
+          <string notr="true">QPushButton#pushButton_7 {
+		background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
 ));
 border: 1px solid rgba(0,0,0,80);
 border-radius: 5px;
-color:white;</string>
+color:white;
+ }
+QPushButton#pushButton_7:pressed {
+background-color: rgba(30, 30, 30,200);
+border: 1px solid rgba(0,0,0,80);
+border-radius: 5px;
+color:white;
+ }
+
+</string>
          </property>
          <property name="text">
           <string>Solid Gray</string>
@@ -1241,13 +1410,31 @@ color:white;</string>
            <height>30</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
-          <string notr="true">
-	background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
+          <string notr="true">QPushButton#pushButton_8{
+		background-color: qlineargradient(spread:pad, x1:0.5, y1:1, x2:0.488636, y2:0, stop:0.238636 rgba(0, 0, 0, 120), stop:1 rgba(179, 179, 179, 5
 ));
 border: 1px solid rgba(0,0,0,80);
 border-radius: 5px;
-color:white;</string>
+color:white;
+ }
+QPushButton#pushButton_8:pressed {
+background-color: rgba(30, 30, 30,200);
+border: 1px solid rgba(0,0,0,80);
+border-radius: 5px;
+color:white;
+ }
+
+</string>
          </property>
          <property name="text">
           <string>Custom...</string>
@@ -1272,8 +1459,8 @@ color:white;</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="drgdrpres.qrc"/>
   <include location="resource.qrc"/>
+  <include location="drgdrpres.qrc"/>
  </resources>
  <connections/>
 </ui>

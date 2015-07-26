@@ -10,6 +10,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QFileDialog>
+#include <QDesktopWidget>
 
 namespace Ui
 	{
@@ -35,6 +36,8 @@ class MainWindow : public QMainWindow
 		QByteArray generateObjects() const;
 		void updateRecordList();
 		void setDatabaseFolderName(const QString& name);
+		void regulateWidgetGetometry(QWidget* widget);
+		void regulateWidgetGetometryM(QWidget* widget, int exSize=2.0);
 		explicit MainWindow(QWidget *parent = 0);
 		~MainWindow();
 	public slots:

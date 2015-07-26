@@ -24,7 +24,6 @@ SOURCES += main.cpp\
     zdragdrop.cpp \
     zdatabasemanager.cpp \
     loginwindow.cpp \
-    zlayout.cpp \
     zwebwidget.cpp \
     zwebbrowser.cpp
 
@@ -32,7 +31,6 @@ HEADERS  += mainwindow.h \
     zdragdrop.h \
     zdatabasemanager.h \
     loginwindow.h \
-    zlayout.h \
     zwebwidget.h \
     zwebbrowser.h
 

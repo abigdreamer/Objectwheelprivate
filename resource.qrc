@@ -31,5 +31,6 @@
         <file>pics/backgrounds/custom.jpg</file>
         <file>pics/duz.png</file>
         <file>pics/owlogo.png</file>
+        <file>pics/owlogo2.png</file>
     </qresource>
 </RCC>

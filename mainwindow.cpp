@@ -81,6 +81,64 @@ MainWindow::MainWindow(QWidget *parent) :
 	dragger->addWithoutObject(ui->page_2);
 
 
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+	regulateWidgetGetometryM(ui->frame_3,1.4);
+	regulateWidgetGetometryM(ui->label_6,1.4);
+	regulateWidgetGetometryM(ui->tabButton);
+	regulateWidgetGetometryM(ui->tabButton_2);
+	regulateWidgetGetometryM(ui->tabButton_3);
+	regulateWidgetGetometryM(ui->backButton);
+	regulateWidgetGetometryM(ui->saveButton);
+	regulateWidgetGetometryM(ui->forwardButton);
+	regulateWidgetGetometryM(ui->loadMasterButton);
+	regulateWidgetGetometryM(ui->deleteTempButton);
+
+	regulateWidgetGetometryM(ui->pushButton);
+	regulateWidgetGetometryM(ui->pushButton_2);
+	regulateWidgetGetometryM(ui->pushButton_3);
+	regulateWidgetGetometryM(ui->pushButton_4);
+	regulateWidgetGetometryM(ui->pushButton_5);
+	regulateWidgetGetometryM(ui->pushButton_6);
+	regulateWidgetGetometryM(ui->pushButton_7);
+	regulateWidgetGetometryM(ui->pushButton_8);
+	regulateWidgetGetometryM(ui->frame_4);
+	regulateWidgetGetometryM(ui->frame);
+	regulateWidgetGetometryM(ui->toolBox);
+	regulateWidgetGetometryM(ui->page);
+	regulateWidgetGetometryM(ui->page_2);
+	regulateWidgetGetometryM(ui->frame_2);
+	regulateWidgetGetometryM(ui->masterRecordList);
+
+#else
+	regulateWidgetGetometry(ui->frame_3);
+	regulateWidgetGetometry(ui->label_6);
+	regulateWidgetGetometry(ui->tabButton);
+	regulateWidgetGetometry(ui->tabButton_2);
+	regulateWidgetGetometry(ui->tabButton_3);
+	regulateWidgetGetometry(ui->backButton);
+	regulateWidgetGetometry(ui->saveButton);
+	regulateWidgetGetometry(ui->forwardButton);
+	regulateWidgetGetometry(ui->loadMasterButton);
+	regulateWidgetGetometry(ui->deleteTempButton);
+	regulateWidgetGetometry(ui->pushButton);
+	regulateWidgetGetometry(ui->pushButton_2);
+	regulateWidgetGetometry(ui->pushButton_3);
+	regulateWidgetGetometry(ui->pushButton_4);
+	regulateWidgetGetometry(ui->pushButton_5);
+	regulateWidgetGetometry(ui->pushButton_6);
+	regulateWidgetGetometry(ui->pushButton_7);
+	regulateWidgetGetometry(ui->pushButton_8);
+	regulateWidgetGetometry(ui->frame_4);
+	regulateWidgetGetometry(ui->frame);
+	regulateWidgetGetometry(ui->toolBox);
+	regulateWidgetGetometry(ui->page);
+	regulateWidgetGetometry(ui->page_2);
+	regulateWidgetGetometry(ui->frame_2);
+	regulateWidgetGetometry(ui->masterRecordList);
+
+#endif
+
+
 	}
 
 MainWindow::~MainWindow()
@@ -673,4 +731,48 @@ void MainWindow::on_pushButton_8_clicked()
 										 "border-image: url(%1);"
 										 "}").arg(fileName));
 		}
+	}
+
+void MainWindow::regulateWidgetGetometry(QWidget* widget)
+	{
+	#define MYRESW 1366
+	#define MYRESH 768
+
+	QDesktopWidget dwidget;
+	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
+
+	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
+	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
+
+	if (ratioConstantH>ratioConstantV)
+		ratioConstantH=ratioConstantV;
+	else
+		ratioConstantV=ratioConstantH;
+
+	widget->setMinimumHeight(widget->minimumHeight()*ratioConstantH);
+	widget->setMaximumHeight(widget->maximumHeight()*ratioConstantH);
+	widget->setMinimumWidth(widget->minimumWidth()*ratioConstantH);
+	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH);
+	}
+
+void MainWindow::regulateWidgetGetometryM(QWidget* widget, int exSize)
+	{
+	#define MYRESW 1366
+	#define MYRESH 768
+
+	QDesktopWidget dwidget;
+	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
+
+	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
+	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
+
+	if (ratioConstantH>ratioConstantV)
+		ratioConstantH=ratioConstantV;
+	else
+		ratioConstantV=ratioConstantH;
+
+	widget->setMinimumHeight(widget->minimumHeight()*ratioConstantH*exSize);
+	widget->setMaximumHeight(widget->maximumHeight()*ratioConstantH*exSize);
+	widget->setMinimumWidth(widget->minimumWidth()*ratioConstantH*exSize);
+	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH*exSize);
 	}

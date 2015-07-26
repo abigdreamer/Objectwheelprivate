@@ -75,6 +75,12 @@ border-image: url(:/pics/backgrounds/solid_gray.jpg);
         </item>
         <item>
          <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="minimumSize">
            <size>
             <width>147</width>

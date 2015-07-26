@@ -22,7 +22,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
 	regulateWidgetGetometry(ui->emailEdit);
 	regulateWidgetGetometry(ui->forwardButton);
 	regulateWidgetGetometry(ui->passEdit);
-	regulateWidgetGetometryM(ui->label);
+	regulateWidgetGetometry(ui->label);
 #endif
 
 	}

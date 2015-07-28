@@ -1,10 +1,11 @@
 #include "zwebwidget.h"
+#include <QtQuick>
+
 const char* ZWebWidget::qmlSource = "import QtQuick 2.2 \n"
 									"import QtWebView 1.0 \n"
 									"WebView { \n"
 									"    id: webView \n"
 									"    objectName: \"webView\" \n"
-									"    url: \"https://m.facebook.com\" \n"
 									"    signal loadingProgressChanged(int p) \n"
 									"    signal urlChanged(string s); \n"
 									"    onLoadProgressChanged:loadingProgressChanged(loadProgress), urlChanged(url) \n"
@@ -19,6 +20,7 @@ ZWebWidget::ZWebWidget(QWidget* parent) : QQuickWidget(parent)
 	QFile* wr = new QFile(QDir::currentPath() + "/source.qml");
 	if (! wr->open(QIODevice::WriteOnly)) {
 		qWarning("ZWebWidget : File can't open.");
+		delete wr;
 		return;
 		}
 	wr->write(qmlSource);
@@ -29,7 +31,7 @@ ZWebWidget::ZWebWidget(QWidget* parent) : QQuickWidget(parent)
 	setResizeMode(QQuickWidget::SizeRootObjectToView);
 	setSource(QUrl::fromLocalFile(QDir::currentPath() + "/source.qml"));
 
-	qmlRootObject = reinterpret_cast<QObject*>(rootObject());
+	qmlRootObject = qobject_cast<QObject*>(rootObject());
 
 	QObject::connect(qmlRootObject, SIGNAL(loadingProgressChanged(int)),
 					 this, SLOT(loadingChanging(int)));
@@ -39,10 +41,7 @@ ZWebWidget::ZWebWidget(QWidget* parent) : QQuickWidget(parent)
 
 
 ZWebWidget::~ZWebWidget()
-	{
-	qmlRootObject->deleteLater();
-	delete qmlRootObject;
-	}
+	{qmlRootObject=0;}
 
 int ZWebWidget::loadingProgress()
 	{

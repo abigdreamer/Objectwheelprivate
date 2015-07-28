@@ -75,7 +75,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Objectwheel v1.1 Beta</string>
+   <string>Objectwheel v1.2 Beta</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resource.qrc">
@@ -398,7 +398,7 @@ background-color: rgba(0, 0, 0, 70);
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>8</pointsize>
+           <pointsize>9</pointsize>
           </font>
          </property>
          <property name="styleSheet">
@@ -572,7 +572,7 @@ background-color: rgba(0, 0, 0, 70);
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>8</pointsize>
+           <pointsize>9</pointsize>
           </font>
          </property>
          <property name="styleSheet">
@@ -583,7 +583,7 @@ background-color: rgba(0, 0, 0, 40);
 </string>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page">
           <property name="geometry">
@@ -591,13 +591,13 @@ background-color: rgba(0, 0, 0, 40);
             <x>0</x>
             <y>0</y>
             <width>108</width>
-            <height>343</height>
+            <height>341</height>
            </rect>
           </property>
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>8</pointsize>
+            <pointsize>9</pointsize>
            </font>
           </property>
           <attribute name="label">
@@ -610,13 +610,13 @@ background-color: rgba(0, 0, 0, 40);
             <x>0</x>
             <y>0</y>
             <width>108</width>
-            <height>343</height>
+            <height>341</height>
            </rect>
           </property>
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>8</pointsize>
+            <pointsize>9</pointsize>
            </font>
           </property>
           <attribute name="label">
@@ -682,7 +682,7 @@ background-color: rgba(0, 0, 0, 70);
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>8</pointsize>
+           <pointsize>9</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -731,7 +731,7 @@ color:white;
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>8</pointsize>
+           <pointsize>9</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -780,7 +780,7 @@ color:white;
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>8</pointsize>
+           <pointsize>9</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -829,7 +829,7 @@ color:white;
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>8</pointsize>
+           <pointsize>9</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -878,7 +878,7 @@ color:white;
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>8</pointsize>
+           <pointsize>9</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -927,7 +927,7 @@ color:white;
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>8</pointsize>
+           <pointsize>9</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -976,7 +976,7 @@ color:white;
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>8</pointsize>
+           <pointsize>9</pointsize>
           </font>
          </property>
          <property name="focusPolicy">
@@ -1025,7 +1025,7 @@ color:white;
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>8</pointsize>
+           <pointsize>9</pointsize>
           </font>
          </property>
          <property name="focusPolicy">

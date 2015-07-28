@@ -12,11 +12,19 @@ LoginWindow::LoginWindow(QWidget *parent) :
 
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+	QFont ft("Arial", 14, QFont::Normal);
+	QFont ft2("Arial", 18, QFont::Normal);
 	regulateWidgetGetometryM(this);
 	regulateWidgetGetometryM(ui->emailEdit);
 	regulateWidgetGetometryM(ui->forwardButton);
 	regulateWidgetGetometryM(ui->passEdit);
 	regulateWidgetGetometryM(ui->label);
+
+	ui->emailEdit->setFont(ft);
+	ui->emailLabel->setFont(ft);
+	ui->passEdit->setFont(ft);
+	ui->passLabel->setFont(ft);
+	ui->signinLabel->setFont(ft2);
 #else
 	regulateWidgetGetometry(this);
 	regulateWidgetGetometry(ui->emailEdit);

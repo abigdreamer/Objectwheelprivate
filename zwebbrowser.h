@@ -16,9 +16,8 @@ class ZWebBrowser : public QWidget
 		Q_OBJECT
 	public:
 		explicit ZWebBrowser(QWidget *parent = 0);
+		~ZWebBrowser();
 		ZWebWidget* webWidget;
-
-		QTimer* resizer;
 
 		QPushButton* backButton;
 		QPushButton* forwardButton;

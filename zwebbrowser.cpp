@@ -2,7 +2,7 @@
 
 ZWebBrowser::ZWebBrowser(QWidget *parent) : QWidget(parent)
 	{
-	QFont arial("Arial", 6, QFont::Normal);
+	QFont arial("Arial", 8, QFont::Normal);
 	firstStarted = false;
 
 	parent->installEventFilter(this);
@@ -48,6 +48,18 @@ ZWebBrowser::ZWebBrowser(QWidget *parent) : QWidget(parent)
 	loadingBar->setFont(arial);
 	connect(webWidget,SIGNAL(loadingChanged(int)),loadingBar,SLOT(setValue(int)));
 
+	}
+
+ZWebBrowser::~ZWebBrowser()
+	{
+	webWidget->close();
+	backButton->close();
+	forwardButton->close();
+	goButton->close();
+	stopButton->close();
+	reloadButton->close();
+	addressLine->close();
+	loadingBar->close();
 	}
 
 void ZWebBrowser::paintEvent(QPaintEvent*)

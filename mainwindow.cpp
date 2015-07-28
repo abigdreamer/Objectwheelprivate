@@ -76,12 +76,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	dragger->addWithoutObject(ui->page_2);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-	ui->tabButton->setIconSize(QSize(36,36));
-	ui->tabButton_2->setIconSize(QSize(36,36));
-	ui->tabButton_3->setIconSize(QSize(36,36));
+	ui->tabButton->setIconSize(QSize(32,32));
+	ui->tabButton_2->setIconSize(QSize(32,32));
+	ui->tabButton_3->setIconSize(QSize(32,32));
 
-	regulateWidgetGetometryM(ui->frame_3,1.4);
-	regulateWidgetGetometryM(ui->label_6,1.4);
+	regulateWidgetGetometryM(ui->frame_3,1.5);
+	regulateWidgetGetometryM(ui->label_6,1.5);
 	regulateWidgetGetometryM(ui->tabButton);
 	regulateWidgetGetometryM(ui->tabButton_2);
 	regulateWidgetGetometryM(ui->tabButton_3);
@@ -155,11 +155,8 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 
 void MainWindow::createObjects(const QByteArray& jsonData)
 	{
-
 	for (int i=0;i<createdObjects.size();i++){
 		createdObjects.at(i)->close();
-		createdObjects.at(i)->deleteLater();
-		delete createdObjects.at(i);
 		}
 
 	createdObjects.clear();
@@ -167,6 +164,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 	/// Getting json datas
 	QJsonDocument loadDoc(QJsonDocument::fromJson(jsonData));
 	QJsonObject allObjects = loadDoc.object();
+	QFont fnt("Arial",9);
 
 	/// Iterating and creating all json object by ClassName
 	for (int i=0;i<allObjects.size();i++)
@@ -187,15 +185,14 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 
 			createdObjects.append(obj);
 			///  Showing object
-			obj->show();
-			obj->raise();
-			obj->show();
-			QFont fnt("Arial",8);
+
+
 			obj->setFont(fnt);
 			obj->setStyleSheet("background-color:transparent;");
+			obj->show();
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.2);
+			regulateWidgetGetometryMnorm(obj,1.5);
 #else
 			regulateWidgetGetometry(obj);
 #endif
@@ -219,14 +216,12 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			/// Adding object to createdObject
 			createdObjects.append(obj);
 			///  Showing object
-			obj->show();
-			obj->raise();
-			obj->show();			QFont fnt("Arial",8);
+
 			obj->setFont(fnt);
 			obj->setStyleSheet("border-image:url(:/pics/plain.png);");
-
+			obj->show();
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.2);
+			regulateWidgetGetometryMnorm(obj,1.5);
 #else
 			regulateWidgetGetometry(obj);
 #endif
@@ -244,15 +239,13 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			/// Adding object to createdObject
 			createdObjects.append(obj);
 			///  Showing object
-			obj->show();
-			obj->raise();
-			obj->show();
-			QFont fnt("Arial",8);
 			obj->setFont(fnt);
+			obj->show();
+
 			//obj->setStyleSheet("background-color:transparent;");
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.2);
+			regulateWidgetGetometryMnorm(obj,1.5);
 #else
 			regulateWidgetGetometry(obj);
 #endif
@@ -279,17 +272,15 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["color"].toObject()["b"].toInt(),
 					object["color"].toObject()["a"].toInt()));
 			obj->setPalette(palette);
-			QFont fnt("Arial",8);
 			obj->setFont(fnt);
 			/// Adding object to createdObject
 			createdObjects.append(obj);
 			///  Showing object
 			obj->show();
-			obj->raise();
-			obj->show();
+
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.2);
+			regulateWidgetGetometryMnorm(obj,1.5);
 #else
 			regulateWidgetGetometry(obj);
 #endif
@@ -311,15 +302,12 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			/// Adding object to createdObject
 			createdObjects.append(obj);
 			///  Showing object
-			obj->show();
-			obj->raise();
-			obj->show();
-			QFont fnt("Arial",8);
+
 			obj->setFont(fnt);
 			obj->setStyleSheet("background-color:transparent;");
-
+			obj->show();
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.2);
+			regulateWidgetGetometryMnorm(obj,1.5);
 #else
 			regulateWidgetGetometry(obj);
 #endif
@@ -338,8 +326,6 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 
 			createdObjects.append(obj);
 			///  Showing object
-			obj->show();
-			obj->raise();
 			obj->show();
 
 			for (int i=0;i<obj->children().size();i++)
@@ -368,7 +354,10 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 				}
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.2);
+			regulateWidgetGetometryMnorm(obj,1.5);
+			QRect r = this->frameGeometry();
+			this->setGeometry(1,1,1,1);
+			this->setGeometry(r);
 #else
 			regulateWidgetGetometry(obj);
 #endif

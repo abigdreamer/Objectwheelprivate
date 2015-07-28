@@ -451,7 +451,7 @@ border-image:url();</string>
 border-image:url();</string>
             </property>
             <property name="text">
-             <string>Kullanıcı Adı:</string>
+             <string>Username</string>
             </property>
            </widget>
           </item>
@@ -700,7 +700,7 @@ border-image:url();</string>
 border-image:url();</string>
             </property>
             <property name="text">
-             <string>Şifre:</string>
+             <string>Password</string>
             </property>
            </widget>
           </item>

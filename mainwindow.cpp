@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QDebug> // For testing
 #include <QPushButton>
 #include <QLineEdit>
 #include <QLabel>
@@ -21,19 +20,16 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	ui->frame_2->setMinimumWidth(0);
 	ui->frame_2->setMaximumWidth(0);
-
 	ui->frame->setMinimumWidth(0);
 	ui->frame->setMaximumWidth(0);
-
-
 	ui->frame_4->setMinimumWidth(0);
 	ui->frame_4->setMaximumWidth(0);
 
-
+	connect(ui->autoFit,SIGNAL(valueChanged(int)),this,SLOT(scaleDesignArea(int)));
 	/** !DragDrop! **/
 	//Creating dragger
 	dragger = new ZDragDrop(this);
-	dragger->setObjectList(&createdObjects);
+	dragger->setObjectList(&createdObjects,&firstRects);
 
 	//For eventFilter
 	qApp->installEventFilter(this);
@@ -69,11 +65,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	dragger->addWithoutObject(ui->pushButton_6);
 	dragger->addWithoutObject(ui->pushButton_7);
 	dragger->addWithoutObject(ui->pushButton_8);
-
+	dragger->addWithoutObject(ui->autoFit);
 	dragger->addWithoutObject(ui->frame);
 	dragger->addWithoutObject(ui->toolBox);
 	dragger->addWithoutObject(ui->page);
 	dragger->addWithoutObject(ui->page_2);
+
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 	ui->tabButton->setIconSize(QSize(32,32));
@@ -106,7 +103,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	regulateWidgetGetometryM(ui->page_2);
 	regulateWidgetGetometryM(ui->frame_2);
 	regulateWidgetGetometryM(ui->masterRecordList);
-
+	regulateWidgetGetometryM(ui->autoFit);
 #else
 	regulateWidgetGetometry(ui->frame_3);
 	regulateWidgetGetometry(ui->label_6);
@@ -133,9 +130,27 @@ MainWindow::MainWindow(QWidget *parent) :
 	regulateWidgetGetometry(ui->page_2);
 	regulateWidgetGetometry(ui->frame_2);
 	regulateWidgetGetometry(ui->masterRecordList);
+	regulateWidgetGetometry(ui->autoFit);
 
 #endif
 
+
+	dragger->addToolBoxObject(ui->pushButton_9);
+	dragger->addToolBoxObject(ui->label);
+	dragger->addToolBoxObject(ui->checkBox);
+	dragger->addToolBoxObject(ui->lineEdit);
+
+	#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+	regulateWidgetGetometryM(ui->pushButton_9);
+	regulateWidgetGetometryM(ui->label);
+	regulateWidgetGetometryM(ui->checkBox);
+	regulateWidgetGetometryM(ui->lineEdit);
+	#else
+	regulateWidgetGetometry(ui->pushButton_9);
+	regulateWidgetGetometry(ui->label);
+	regulateWidgetGetometry(ui->checkBox);
+	regulateWidgetGetometry(ui->lineEdit);
+	#endif
 	}
 
 MainWindow::~MainWindow()
@@ -153,6 +168,11 @@ bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 	return dragger->updateWidget(event,ui,this,obj);
 	}
 
+void MainWindow::resizeEvent(QResizeEvent*)
+	{
+	ui->autoFit->move(5,ui->widget->height()-5-ui->autoFit->height());
+	}
+
 void MainWindow::createObjects(const QByteArray& jsonData)
 	{
 	for (int i=0;i<createdObjects.size();i++){
@@ -160,6 +180,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 		}
 
 	createdObjects.clear();
+	firstRects.clear();
 
 	/// Getting json datas
 	QJsonDocument loadDoc(QJsonDocument::fromJson(jsonData));
@@ -182,13 +203,13 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["y"].toInt(),
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
+			obj->setStyleSheet(object["styleSheet"].toString());
 
 			createdObjects.append(obj);
 			///  Showing object
 
 
 			obj->setFont(fnt);
-			obj->setStyleSheet("background-color:transparent;");
 			obj->show();
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
@@ -196,6 +217,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 #else
 			regulateWidgetGetometry(obj);
 #endif
+			firstRects.append(obj->geometry());
+
 			}
 
 		else if ( className == "QLineEdit")
@@ -212,19 +235,22 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			QPalette palette = obj->palette();
 			palette.setColor(obj->foregroundRole(), qRgb(255,255,255));
 			obj->setPalette(palette);
+			obj->setStyleSheet(object["styleSheet"].toString());
 
 			/// Adding object to createdObject
 			createdObjects.append(obj);
+
 			///  Showing object
 
 			obj->setFont(fnt);
-			obj->setStyleSheet("border-image:url(:/pics/plain.png);");
 			obj->show();
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 			regulateWidgetGetometryMnorm(obj,1.5);
 #else
 			regulateWidgetGetometry(obj);
 #endif
+			firstRects.append(obj->geometry());
+
 			}
 
 		else if ( className == "QComboBox")
@@ -236,8 +262,10 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["y"].toInt(),
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
+			obj->setStyleSheet(object["styleSheet"].toString());
 			/// Adding object to createdObject
 			createdObjects.append(obj);
+
 			///  Showing object
 			obj->setFont(fnt);
 			obj->show();
@@ -249,6 +277,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 #else
 			regulateWidgetGetometry(obj);
 #endif
+			firstRects.append(obj->geometry());
+
 			}
 
 		else if ( className == "QLabel")
@@ -275,6 +305,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->setFont(fnt);
 			/// Adding object to createdObject
 			createdObjects.append(obj);
+
 			///  Showing object
 			obj->show();
 
@@ -284,6 +315,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 #else
 			regulateWidgetGetometry(obj);
 #endif
+			firstRects.append(obj->geometry());
+
 			}
 
 		else if ( className == "QCheckBox")
@@ -298,19 +331,22 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["y"].toInt(),
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
+			obj->setStyleSheet(object["styleSheet"].toString());
 
 			/// Adding object to createdObject
 			createdObjects.append(obj);
+
 			///  Showing object
 
 			obj->setFont(fnt);
-			obj->setStyleSheet("background-color:transparent;");
 			obj->show();
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 			regulateWidgetGetometryMnorm(obj,1.5);
 #else
 			regulateWidgetGetometry(obj);
 #endif
+			firstRects.append(obj->geometry());
+
 			}
 
 		else if ( className == "ZWebBrowser")
@@ -323,8 +359,10 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
 			obj->goUrl(object["url"].toString());
+			obj->setStyleSheet(object["styleSheet"].toString());
 
 			createdObjects.append(obj);
+
 			///  Showing object
 			obj->show();
 
@@ -334,23 +372,42 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 				dragger->addWithoutObject((QWidget*)obj->children().at(i));
 				((QWidget*)obj->children().at(i))->setObjectName(QString("__zwebbrowserbtn%1").arg(i));
 				((QWidget*)obj->children().at(i))->setFocusPolicy(Qt::NoFocus);
-				((QWidget*)obj->children().at(i))->setStyleSheet(QString("#%1 {"
-																		 "background-color: qlineargradient("
-																		 "spread:pad, x1:0.5, y1:1, "
-																		 "x2:0.488636, y2:0, stop:0.238636 "
-																		 "rgba(80, 80, 80, 120), stop:1 "
-																		 "rgba(189, 189, 189, 5"
-																		 "));"
-																		 "border: 1px solid rgba(50,50,50,80);"
-																		 "border-radius: 5px;"
-																		 "color:white;"
-																		 " }"
-																		 "#%1:pressed {"
-																		 "background-color: rgba(30, 30, 30,200);"
-																		 "border: 1px solid rgba(0,0,0,80);"
-																		 "border-radius: 5px;"
-																		 "color:white;"
-																		 " }").arg(((QWidget*)obj->children().at(i))->objectName()));
+				if (QString(((QWidget*)obj->children().at(i))->metaObject()->className())=="QPushButton")
+					((QWidget*)obj->children().at(i))->setStyleSheet(QString("#%1 {"
+																			 "background-color: qlineargradient("
+																			 "spread:pad, x1:0.5, y1:1, "
+																			 "x2:0.488636, y2:0, stop:0.238636 "
+																			 "rgba(80, 80, 80, 120), stop:1 "
+																			 "rgba(189, 189, 189, 5"
+																			 "));"
+																			 "border: 1px solid rgba(50,50,50,80);"
+																			 "border-radius: 5px;"
+																			 "color:white;"
+																			 " }"
+																			 "#%1:pressed {"
+																			 "background-color: rgba(30, 30, 30,200);"
+																			 "border: 1px solid rgba(0,0,0,80);"
+																			 "border-radius: 5px;"
+																			 "color:white;"
+																			 " }").arg(((QWidget*)obj->children().at(i))->objectName()));
+
+				else if (QString(((QWidget*)obj->children().at(i))->metaObject()->className())=="QProgressBar")
+					((QWidget*)obj->children().at(i))->setStyleSheet("QProgressBar {"
+																	 "text-align: center;"
+																	 "border : 1px solid rgb(90, 90, 100);"
+																	 "background: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1,"
+																	 "stop: 0 #fff,"
+																	 "stop: 0.4999 #eee,"
+																	 "stop: 0.5 #ddd,"
+																	 "stop: 1 #eee);"
+																	 "}QProgressBar::chunk {"
+																	 "background: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1,"
+																	 "stop: 0 #78d,"
+																	 "stop: 0.4999 #46a,"
+																	 "stop: 0.5 #45a,"
+																	 "stop: 1 #238 );}");
+				else if (QString(((QWidget*)obj->children().at(i))->metaObject()->className())=="QLineEdit")
+					((QWidget*)obj->children().at(i))->setFocusPolicy(Qt::StrongFocus);
 				}
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
@@ -361,6 +418,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 #else
 			regulateWidgetGetometry(obj);
 #endif
+			firstRects.append(obj->geometry());
+
 			}
 		}
 
@@ -392,7 +451,7 @@ QByteArray MainWindow::generateObjects() const
 			object.insert("text",obj->text());
 			object.insert("enabled",obj->isEnabled());
 			object.insert("geometry",geometry);
-
+			object.insert("styleSheet",obj->styleSheet());
 			mainObject.insert(QString("object%1").arg(i),object);
 			}
 
@@ -412,6 +471,7 @@ QByteArray MainWindow::generateObjects() const
 			object.insert("text",obj->text());
 			object.insert("enabled",obj->isEnabled());
 			object.insert("geometry",geometry);
+			object.insert("styleSheet",obj->styleSheet());
 
 			mainObject.insert(QString("object%1").arg(i),object);
 			}
@@ -431,6 +491,7 @@ QByteArray MainWindow::generateObjects() const
 			object.insert("objectName",obj->objectName());
 			object.insert("enabled",obj->isEnabled());
 			object.insert("geometry",geometry);
+			object.insert("styleSheet",obj->styleSheet());
 
 			mainObject.insert(QString("object%1").arg(i),object);
 			}
@@ -492,6 +553,7 @@ QByteArray MainWindow::generateObjects() const
 			object.insert("enabled",obj->isEnabled());
 			object.insert("checked",obj->isChecked());
 			object.insert("geometry",geometry);
+			object.insert("styleSheet",obj->styleSheet());
 
 			mainObject.insert(QString("object%1").arg(i),object);
 
@@ -508,6 +570,7 @@ QByteArray MainWindow::generateObjects() const
 			object.insert("objectClass",className);
 			object.insert("objectName",obj->objectName());
 			object.insert("geometry",geometry);
+			object.insert("styleSheet",obj->styleSheet());
 
 			mainObject.insert(QString("object%1").arg(i),object);
 
@@ -529,6 +592,7 @@ QByteArray MainWindow::generateObjects() const
 			object.insert("enabled",obj->isEnabled());
 			object.insert("geometry",geometry);
 			object.insert("url",obj->url());
+			object.insert("styleSheet",obj->styleSheet());
 
 			mainObject.insert(QString("object%1").arg(i),object);
 			}
@@ -604,6 +668,7 @@ void MainWindow::on_tabButton_clicked()
 		{
 		ui->frame_2->setMinimumWidth(0);
 		ui->frame_2->setMaximumWidth(0);
+		update();
 		}
 	else
 		{
@@ -611,9 +676,9 @@ void MainWindow::on_tabButton_clicked()
 		ui->frame->setMaximumWidth(0);
 		ui->frame_4->setMinimumWidth(0);
 		ui->frame_4->setMaximumWidth(0);
-
 		ui->frame_2->setMinimumWidth(150);
 		ui->frame_2->setMaximumWidth(150);
+		update();
 		}
 	}
 
@@ -623,6 +688,7 @@ void MainWindow::on_tabButton_2_clicked()
 		{
 		ui->frame->setMinimumWidth(0);
 		ui->frame->setMaximumWidth(0);
+		update();
 		}
 	else
 		{
@@ -630,10 +696,9 @@ void MainWindow::on_tabButton_2_clicked()
 		ui->frame_2->setMaximumWidth(0);
 		ui->frame_4->setMinimumWidth(0);
 		ui->frame_4->setMaximumWidth(0);
-
-
 		ui->frame->setMinimumWidth(120);
 		ui->frame->setMaximumWidth(120);
+		update();
 		}
 	}
 
@@ -643,6 +708,7 @@ void MainWindow::on_tabButton_3_clicked()
 		{
 		ui->frame_4->setMinimumWidth(0);
 		ui->frame_4->setMaximumWidth(0);
+		update();
 		}
 	else
 		{
@@ -650,10 +716,9 @@ void MainWindow::on_tabButton_3_clicked()
 		ui->frame->setMaximumWidth(0);
 		ui->frame_2->setMinimumWidth(0);
 		ui->frame_2->setMaximumWidth(0);
-
-
 		ui->frame_4->setMinimumWidth(100);
 		ui->frame_4->setMaximumWidth(100);
+		update();
 		}
 	}
 
@@ -780,4 +845,22 @@ void MainWindow::regulateWidgetGetometryMnorm(QWidget* widget, float exSize)
 
 	widget->setGeometry(widget->x()*ratioConstantH*exSize , widget->y()*ratioConstantH*exSize,
 						widget->width()*ratioConstantH*exSize, widget->height()*ratioConstantH*exSize);
+	}
+
+void MainWindow::scaleDesignArea(int val)
+	{
+	float value = val / 100.0;
+
+	if (value > 0)
+		{
+		for (int i=0;i<createdObjects.size();i++)
+			{
+			QWidget* obj = (QWidget*) createdObjects.at(i);
+			obj->setGeometry(firstRects.at(i).x() * value ,
+							 firstRects.at(i).y() * value ,
+							 firstRects.at(i).width() * value ,
+							 firstRects.at(i).height() * value);
+			}
+		}
+	update();
 	}

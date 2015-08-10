@@ -10,7 +10,6 @@
 #include <QCryptographicHash>
 #include <QStringList>
 #include <iostream>
-#include <QDebug>
 
 using namespace std;
 

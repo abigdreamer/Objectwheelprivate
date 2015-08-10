@@ -10,18 +10,23 @@
 #include "ui_mainwindow.h"
 #include <QVector>
 #include <QPushButton>
+#include <QUiLoader>
 
 class ZDragDrop : public QObject
 	{
 		Q_OBJECT
 	private:
 		QWidget* olderWidget = NULL;
+		QWidget* toolPage;
+		int toolIndex;
 		QVector<QWidget*>  withoutWidgets;
 		QPoint startingPos, widgetPos;
 		bool pressed;
 		QWidget* lastSelected;
 		QPushButton* resizeButton,* burnButton,* disableButton;
 		QVector<QWidget*>* createdObjects;
+		QVector<QWidget*> toolBoxObjects;
+		QVector<QRect>* firstRects;
 
 		bool fixer;
 	public:
@@ -29,8 +34,11 @@ class ZDragDrop : public QObject
 		bool updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mainWindow, QObject* obj);
 		void addWithoutObject(QWidget* obj);
 		void removeWithoutObjectOf(QWidget* obj);
-		void setObjectList(QVector<QWidget*>* list);
-
+		void setObjectList(QVector<QWidget*>* list, QVector<QRect>* rects);
+		void regulateWidgetGetometry(QWidget* widget);
+		void regulateWidgetGetometryM(QWidget* widget, float exSize=2.0);
+		void regulateWidgetGetometryMnorm(QWidget* widget, float exSize=2.0);
+		void addToolBoxObject(QWidget* obj);
 	signals:
 
 	public slots:

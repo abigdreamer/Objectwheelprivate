@@ -25,9 +25,11 @@ class MainWindow : public QMainWindow
 		ZDragDrop* dragger; //For drag&drop
 		ZDatabaseManager* databaseManager;
 		QVector<QWidget*> createdObjects;
+		QVector<QRect> firstRects;
+		QSize initSizeOfDesingArea;
 	protected:
 		bool eventFilter(QObject *obj, QEvent *event); //For drag&drop control
-
+		void resizeEvent(QResizeEvent *);
 	public:
 		void createObjects(const QByteArray& jsonData);
 		QByteArray generateObjects() const;
@@ -42,12 +44,12 @@ class MainWindow : public QMainWindow
 
 	private slots:
 		void databaseChangeHandler();
+		void scaleDesignArea(int val);
 		void on_saveButton_clicked();
 		void on_backButton_clicked();
 		void on_forwardButton_clicked();
 		void on_deleteTempButton_clicked();
 		void on_loadMasterButton_clicked();
-
 		void on_tabButton_clicked();
 		void on_tabButton_2_clicked();
 		void on_tabButton_3_clicked();

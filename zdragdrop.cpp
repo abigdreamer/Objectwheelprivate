@@ -1,6 +1,6 @@
 #include "zdragdrop.h"
-#include <QDebug>
 #include <QTime>
+#include <QDesktopWidget>
 
 ZDragDrop::ZDragDrop(QObject *parent) :
 	QObject(parent)
@@ -59,8 +59,53 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 
 	if ( mouseEvent->type() == QEvent::MouseButtonRelease)
 		{
-		pressed=false;
+
+		if (toolBoxObjects.indexOf(olderWidget) >= 0 &&
+			(mainWindow->mapFromGlobal(QCursor::pos()).x() <= ui->widget->x()+ui->widget->width() &&
+			 mainWindow->mapFromGlobal(QCursor::pos()).x() >= ui->widget->x() &&
+			 mainWindow->mapFromGlobal(QCursor::pos()).y() <= ui->widget->y()+ui->widget->height() &&
+			 mainWindow->mapFromGlobal(QCursor::pos()).y() >= ui->widget->y()))
+			{
+			toolBoxObjects.removeAt(toolBoxObjects.indexOf(olderWidget));
+			createdObjects->append(olderWidget);
+			firstRects->append(olderWidget->geometry());
+			olderWidget->setParent(ui->widget);
+			olderWidget->show();
+
+			QUiLoader yeni;
+			QWidget* unnamed = yeni.createWidget(olderWidget->metaObject()->className(),toolPage);
+			((QVBoxLayout*)toolPage->layout())->insertWidget(toolIndex,unnamed);
+
+			unnamed->setMinimumSize(olderWidget->minimumSize());
+			unnamed->setMaximumSize(olderWidget->maximumSize());
+			unnamed->setSizePolicy(olderWidget->sizePolicy());
+			unnamed->setObjectName(QDateTime::currentDateTime().toString(Qt::ISODate));
+			unnamed->setStyleSheet(olderWidget->styleSheet().replace(olderWidget->objectName(),olderWidget->objectName()));
+			unnamed->setProperty("text",olderWidget->property("text"));
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			regulateWidgetGetometryM(unnamed);
+#else
+			regulateWidgetGetometry(unnamed);
+#endif
+			toolBoxObjects.append(unnamed);
+
+			QWidget* cache = yeni.createWidget(olderWidget->metaObject()->className(),mainWindow);
+			olderWidget->setSizePolicy(cache->sizePolicy());
+			olderWidget->setMinimumSize(cache->minimumSize());
+			olderWidget->setMaximumSize(cache->maximumSize());
+			cache->close();
+			}
+		else if (toolBoxObjects.indexOf(olderWidget) >= 0)
+			{
+			olderWidget->setParent(toolPage);
+			((QVBoxLayout*)((QWidget*)olderWidget->parent())->layout())->insertWidget(toolIndex,olderWidget);
+			}
+
 		olderWidget=NULL;
+		pressed=false;
+
+
 		}
 	if (mouseEvent->type()==QMouseEvent::MouseButtonPress)
 		{
@@ -77,6 +122,12 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 		if (olderWidget->objectName() == "qt_scrollarea_viewport")
 			olderWidget=NULL;
 
+
+		if (toolBoxObjects.indexOf(olderWidget) >= 0)
+			{
+			toolPage = olderWidget->parentWidget();
+			toolIndex = ((QVBoxLayout*)((QWidget*)olderWidget->parent())->layout())->indexOf(olderWidget);
+			}
 		}
 
 	if (mouseEvent->type()==QMouseEvent::MouseMove && pressed==true)
@@ -92,15 +143,35 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 					olderWidget->objectName() != "__resizeButton")
 					{ /* Drag Normal objects  */
 					if (fixer)
-						olderWidget->setGeometry(ui->widget->mapFrom(mainWindow,mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos)).x(),ui->widget->mapFrom(mainWindow,mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos)).y(),olderWidget->width()+2,olderWidget->height()+2);
+						if (toolBoxObjects.indexOf(olderWidget) >= 0)
+							{
+							olderWidget->setParent(mainWindow);
+							olderWidget->move(mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos));
+							olderWidget->show();
+							}
+						else
+							olderWidget->setGeometry(ui->widget->mapFrom(mainWindow,mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos)).x(),ui->widget->mapFrom(mainWindow,mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos)).y(),olderWidget->width()+1,olderWidget->height()+1);
+
 					else
-						olderWidget->setGeometry(ui->widget->mapFrom(mainWindow,mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos)).x(),ui->widget->mapFrom(mainWindow,mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos)).y(),olderWidget->width()-2,olderWidget->height()-2);
+						if (toolBoxObjects.indexOf(olderWidget) >= 0)
+							{
+							olderWidget->setParent(mainWindow);
+							olderWidget->move(mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos));
+							olderWidget->show();
+							}
+						else
+							olderWidget->setGeometry(ui->widget->mapFrom(mainWindow,mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos)).x(),ui->widget->mapFrom(mainWindow,mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos)).y(),olderWidget->width()-1,olderWidget->height()-1);
 					fixer = !fixer;
-					//olderWidget->move( ui->widget->mapFrom(mainWindow,mainWindow->mapFromGlobal(QCursor::pos()) - (startingPos-widgetPos)));
+
 					disableButton->hide();
 					burnButton->hide();
 					resizeButton->hide();
 
+					if (createdObjects->indexOf(olderWidget) >= 0)
+						(*firstRects)[createdObjects->indexOf(olderWidget)] = QRect(olderWidget->x(),
+																					olderWidget->y(),
+																					olderWidget->width(),
+																					olderWidget->height());
 					}
 				else if(lastSelected->isEnabled())
 					{ /* Drag Resize_button  */
@@ -177,9 +248,15 @@ void ZDragDrop::removeWithoutObjectOf(QWidget* obj)
 		withoutWidgets.remove(withoutWidgets.indexOf(obj));
 	}
 
-void ZDragDrop::setObjectList(QVector<QWidget*>* list)
+void ZDragDrop::setObjectList(QVector<QWidget*>* list, QVector<QRect>* rects)
 	{
 	createdObjects=list;
+	firstRects=rects;
+	}
+
+void ZDragDrop::addToolBoxObject(QWidget* obj)
+	{
+	toolBoxObjects.append(obj);
 	}
 
 void ZDragDrop::burnButton_clicked()
@@ -189,6 +266,7 @@ void ZDragDrop::burnButton_clicked()
 	burnButton->hide();
 	resizeButton->hide();
 
+	firstRects->remove(createdObjects->indexOf(lastSelected));
 	createdObjects->remove(createdObjects->indexOf(lastSelected));
 	}
 
@@ -206,4 +284,70 @@ void ZDragDrop::disableButton_clicked()
 	disableButton->hide();
 	burnButton->hide();
 	resizeButton->hide();
+	}
+
+
+
+void ZDragDrop::regulateWidgetGetometry(QWidget* widget)
+	{
+#define MYRESW 1366
+#define MYRESH 768
+
+	QDesktopWidget dwidget;
+	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
+
+	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
+	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
+
+	if (ratioConstantH>ratioConstantV)
+		ratioConstantH=ratioConstantV;
+	else
+		ratioConstantV=ratioConstantH;
+
+	widget->setMinimumHeight(widget->minimumHeight()*ratioConstantH);
+	widget->setMaximumHeight(widget->maximumHeight()*ratioConstantH);
+	widget->setMinimumWidth(widget->minimumWidth()*ratioConstantH);
+	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH);
+	}
+
+void ZDragDrop::regulateWidgetGetometryM(QWidget* widget, float exSize)
+	{
+#define MYRESW 1366
+#define MYRESH 768
+
+	QDesktopWidget dwidget;
+	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
+
+	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
+	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
+
+	if (ratioConstantH>ratioConstantV)
+		ratioConstantH=ratioConstantV;
+	else
+		ratioConstantV=ratioConstantH;
+
+	widget->setMinimumHeight(widget->minimumHeight()*ratioConstantH*exSize);
+	widget->setMaximumHeight(widget->maximumHeight()*ratioConstantH*exSize);
+	widget->setMinimumWidth(widget->minimumWidth()*ratioConstantH*exSize);
+	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH*exSize);
+	}
+
+void ZDragDrop::regulateWidgetGetometryMnorm(QWidget* widget, float exSize)
+	{
+#define MYRESW 1366
+#define MYRESH 768
+
+	QDesktopWidget dwidget;
+	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
+
+	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
+	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
+
+	if (ratioConstantH>ratioConstantV)
+		ratioConstantH=ratioConstantV;
+	else
+		ratioConstantV=ratioConstantH;
+
+	widget->setGeometry(widget->x()*ratioConstantH*exSize , widget->y()*ratioConstantH*exSize,
+						widget->width()*ratioConstantH*exSize, widget->height()*ratioConstantH*exSize);
 	}

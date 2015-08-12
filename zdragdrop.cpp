@@ -166,6 +166,9 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 					disableButton->hide();
 					burnButton->hide();
 					resizeButton->hide();
+					disableButton->setGeometry(0,0,20,20);
+					burnButton->setGeometry(0,0,20,20);
+					resizeButton->setGeometry(0,0,20,20);
 
 					if (createdObjects->indexOf(olderWidget) >= 0)
 						(*firstRects)[createdObjects->indexOf(olderWidget)] = QRect(olderWidget->x(),
@@ -208,6 +211,9 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 				disableButton->hide();
 				burnButton->hide();
 				resizeButton->hide();
+				disableButton->setGeometry(0,0,20,20);
+				burnButton->setGeometry(0,0,20,20);
+				resizeButton->setGeometry(0,0,20,20);
 				}
 		}
 	if (olderWidget!=NULL)
@@ -232,6 +238,7 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 			disableButton->show();
 			burnButton->show();
 			resizeButton->show();
+
 			}
 
 	return false;
@@ -265,7 +272,9 @@ void ZDragDrop::burnButton_clicked()
 	disableButton->hide();
 	burnButton->hide();
 	resizeButton->hide();
-
+	disableButton->setGeometry(0,0,20,20);
+	burnButton->setGeometry(0,0,20,20);
+	resizeButton->setGeometry(0,0,20,20);
 	firstRects->remove(createdObjects->indexOf(lastSelected));
 	createdObjects->remove(createdObjects->indexOf(lastSelected));
 	}
@@ -284,6 +293,9 @@ void ZDragDrop::disableButton_clicked()
 	disableButton->hide();
 	burnButton->hide();
 	resizeButton->hide();
+	disableButton->setGeometry(0,0,20,20);
+	burnButton->setGeometry(0,0,20,20);
+	resizeButton->setGeometry(0,0,20,20);
 	}
 
 

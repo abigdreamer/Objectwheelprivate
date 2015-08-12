@@ -10,6 +10,7 @@
 #include <QEvent>
 #include <QTimer>
 #include "zwebwidget.h"
+#include "zvisualregulator.h"
 
 class ZWebBrowser : public QWidget
 	{

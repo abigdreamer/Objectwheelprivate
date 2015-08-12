@@ -14,11 +14,10 @@ LoginWindow::LoginWindow(QWidget *parent) :
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 	QFont ft("Arial", 14, QFont::Normal);
 	QFont ft2("Arial", 18, QFont::Normal);
-	regulateWidgetGetometryM(this);
-	regulateWidgetGetometryM(ui->emailEdit);
-	regulateWidgetGetometryM(ui->forwardButton);
-	regulateWidgetGetometryM(ui->passEdit);
-	regulateWidgetGetometryM(ui->label);
+	ZVisualRegulator::regulateWidget(ui->emailEdit, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->forwardButton, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->passEdit, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->label, ZVisualRegulator::Mobile);
 
 	ui->emailEdit->setFont(ft);
 	ui->emailLabel->setFont(ft);
@@ -26,11 +25,10 @@ LoginWindow::LoginWindow(QWidget *parent) :
 	ui->passLabel->setFont(ft);
 	ui->signinLabel->setFont(ft2);
 #else
-	regulateWidgetGetometry(this);
-	regulateWidgetGetometry(ui->emailEdit);
-	regulateWidgetGetometry(ui->forwardButton);
-	regulateWidgetGetometry(ui->passEdit);
-	regulateWidgetGetometry(ui->label);
+	ZVisualRegulator::regulateWidget(ui->emailEdit, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->forwardButton, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->passEdit, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->label, ZVisualRegulator::Pc);
 #endif
 
 	}
@@ -38,50 +36,6 @@ LoginWindow::LoginWindow(QWidget *parent) :
 LoginWindow::~LoginWindow()
 	{
 	delete ui;
-	}
-
-void LoginWindow::regulateWidgetGetometry(QWidget* widget)
-	{
-	#define MYRESW 1366
-	#define MYRESH 768
-
-	QDesktopWidget dwidget;
-	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
-
-	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
-	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
-
-	if (ratioConstantH>ratioConstantV)
-		ratioConstantH=ratioConstantV;
-	else
-		ratioConstantV=ratioConstantH;
-
-	widget->setMinimumHeight(widget->minimumHeight()*ratioConstantH);
-	widget->setMaximumHeight(widget->maximumHeight()*ratioConstantH);
-	widget->setMinimumWidth(widget->minimumWidth()*ratioConstantH);
-	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH);
-	}
-
-void LoginWindow::regulateWidgetGetometryM(QWidget* widget)
-	{
-	#define MYRESW 1366
-	#define MYRESH 768
-
-	QDesktopWidget dwidget;
-	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
-
-	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
-	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
-
-	if (ratioConstantH>ratioConstantV)
-		ratioConstantH=ratioConstantV;
-	else
-		ratioConstantV=ratioConstantH;
-
-	widget->setMinimumHeight(widget->minimumHeight()*ratioConstantH*2);
-	widget->setMaximumHeight(widget->maximumHeight()*ratioConstantH*2);
-	widget->setMinimumWidth(widget->minimumWidth()*ratioConstantH*2);
-	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH*2);
 	}
 
 void LoginWindow::on_forwardButton_clicked()

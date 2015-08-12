@@ -25,14 +25,16 @@ SOURCES += main.cpp\
     zdatabasemanager.cpp \
     loginwindow.cpp \
     zwebwidget.cpp \
-    zwebbrowser.cpp
+    zwebbrowser.cpp \
+    zvisualregulator.cpp
 
 HEADERS  += mainwindow.h \
     zdragdrop.h \
     zdatabasemanager.h \
     loginwindow.h \
     zwebwidget.h \
-    zwebbrowser.h
+    zwebbrowser.h \
+    zvisualregulator.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui
@@ -43,32 +45,29 @@ RESOURCES += \
 
 DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradlew.bat \
-    android/res/values/libs.xml \
-    android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew \
     android/gradle/wrapper/gradle-wrapper.jar \
-    android/AndroidManifest.xml \
-    android/gradlew.bat \
-    android/res/values/libs.xml \
-    android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew \
-    android/AndroidManifest.xml \
     android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradlew \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradle/wrapper/gradle-wrapper.jar \
     android/res/values/libs.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
     android/AndroidManifest.xml \
     android/gradle/wrapper/gradle-wrapper.jar \
-    android/gradlew \
     android/res/values/libs.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.properties \
-    android/gradlew.bat
+    android/AndroidManifest.xml \
+    android/res/values/libs.xml \
+    android/build.gradle
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 

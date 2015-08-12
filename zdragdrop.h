@@ -11,6 +11,7 @@
 #include <QVector>
 #include <QPushButton>
 #include <QUiLoader>
+#include "zvisualregulator.h"
 
 class ZDragDrop : public QObject
 	{

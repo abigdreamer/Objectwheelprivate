@@ -2,6 +2,7 @@
 #define LOGINWINDOW_H
 
 #include "mainwindow.h"
+#include "zvisualregulator.h"
 #include <QMainWindow>
 #include <QCryptographicHash>
 #include <QMessageBox>

@@ -32,5 +32,7 @@
         <file>pics/duz.png</file>
         <file>pics/owlogo.png</file>
         <file>pics/owlogo2.png</file>
+        <file>pics/go3.png</file>
+        <file>pics/go4.png</file>
     </qresource>
 </RCC>

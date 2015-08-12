@@ -33,6 +33,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	//For eventFilter
 	qApp->installEventFilter(this);
+
+	foreach( QWidget* w, ui->toolBox->findChildren<QWidget*>() )
+		{
+		if( w->inherits("QToolBoxButton") )
+			{
+			QAbstractButton* button = qobject_cast<QAbstractButton*>(w);
+			button->setFocusPolicy(Qt::NoFocus);
+			button->setStyleSheet("background:transparent;");
+			dragger->addWithoutObject(button);
+			}
+		}
 	//Adding without object to dragger
 	dragger->addWithoutObject(ui->backButton);
 
@@ -70,87 +81,94 @@ MainWindow::MainWindow(QWidget *parent) :
 	dragger->addWithoutObject(ui->toolBox);
 	dragger->addWithoutObject(ui->page);
 	dragger->addWithoutObject(ui->page_2);
-
+	dragger->addToolBoxObject(ui->pushButton_9);
+	dragger->addToolBoxObject(ui->label);
+	dragger->addToolBoxObject(ui->checkBox);
+	dragger->addToolBoxObject(ui->lineEdit);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 	ui->tabButton->setIconSize(QSize(32,32));
 	ui->tabButton_2->setIconSize(QSize(32,32));
 	ui->tabButton_3->setIconSize(QSize(32,32));
 
-	regulateWidgetGetometryM(ui->frame_3,1.5);
-	regulateWidgetGetometryM(ui->label_6,1.5);
-	regulateWidgetGetometryM(ui->tabButton);
-	regulateWidgetGetometryM(ui->tabButton_2);
-	regulateWidgetGetometryM(ui->tabButton_3);
-	regulateWidgetGetometryM(ui->backButton);
-	regulateWidgetGetometryM(ui->saveButton);
-	regulateWidgetGetometryM(ui->forwardButton);
-	regulateWidgetGetometryM(ui->loadMasterButton);
-	regulateWidgetGetometryM(ui->deleteTempButton);
+	ZVisualRegulator::regulateWidget(ui->frame_3, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->label_6, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->tabButton, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->tabButton_2, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->tabButton_3, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->backButton, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->saveButton, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->forwardButton, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->loadMasterButton, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->deleteTempButton, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->pushButton, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->pushButton_2, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->pushButton_3, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->pushButton_4, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->pushButton_5, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->pushButton_6, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->pushButton_7, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->pushButton_8, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->frame_4, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->frame, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->frame_2, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->lineEdit, ZVisualRegulator::Custom,1.5);
+	ZVisualRegulator::regulateWidget(ui->pushButton_9, ZVisualRegulator::Custom,1.5);
 
-	regulateWidgetGetometryM(ui->pushButton);
-	regulateWidgetGetometryM(ui->pushButton_2);
-	regulateWidgetGetometryM(ui->pushButton_3);
-	regulateWidgetGetometryM(ui->pushButton_4);
-	regulateWidgetGetometryM(ui->pushButton_5);
-	regulateWidgetGetometryM(ui->pushButton_6);
-	regulateWidgetGetometryM(ui->pushButton_7);
-	regulateWidgetGetometryM(ui->pushButton_8);
-	regulateWidgetGetometryM(ui->frame_4);
-	regulateWidgetGetometryM(ui->frame);
-	regulateWidgetGetometryM(ui->toolBox);
-	regulateWidgetGetometryM(ui->page);
-	regulateWidgetGetometryM(ui->page_2);
-	regulateWidgetGetometryM(ui->frame_2);
-	regulateWidgetGetometryM(ui->masterRecordList);
-	regulateWidgetGetometryM(ui->autoFit);
-#else
-	regulateWidgetGetometry(ui->frame_3);
-	regulateWidgetGetometry(ui->label_6);
-	regulateWidgetGetometry(ui->tabButton);
-	regulateWidgetGetometry(ui->tabButton_2);
-	regulateWidgetGetometry(ui->tabButton_3);
-	regulateWidgetGetometry(ui->backButton);
-	regulateWidgetGetometry(ui->saveButton);
-	regulateWidgetGetometry(ui->forwardButton);
-	regulateWidgetGetometry(ui->loadMasterButton);
-	regulateWidgetGetometry(ui->deleteTempButton);
-	regulateWidgetGetometry(ui->pushButton);
-	regulateWidgetGetometry(ui->pushButton_2);
-	regulateWidgetGetometry(ui->pushButton_3);
-	regulateWidgetGetometry(ui->pushButton_4);
-	regulateWidgetGetometry(ui->pushButton_5);
-	regulateWidgetGetometry(ui->pushButton_6);
-	regulateWidgetGetometry(ui->pushButton_7);
-	regulateWidgetGetometry(ui->pushButton_8);
-	regulateWidgetGetometry(ui->frame_4);
-	regulateWidgetGetometry(ui->frame);
-	regulateWidgetGetometry(ui->toolBox);
-	regulateWidgetGetometry(ui->page);
-	regulateWidgetGetometry(ui->page_2);
-	regulateWidgetGetometry(ui->frame_2);
-	regulateWidgetGetometry(ui->masterRecordList);
-	regulateWidgetGetometry(ui->autoFit);
+	ZVisualRegulator::regulateFont(ui->pushButton, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->pushButton_2, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->pushButton_3, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->pushButton_4, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->pushButton_5, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->pushButton_6, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->pushButton_7, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->pushButton_8, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->lineEdit, ZVisualRegulator::Custom,1.5);
+	ZVisualRegulator::regulateFont(ui->pushButton_9, ZVisualRegulator::Custom,1.5);
+	ZVisualRegulator::regulateFont(ui->checkBox, ZVisualRegulator::Custom,1.5);
+	ZVisualRegulator::regulateFont(ui->label, ZVisualRegulator::Custom,1.5);
+	ZVisualRegulator::regulateFont(ui->toolBox, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->masterRecordList, ZVisualRegulator::Mobile);
+#else	
+	ZVisualRegulator::regulateWidget(ui->frame_3, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->label_6, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->tabButton, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->tabButton_2, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->tabButton_3, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->backButton, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->saveButton, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->forwardButton, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->loadMasterButton, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->deleteTempButton, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->pushButton, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->pushButton_2, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->pushButton_3, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->pushButton_4, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->pushButton_5, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->pushButton_6, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->pushButton_7, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->pushButton_8, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->frame_4, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->frame, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->frame_2, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->lineEdit, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->pushButton_9, ZVisualRegulator::Pc);
 
+	ZVisualRegulator::regulateFont(ui->pushButton, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->pushButton_2, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->pushButton_3, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->pushButton_4, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->pushButton_5, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->pushButton_6, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->pushButton_7, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->pushButton_8, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->lineEdit, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->pushButton_9, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->checkBox, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->label, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->toolBox, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->masterRecordList, ZVisualRegulator::Pc);
 #endif
-
-
-	dragger->addToolBoxObject(ui->pushButton_9);
-	dragger->addToolBoxObject(ui->label);
-	dragger->addToolBoxObject(ui->checkBox);
-	dragger->addToolBoxObject(ui->lineEdit);
-
-	#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-	regulateWidgetGetometryM(ui->pushButton_9);
-	regulateWidgetGetometryM(ui->label);
-	regulateWidgetGetometryM(ui->checkBox);
-	regulateWidgetGetometryM(ui->lineEdit);
-	#else
-	regulateWidgetGetometry(ui->pushButton_9);
-	regulateWidgetGetometry(ui->label);
-	regulateWidgetGetometry(ui->checkBox);
-	regulateWidgetGetometry(ui->lineEdit);
-	#endif
 	}
 
 MainWindow::~MainWindow()
@@ -213,9 +231,9 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->show();
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.5);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
 #else
-			regulateWidgetGetometry(obj);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 #endif
 			firstRects.append(obj->geometry());
 
@@ -245,9 +263,9 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->setFont(fnt);
 			obj->show();
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.5);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
 #else
-			regulateWidgetGetometry(obj);
+ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 #endif
 			firstRects.append(obj->geometry());
 
@@ -273,9 +291,9 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			//obj->setStyleSheet("background-color:transparent;");
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.5);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
 #else
-			regulateWidgetGetometry(obj);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 #endif
 			firstRects.append(obj->geometry());
 
@@ -311,9 +329,9 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.5);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
 #else
-			regulateWidgetGetometry(obj);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 #endif
 			firstRects.append(obj->geometry());
 
@@ -341,9 +359,9 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->setFont(fnt);
 			obj->show();
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.5);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
 #else
-			regulateWidgetGetometry(obj);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 #endif
 			firstRects.append(obj->geometry());
 
@@ -372,26 +390,8 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 				dragger->addWithoutObject((QWidget*)obj->children().at(i));
 				((QWidget*)obj->children().at(i))->setObjectName(QString("__zwebbrowserbtn%1").arg(i));
 				((QWidget*)obj->children().at(i))->setFocusPolicy(Qt::NoFocus);
-				if (QString(((QWidget*)obj->children().at(i))->metaObject()->className())=="QPushButton")
-					((QWidget*)obj->children().at(i))->setStyleSheet(QString("#%1 {"
-																			 "background-color: qlineargradient("
-																			 "spread:pad, x1:0.5, y1:1, "
-																			 "x2:0.488636, y2:0, stop:0.238636 "
-																			 "rgba(80, 80, 80, 120), stop:1 "
-																			 "rgba(189, 189, 189, 5"
-																			 "));"
-																			 "border: 1px solid rgba(50,50,50,80);"
-																			 "border-radius: 5px;"
-																			 "color:white;"
-																			 " }"
-																			 "#%1:pressed {"
-																			 "background-color: rgba(30, 30, 30,200);"
-																			 "border: 1px solid rgba(0,0,0,80);"
-																			 "border-radius: 5px;"
-																			 "color:white;"
-																			 " }").arg(((QWidget*)obj->children().at(i))->objectName()));
 
-				else if (QString(((QWidget*)obj->children().at(i))->metaObject()->className())=="QProgressBar")
+				if (QString(((QWidget*)obj->children().at(i))->metaObject()->className())=="QProgressBar")
 					((QWidget*)obj->children().at(i))->setStyleSheet("QProgressBar {"
 																	 "text-align: center;"
 																	 "border : 1px solid rgb(90, 90, 100);"
@@ -411,12 +411,12 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 				}
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			regulateWidgetGetometryMnorm(obj,1.5);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
 			QRect r = this->frameGeometry();
 			this->setGeometry(1,1,1,1);
 			this->setGeometry(r);
 #else
-			regulateWidgetGetometry(obj);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 #endif
 			firstRects.append(obj->geometry());
 
@@ -698,6 +698,11 @@ void MainWindow::on_tabButton_2_clicked()
 		ui->frame_4->setMaximumWidth(0);
 		ui->frame->setMinimumWidth(120);
 		ui->frame->setMaximumWidth(120);
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+		ZVisualRegulator::regulateWidget(ui->frame, ZVisualRegulator::Mobile);
+#else
+		ZVisualRegulator::regulateWidget(ui->frame, ZVisualRegulator::Pc);
+#endif
 		update();
 		}
 	}
@@ -718,6 +723,11 @@ void MainWindow::on_tabButton_3_clicked()
 		ui->frame_2->setMaximumWidth(0);
 		ui->frame_4->setMinimumWidth(100);
 		ui->frame_4->setMaximumWidth(100);
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+		ZVisualRegulator::regulateWidget(ui->frame_4, ZVisualRegulator::Mobile);
+#else
+		ZVisualRegulator::regulateWidget(ui->frame_4, ZVisualRegulator::Pc);
+#endif
 		update();
 		}
 	}
@@ -781,70 +791,6 @@ void MainWindow::on_pushButton_8_clicked()
 												 "border-image: url(%1);"
 												 "}").arg(fileName));
 		}
-	}
-
-void MainWindow::regulateWidgetGetometry(QWidget* widget)
-	{
-#define MYRESW 1366
-#define MYRESH 768
-
-	QDesktopWidget dwidget;
-	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
-
-	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
-	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
-
-	if (ratioConstantH>ratioConstantV)
-		ratioConstantH=ratioConstantV;
-	else
-		ratioConstantV=ratioConstantH;
-
-	widget->setMinimumHeight(widget->minimumHeight()*ratioConstantH);
-	widget->setMaximumHeight(widget->maximumHeight()*ratioConstantH);
-	widget->setMinimumWidth(widget->minimumWidth()*ratioConstantH);
-	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH);
-	}
-
-void MainWindow::regulateWidgetGetometryM(QWidget* widget, float exSize)
-	{
-#define MYRESW 1366
-#define MYRESH 768
-
-	QDesktopWidget dwidget;
-	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
-
-	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
-	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
-
-	if (ratioConstantH>ratioConstantV)
-		ratioConstantH=ratioConstantV;
-	else
-		ratioConstantV=ratioConstantH;
-
-	widget->setMinimumHeight(widget->minimumHeight()*ratioConstantH*exSize);
-	widget->setMaximumHeight(widget->maximumHeight()*ratioConstantH*exSize);
-	widget->setMinimumWidth(widget->minimumWidth()*ratioConstantH*exSize);
-	widget->setMaximumWidth(widget->maximumWidth()*ratioConstantH*exSize);
-	}
-
-void MainWindow::regulateWidgetGetometryMnorm(QWidget* widget, float exSize)
-	{
-#define MYRESW 1366
-#define MYRESH 768
-
-	QDesktopWidget dwidget;
-	QRect mainScreenSize = dwidget.screenGeometry(dwidget.primaryScreen());
-
-	float ratioConstantH =    ( (mainScreenSize.width()) / ((float)MYRESW) );
-	float ratioConstantV = ( (mainScreenSize.height()) / ((float)MYRESH) );
-
-	if (ratioConstantH>ratioConstantV)
-		ratioConstantH=ratioConstantV;
-	else
-		ratioConstantV=ratioConstantH;
-
-	widget->setGeometry(widget->x()*ratioConstantH*exSize , widget->y()*ratioConstantH*exSize,
-						widget->width()*ratioConstantH*exSize, widget->height()*ratioConstantH*exSize);
 	}
 
 void MainWindow::scaleDesignArea(int val)

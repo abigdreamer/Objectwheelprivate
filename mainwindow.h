@@ -5,6 +5,7 @@
 #include "zdragdrop.h"
 #include "zdatabasemanager.h"
 #include "zwebbrowser.h"
+#include "zvisualregulator.h"
 #include <QVector>
 #include <QJsonDocument>
 #include <QJsonObject>

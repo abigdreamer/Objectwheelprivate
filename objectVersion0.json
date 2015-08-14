@@ -94,7 +94,7 @@
         "objectClass": "ZWebBrowser",
         "objectName": "__webwb",
         "styleSheet": "#__webwb {border: 1px solid rgba(0,0,0,190);border-radius: 5px;background-color: rgba(0, 0, 0, 90);}",
-        "url": ""
+        "url": "www.facebook.com"
     },
     "object2": {
         "color": {

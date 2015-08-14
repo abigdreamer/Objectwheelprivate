@@ -44,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
 			dragger->addWithoutObject(button);
 			}
 		}
+
 	//Adding without object to dragger
 	dragger->addWithoutObject(ui->backButton);
 
@@ -85,11 +86,14 @@ MainWindow::MainWindow(QWidget *parent) :
 	dragger->addToolBoxObject(ui->label);
 	dragger->addToolBoxObject(ui->checkBox);
 	dragger->addToolBoxObject(ui->lineEdit);
+	dragger->addToolBoxObject(ui->label_2);
+	dragger->addToolBoxObject(ui->label_3);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 	ui->tabButton->setIconSize(QSize(32,32));
 	ui->tabButton_2->setIconSize(QSize(32,32));
 	ui->tabButton_3->setIconSize(QSize(32,32));
+	ui->autoFit->setGeometry(ui->autoFit->x(),ui->autoFit->y(),ui->autoFit->width()+20,ui->autoFit->height()+20);
 
 	ZVisualRegulator::regulateWidget(ui->frame_3, ZVisualRegulator::Mobile);
 	ZVisualRegulator::regulateWidget(ui->label_6, ZVisualRegulator::Mobile);
@@ -112,8 +116,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	ZVisualRegulator::regulateWidget(ui->frame_4, ZVisualRegulator::Mobile);
 	ZVisualRegulator::regulateWidget(ui->frame, ZVisualRegulator::Mobile);
 	ZVisualRegulator::regulateWidget(ui->frame_2, ZVisualRegulator::Mobile);
-	ZVisualRegulator::regulateWidget(ui->lineEdit, ZVisualRegulator::Custom,1.5);
-	ZVisualRegulator::regulateWidget(ui->pushButton_9, ZVisualRegulator::Custom,1.5);
+	ZVisualRegulator::regulateWidget(ui->lineEdit, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->pushButton_9, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->label_2, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateWidget(ui->label_3, ZVisualRegulator::Mobile);
 
 	ZVisualRegulator::regulateFont(ui->pushButton, ZVisualRegulator::Mobile);
 	ZVisualRegulator::regulateFont(ui->pushButton_2, ZVisualRegulator::Mobile);
@@ -123,12 +129,15 @@ MainWindow::MainWindow(QWidget *parent) :
 	ZVisualRegulator::regulateFont(ui->pushButton_6, ZVisualRegulator::Mobile);
 	ZVisualRegulator::regulateFont(ui->pushButton_7, ZVisualRegulator::Mobile);
 	ZVisualRegulator::regulateFont(ui->pushButton_8, ZVisualRegulator::Mobile);
-	ZVisualRegulator::regulateFont(ui->lineEdit, ZVisualRegulator::Custom,1.5);
-	ZVisualRegulator::regulateFont(ui->pushButton_9, ZVisualRegulator::Custom,1.5);
-	ZVisualRegulator::regulateFont(ui->checkBox, ZVisualRegulator::Custom,1.5);
-	ZVisualRegulator::regulateFont(ui->label, ZVisualRegulator::Custom,1.5);
+	ZVisualRegulator::regulateFont(ui->lineEdit, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->pushButton_9, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->checkBox, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->label, ZVisualRegulator::Mobile);
 	ZVisualRegulator::regulateFont(ui->toolBox, ZVisualRegulator::Mobile);
 	ZVisualRegulator::regulateFont(ui->masterRecordList, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->label_2, ZVisualRegulator::Mobile);
+	ZVisualRegulator::regulateFont(ui->label_3, ZVisualRegulator::Mobile);
+
 #else	
 	ZVisualRegulator::regulateWidget(ui->frame_3, ZVisualRegulator::Pc);
 	ZVisualRegulator::regulateWidget(ui->label_6, ZVisualRegulator::Pc);
@@ -153,6 +162,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ZVisualRegulator::regulateWidget(ui->frame_2, ZVisualRegulator::Pc);
 	ZVisualRegulator::regulateWidget(ui->lineEdit, ZVisualRegulator::Pc);
 	ZVisualRegulator::regulateWidget(ui->pushButton_9, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->label_2, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateWidget(ui->label_3, ZVisualRegulator::Pc);
 
 	ZVisualRegulator::regulateFont(ui->pushButton, ZVisualRegulator::Pc);
 	ZVisualRegulator::regulateFont(ui->pushButton_2, ZVisualRegulator::Pc);
@@ -168,6 +179,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ZVisualRegulator::regulateFont(ui->label, ZVisualRegulator::Pc);
 	ZVisualRegulator::regulateFont(ui->toolBox, ZVisualRegulator::Pc);
 	ZVisualRegulator::regulateFont(ui->masterRecordList, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->label_2, ZVisualRegulator::Pc);
+	ZVisualRegulator::regulateFont(ui->label_3, ZVisualRegulator::Pc);
 #endif
 	}
 
@@ -222,6 +235,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
 			obj->setStyleSheet(object["styleSheet"].toString());
+			obj->setFocusPolicy(Qt::NoFocus);
 
 			createdObjects.append(obj);
 			///  Showing object
@@ -232,8 +246,10 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Custom,1.5);
 #else
 			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Pc);
 #endif
 			firstRects.append(obj->geometry());
 
@@ -264,8 +280,10 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			obj->show();
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Custom,1.5);
 #else
-ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Pc);
 #endif
 			firstRects.append(obj->geometry());
 
@@ -281,6 +299,7 @@ ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
 			obj->setStyleSheet(object["styleSheet"].toString());
+			obj->setFocusPolicy(Qt::NoFocus);
 			/// Adding object to createdObject
 			createdObjects.append(obj);
 
@@ -288,13 +307,14 @@ ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 			obj->setFont(fnt);
 			obj->show();
 
-			//obj->setStyleSheet("background-color:transparent;");
-
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Custom,1.5);
 #else
 			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Pc);
 #endif
+
 			firstRects.append(obj->geometry());
 
 			}
@@ -321,6 +341,7 @@ ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 					object["color"].toObject()["a"].toInt()));
 			obj->setPalette(palette);
 			obj->setFont(fnt);
+			obj->setFocusPolicy(Qt::NoFocus);
 			/// Adding object to createdObject
 			createdObjects.append(obj);
 
@@ -330,8 +351,10 @@ ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Custom,1.5);
 #else
 			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Pc);
 #endif
 			firstRects.append(obj->geometry());
 
@@ -350,7 +373,7 @@ ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 					object["geometry"].toObject()["width"].toInt(),
 					object["geometry"].toObject()["height"].toInt());
 			obj->setStyleSheet(object["styleSheet"].toString());
-
+			obj->setFocusPolicy(Qt::NoFocus);
 			/// Adding object to createdObject
 			createdObjects.append(obj);
 
@@ -360,8 +383,10 @@ ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 			obj->show();
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Custom,1.5);
 #else
 			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Pc);
 #endif
 			firstRects.append(obj->geometry());
 
@@ -412,11 +437,13 @@ ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Custom,1.5);
 			QRect r = this->frameGeometry();
 			this->setGeometry(1,1,1,1);
 			this->setGeometry(r);
 #else
 			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Pc);
 #endif
 			firstRects.append(obj->geometry());
 

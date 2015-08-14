@@ -28,6 +28,7 @@ class MainWindow : public QMainWindow
 		QVector<QWidget*> createdObjects;
 		QVector<QRect> firstRects;
 		QSize initSizeOfDesingArea;
+		ZWebBrowser* toolWebBrowser;
 	protected:
 		bool eventFilter(QObject *obj, QEvent *event); //For drag&drop control
 		void resizeEvent(QResizeEvent *);

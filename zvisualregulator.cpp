@@ -170,3 +170,19 @@ void ZVisualRegulator::regulateFont(QFont& font, const ZVisualRegulator::Platfor
 		}
 	}
 
+float ZVisualRegulator::getRatio()
+	{
+	QDesktopWidget dwidget;
+	QRect mainScreenSize = dwidget.screenGeometry( dwidget.primaryScreen() );
+
+	float ratioConstantH = ( mainScreenSize.width() / BASE_RESOLUTION_W );
+	float ratioConstantV = ( mainScreenSize.height() / BASE_RESOLUTION_H );
+
+	if (ratioConstantH>ratioConstantV)
+		ratioConstantH=ratioConstantV;
+	else
+		ratioConstantV=ratioConstantH;
+
+	return ratioConstantH;
+	}
+

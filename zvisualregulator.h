@@ -20,7 +20,7 @@ class ZVisualRegulator : public QObject
 		static void regulateWidget( QWidget* widget, const Platform platform = Pc, const bool haveLayout=true, const float customFactor=1.0 );
 		static void regulateFont( QWidget* widget, const Platform platform = Pc, const float customFactor=1.0 );
 		static void regulateFont( QFont& font, const Platform platform = Pc, const float customFactor=1.0 );
-
+		static float getRatio();
 	signals:
 
 	public slots:

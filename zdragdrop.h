@@ -40,6 +40,7 @@ class ZDragDrop : public QObject
 		void regulateWidgetGetometryM(QWidget* widget, float exSize=2.0);
 		void regulateWidgetGetometryMnorm(QWidget* widget, float exSize=2.0);
 		void addToolBoxObject(QWidget* obj);
+		void scaleDesignArea(int val, QMainWindow* mainWindow);
 	signals:
 
 	public slots:

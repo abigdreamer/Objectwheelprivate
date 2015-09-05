@@ -194,7 +194,7 @@ background:transparent;
             <x>0</x>
             <y>0</y>
             <width>112</width>
-            <height>341</height>
+            <height>331</height>
            </rect>
           </property>
           <property name="font">
@@ -526,7 +526,7 @@ color:rgb(0,120,180);
             <x>0</x>
             <y>0</y>
             <width>112</width>
-            <height>341</height>
+            <height>331</height>
            </rect>
           </property>
           <property name="font">
@@ -708,6 +708,12 @@ background-color: rgba(0, 0, 0, 70);
        </property>
        <item>
         <widget class="QLabel" name="label_3">
+         <property name="maximumSize">
+          <size>
+           <width>999</width>
+           <height>999</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Arial</family>
@@ -1027,6 +1033,12 @@ background-color: rgba(0, 0, 0, 70);
        </property>
        <item>
         <widget class="QLabel" name="label_2">
+         <property name="maximumSize">
+          <size>
+           <width>999</width>
+           <height>999</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Arial</family>

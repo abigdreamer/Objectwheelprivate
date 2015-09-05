@@ -29,6 +29,12 @@ LoginWindow::LoginWindow(QWidget *parent) :
 	ZVisualRegulator::regulateWidget(ui->forwardButton, ZVisualRegulator::Pc);
 	ZVisualRegulator::regulateWidget(ui->passEdit, ZVisualRegulator::Pc);
 	ZVisualRegulator::regulateWidget(ui->label, ZVisualRegulator::Pc);
+
+    ZVisualRegulator::regulateFont(ui->signinLabel);
+    ZVisualRegulator::regulateFont(ui->emailLabel);
+    ZVisualRegulator::regulateFont(ui->passLabel);
+    ZVisualRegulator::regulateFont(ui->emailEdit);
+    ZVisualRegulator::regulateFont(ui->passEdit);
 #endif
 
 	}

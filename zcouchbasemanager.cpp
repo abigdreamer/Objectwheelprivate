@@ -163,10 +163,16 @@ const QString ZCouchbaseManager::getCurrentDoc()
 #endif
 	return ret;
 	}
-
-bool ZCouchbaseManager::addDoc(const QString& json)
+#include <QFile>
+bool ZCouchbaseManager::addDoc(QString json)
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
+
+	QFile out("cikti.txt");
+	out.open(QIODevice::WriteOnly);
+	out.write(QByteArray().insert(0,json));
+	out.close();
+
 	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "addDoc", "(Ljava/lang/String;)Z");
 	if (func == 0)
 		{

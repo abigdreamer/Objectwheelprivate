@@ -33,7 +33,7 @@ class ZCouchbaseManager : public QObject
 		int getCurrentDocId();
 		void startChangeListener();
 		const QString getCurrentDoc();
-		bool addDoc( const QString& json );
+		bool addDoc(QString json );
 		bool setCurrentDoc( const int id );
 		void setDatabaseName( const QString& dbname );
 		void setHostAddress( const QString& haddress );

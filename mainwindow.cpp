@@ -646,10 +646,9 @@ void MainWindow::updateRecordList()
 void MainWindow::setDatabaseName(const QString& name)
 	{
 	databaseManager = new ZCouchbaseManager;
-	QThread::msleep(1000);
-	databaseManager->setDatabaseName("name");
+	databaseManager->setDatabaseName(name);
 	databaseManager->setHostAddress("http://127.0.0.1:4984/owdatabase");
-	qWarning(QString::number(databaseManager->open()).toStdString().c_str());
+	databaseManager->open();
 	databaseManager->startSync();
 	databaseManager->startChangeListener();
 	connect(databaseManager,SIGNAL(databaseChanged()),this,SLOT(databaseChangeHandler()));

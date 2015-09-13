@@ -6,7 +6,7 @@ JNIEnv* ZCouchbaseManager::CreateVM(JavaVM** jvm)
 	JNIEnv *env;
 	JavaVMInitArgs vm_args;
 	JavaVMOption* options = new JavaVMOption[2];
-	options[0].optionString = (char*)"-Xbootclasspath/a:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/classes";
+	options[0].optionString = (char*)"-Djava.class.path=/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/commons-logging-1.1.3.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/couchbase-lite-java-1.1.0.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/couchbase-lite-java-core.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/couchbase-lite-java-core-1.1.0.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/couchbase-lite-java-native.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/couchbase-lite-java-native-1.1.0.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/couchbase-lite-java-native-sources.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/doclet.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/httpclient-4.0-beta1.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/httpcore-4.0-beta2.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/jackson-annotations-2.5.0.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/jackson-core-2.5.0.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/jackson-databind-2.5.0.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/lib/stateless4j-2.4.0.jar:/home/kozmon/Projeler/Git/objectwheelprivate/couchbase/java/classes";
 	vm_args.version = JNI_VERSION_1_6;
 	vm_args.nOptions = 1;
 	vm_args.options = options;
@@ -32,6 +32,14 @@ ZCouchbaseManager::ZCouchbaseManager(QObject *parent) : QObject(parent)
 		qWarning("ZCouchbaseManager : Fail Find Class");
 		exit(1);
 		}
+
+	jmethodID constructor=JEnv.env->GetMethodID(JEnv.jClass, "<init>", "()V");
+	if (constructor == 0)
+		qWarning("ZCouchbaseManager : Find method Failed");
+
+	JEnv.jObject=JEnv.env->NewObject(JEnv.jClass,constructor);
+	if (constructor == 0)
+		qWarning("ZCouchbaseManager : Contruct method Failed");
 	else
 		qWarning("Java VM successfuly created!");
 #endif
@@ -40,13 +48,13 @@ ZCouchbaseManager::ZCouchbaseManager(QObject *parent) : QObject(parent)
 bool ZCouchbaseManager::open()
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-	jmethodID func=JEnv.env->GetStaticMethodID(JEnv.jClass, "open", "()Z");
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "open", "()Z");
 	if (func == 0)
 		{
 		qWarning("ZCouchbaseManager : Fail Get Static Method");
 		return false;
 		}
-	return JEnv.env->CallStaticBooleanMethod(JEnv.jClass, func);
+	return JEnv.env->CallBooleanMethod(JEnv.jObject, func);
 #endif
 	return false;
 	}
@@ -54,13 +62,13 @@ bool ZCouchbaseManager::open()
 int ZCouchbaseManager::docCount()
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-	jmethodID func=JEnv.env->GetStaticMethodID(JEnv.jClass, "docCount", "()I");
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "docCount", "()I");
 	if (func == 0)
 		{
 		qWarning("ZCouchbaseManager : Fail Get Static Method");
 		return false;
 		}
-	return JEnv.env->CallStaticBooleanMethod(JEnv.jClass, func);
+	return JEnv.env->CallIntMethod(JEnv.jObject, func);
 #endif
 	return -1;
 	}
@@ -68,53 +76,67 @@ int ZCouchbaseManager::docCount()
 void ZCouchbaseManager::stopSync()
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-	jmethodID func=JEnv.env->GetStaticMethodID(JEnv.jClass, "stopSync", "()V");
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "stopSync", "()V");
 	if (func == 0)
 		{
 		qWarning("ZCouchbaseManager : Fail Get Static Method");
 		return;
 		}
-	JEnv.env->CallStaticVoidMethod(JEnv.jClass, func);
+	JEnv.env->CallVoidMethod(JEnv.jObject, func);
 #endif
 	}
 
 void ZCouchbaseManager::startSync()
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-	jmethodID func=JEnv.env->GetStaticMethodID(JEnv.jClass, "startSync", "()V");
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "startSync", "()V");
 	if (func == 0)
 		{
 		qWarning("ZCouchbaseManager : Fail Get Static Method");
 		return;
 		}
-	JEnv.env->CallStaticVoidMethod(JEnv.jClass, func);
+	JEnv.env->CallVoidMethod(JEnv.jObject, func);
 #endif
 	}
 
 bool ZCouchbaseManager::delCurrentDoc()
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-	jmethodID func=JEnv.env->GetStaticMethodID(JEnv.jClass, "delCurrentDoc", "()Z");
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "delCurrentDoc", "()Z");
 	if (func == 0)
 		{
 		qWarning("ZCouchbaseManager : Fail Get Static Method");
 		return false;
 		}
-	return JEnv.env->CallStaticBooleanMethod(JEnv.jClass, func);
+	return JEnv.env->CallBooleanMethod(JEnv.jObject, func);
 #endif
 	return false;
+	}
+
+int ZCouchbaseManager::getCurrentDocId()
+	{
+#if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "getCurrentDocId", "()I");
+	if (func == 0)
+		{
+		qWarning("ZCouchbaseManager : Fail Get Static Method");
+		return false;
+		}
+	return JEnv.env->CallIntMethod(JEnv.jObject, func);
+#endif
+	return -1;
 	}
 
 void ZCouchbaseManager::startChangeListener()
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-	jmethodID func=JEnv.env->GetStaticMethodID(JEnv.jClass, "startChangeListener", "()V");
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "startChangeListener", "()V");
 	if (func == 0)
 		{
 		qWarning("ZCouchbaseManager : Fail Get Static Method");
 		return;
 		}
-	JEnv.env->CallStaticVoidMethod(JEnv.jClass, func);
+	JEnv.env->CallVoidMethod(JEnv.jObject, func);
 #endif
 	}
 
@@ -122,13 +144,13 @@ const QString ZCouchbaseManager::getCurrentDoc()
 	{
 	QString ret;
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-	jmethodID func=JEnv.env->GetStaticMethodID(JEnv.jClass, "getCurrentDoc", "()Ljava/lang/String;");
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "getCurrentDoc", "()Ljava/lang/String;");
 	if (func == 0)
 		{
 		qWarning("ZCouchbaseManager : Fail Get Static Method");
 		return 0;
 		}
-	jstring str=(jstring)JEnv.env->CallStaticObjectMethod(JEnv.jClass, func);
+	jstring str=(jstring)JEnv.env->CallObjectMethod(JEnv.jObject, func);
 
 	if (str != 0)
 		{
@@ -145,27 +167,27 @@ const QString ZCouchbaseManager::getCurrentDoc()
 bool ZCouchbaseManager::addDoc(const QString& json)
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-	jmethodID func=JEnv.env->GetStaticMethodID(JEnv.jClass, "addDoc", "(Ljava/lang/String;)Z");
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "addDoc", "(Ljava/lang/String;)Z");
 	if (func == 0)
 		{
 		qWarning("ZCouchbaseManager : Fail Get Static Method");
 		return 0;
 		}
-	return JEnv.env->CallStaticBooleanMethod(JEnv.jClass, func,JEnv.env->NewStringUTF(json.toUtf8().constData()) );
+	return JEnv.env->CallBooleanMethod(JEnv.jObject, func,JEnv.env->NewStringUTF(json.toUtf8().constData()) );
 #endif
 	return false;
 	}
 
-bool ZCouchbaseManager::setCurrentDoc(const QString& id)
+bool ZCouchbaseManager::setCurrentDoc(const int id)
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-	jmethodID func=JEnv.env->GetStaticMethodID(JEnv.jClass, "setCurrentDoc", "(Ljava/lang/String;)Z");
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "setCurrentDoc", "(Ljava/lang/String;)Z");
 	if (func == 0)
 		{
 		qWarning("ZCouchbaseManager : Fail Get Static Method");
 		return 0;
 		}
-	return JEnv.env->CallStaticBooleanMethod(JEnv.jClass, func,JEnv.env->NewStringUTF(id.toUtf8().constData()) );
+	return JEnv.env->CallBooleanMethod(JEnv.jObject, func,JEnv.env->NewStringUTF(QString::number(id).toUtf8().constData()) );
 #endif
 	return false;
 	}
@@ -173,26 +195,26 @@ bool ZCouchbaseManager::setCurrentDoc(const QString& id)
 void ZCouchbaseManager::setDatabaseName(const QString& dbname)
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-	jmethodID func=JEnv.env->GetStaticMethodID(JEnv.jClass, "setDatabaseName", "(Ljava/lang/String;)V");
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "setDatabaseName", "(Ljava/lang/String;)V");
 	if (func == 0)
 		{
 		qWarning("ZCouchbaseManager : Fail Get Static Method");
 		return;
 		}
-	JEnv.env->CallStaticVoidMethod(JEnv.jClass, func,JEnv.env->NewStringUTF(dbname.toUtf8().constData()) );
+	JEnv.env->CallVoidMethod(JEnv.jObject, func,JEnv.env->NewStringUTF(dbname.toUtf8().constData()) );
 #endif
 	}
 
 void ZCouchbaseManager::setHostAddress(const QString& haddress)
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-	jmethodID func=JEnv.env->GetStaticMethodID(JEnv.jClass, "setHostAddress", "(Ljava/lang/String;)V");
+	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "setHostAddress", "(Ljava/lang/String;)V");
 	if (func == 0)
 		{
 		qWarning("ZCouchbaseManager : Fail Get Static Method");
 		return;
 		}
-	JEnv.env->CallStaticVoidMethod(JEnv.jClass, func,JEnv.env->NewStringUTF(haddress.toUtf8().constData()));
+	JEnv.env->CallVoidMethod(JEnv.jObject, func,JEnv.env->NewStringUTF(haddress.toUtf8().constData()));
 #endif
 	}
 

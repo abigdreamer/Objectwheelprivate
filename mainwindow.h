@@ -5,6 +5,7 @@
 #include "zdragdrop.h"
 #include "zwebbrowser.h"
 #include "zvisualregulator.h"
+#include "zcouchbasemanager.h"
 #include <QVector>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -23,7 +24,7 @@ class MainWindow : public QMainWindow
 	private:
 		Ui::MainWindow *ui;
 		ZDragDrop* dragger; //For drag&drop
-		///ZDatabaseManager* databaseManager;
+		ZCouchbaseManager* databaseManager;
 		QVector<QWidget*> createdObjects;
 		QVector<QRect> firstRects;
 		QSize initSizeOfDesingArea;
@@ -35,7 +36,7 @@ class MainWindow : public QMainWindow
 		void createObjects(const QByteArray& jsonData);
 		QByteArray generateObjects() const;
 		void updateRecordList();
-		void setDatabaseFolderName(const QString& name);
+		void setDatabaseName(const QString& name);
 		void regulateWidgetGetometry(QWidget* widget);
 		void regulateWidgetGetometryM(QWidget* widget, float exSize=2.0);
 		void regulateWidgetGetometryMnorm(QWidget* widget, float exSize=2.0);

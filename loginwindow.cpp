@@ -39,9 +39,6 @@ LoginWindow::LoginWindow(QWidget *parent) :
     ZVisualRegulator::regulateFont(ui->passEdit);
 #endif
 
-
-	ZCouchbaseManager* cb= new ZCouchbaseManager;
-	cb->setHostAddress("addDWoc");
 	}
 
 LoginWindow::~LoginWindow()
@@ -58,7 +55,7 @@ void LoginWindow::on_forwardButton_clicked()
 		if (dir.exists())
 			{
 			mainScreen = new MainWindow;
-			mainScreen->setDatabaseFolderName(generatedHash);
+			mainScreen->setDatabaseName(generatedHash);
 			mainScreen->move( QApplication::desktop()->availableGeometry().center() - mainScreen->rect().center() );
 			mainScreen->show();
 			this->close();
@@ -75,7 +72,7 @@ void LoginWindow::on_forwardButton_clicked()
 				{
 				case QMessageBox::Ok :
 					dir.mkpath(QDir::currentPath()+"/"+generatedHash);
-					mainScreen->setDatabaseFolderName(generatedHash);
+					mainScreen->setDatabaseName(generatedHash);
 					mainScreen->move( QApplication::desktop()->availableGeometry().center() - mainScreen->rect().center() );
 					mainScreen->show();
 					this->close();

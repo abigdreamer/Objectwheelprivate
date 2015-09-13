@@ -190,7 +190,7 @@ MainWindow::~MainWindow()
 	}
 
 void MainWindow::databaseChangeHandler()
-	{/* this->createObjects(databaseManager->getFile()); updateRecordList();*/}
+	{ this->createObjects(QByteArray().insert(0,databaseManager->getCurrentDoc())); updateRecordList();}
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 	{
@@ -633,61 +633,51 @@ QByteArray MainWindow::generateObjects() const
 	}
 
 void MainWindow::updateRecordList()
-	{/*
-	///int sz=databaseManager->getSize();
+	{
+	int sz=databaseManager->docCount();
 	ui->masterRecordList->clear();
 	for (int i=0;i<sz;i++)
 		{
 		ui->masterRecordList->addItem(QString("Version-%1").arg(i));
 		}
-	ui->masterRecordList->setCurrentRow(databaseManager->getCurrentFileIndex());*/
+	ui->masterRecordList->setCurrentRow(databaseManager->getCurrentDocId());
 	}
 
-void MainWindow::setDatabaseFolderName(const QString& name)
+void MainWindow::setDatabaseName(const QString& name)
 	{
-	QFile* fil= new QFile;
-	fil->setFileName(":/objectVersion0.json");
-	if (!fil->open(QIODevice::ReadOnly))
-		return;
-	QByteArray buff = fil->readAll();
-	fil->close();
-
-	fil->setFileName(QDir::currentPath()+"/"+name + "/objectVersion0.json");
-	if (!fil->open(QIODevice::WriteOnly))
-		return;
-	fil->write(buff);
-	fil->close();
-/*
-	databaseManager = new ZDatabaseManager;
-	databaseManager->setCheckTimeout(1000);
-	databaseManager->setFileName(QDir::currentPath()+"/"+name,"objectVersion");
+	databaseManager = new ZCouchbaseManager;
+	QThread::msleep(1000);
+	databaseManager->setDatabaseName("name");
+	databaseManager->setHostAddress("http://127.0.0.1:4984/owdatabase");
+	qWarning(QString::number(databaseManager->open()).toStdString().c_str());
+	databaseManager->startSync();
+	databaseManager->startChangeListener();
 	connect(databaseManager,SIGNAL(databaseChanged()),this,SLOT(databaseChangeHandler()));
-	databaseManager->startChangeListener();*/
 	}
 
 
 void MainWindow::on_saveButton_clicked()
-	{ /*databaseManager->addFile(generateObjects()); updateRecordList(); */}
+	{ databaseManager->addDoc(generateObjects()); updateRecordList(); }
 
 void MainWindow::on_backButton_clicked()
-	{/*
-	int backIndex = databaseManager->getCurrentFileIndex()-1;
+	{
+	int backIndex = databaseManager->getCurrentDocId()-1;
 	if ( backIndex >= 0 )
-		databaseManager->setCurrentFileIndex(backIndex);*/
+		databaseManager->setCurrentDoc(backIndex);
 	}
 
 void MainWindow::on_forwardButton_clicked()
-	{/*
-	int nextIndex = databaseManager->getCurrentFileIndex()+1;
-	if (nextIndex < databaseManager->getSize() )
-		databaseManager->setCurrentFileIndex(nextIndex);*/
+	{
+	int nextIndex = databaseManager->getCurrentDocId()+1;
+	if (nextIndex < databaseManager->docCount() )
+		databaseManager->setCurrentDoc(nextIndex);
 	}
 
 void MainWindow::on_deleteTempButton_clicked()
-	{ /*databaseManager->removeFile();*/ }
+	{ databaseManager->delCurrentDoc(); }
 
 void MainWindow::on_loadMasterButton_clicked()
-	{ /*databaseManager->setCurrentFileIndex(ui->masterRecordList->currentRow());*/ }
+	{ databaseManager->setCurrentDoc( ui->masterRecordList->currentRow()); }
 
 void MainWindow::on_tabButton_clicked()
 	{

@@ -10,6 +10,7 @@ struct ZJavaEnvForPc
 		JavaVM *jvm;
 		JNIEnv *env;
 		jclass jClass;
+		jobject jObject;
 	};
 #endif
 
@@ -24,21 +25,23 @@ class ZCouchbaseManager : public QObject
 	public:
 		explicit ZCouchbaseManager(QObject *parent = 0);
 
-
 		bool open();
 		int docCount();
 		void stopSync();
 		void startSync();
 		bool delCurrentDoc();
+		int getCurrentDocId();
 		void startChangeListener();
 		const QString getCurrentDoc();
 		bool addDoc( const QString& json );
-		bool setCurrentDoc( const QString& id );
+		bool setCurrentDoc( const int id );
 		void setDatabaseName( const QString& dbname );
 		void setHostAddress( const QString& haddress );
 
+		void receivedDataHandler()
+			{ emit databaseChanged(); }
 	signals:
-
+		void databaseChanged();
 	public slots:
 	};
 

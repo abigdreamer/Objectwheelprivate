@@ -190,7 +190,7 @@ MainWindow::~MainWindow()
 	}
 
 void MainWindow::databaseChangeHandler()
-	{ this->createObjects(databaseManager->getFile()); updateRecordList(); }
+	{/* this->createObjects(databaseManager->getFile()); updateRecordList();*/}
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 	{
@@ -633,14 +633,14 @@ QByteArray MainWindow::generateObjects() const
 	}
 
 void MainWindow::updateRecordList()
-	{
-	int sz=databaseManager->getSize();
+	{/*
+	///int sz=databaseManager->getSize();
 	ui->masterRecordList->clear();
 	for (int i=0;i<sz;i++)
 		{
 		ui->masterRecordList->addItem(QString("Version-%1").arg(i));
 		}
-	ui->masterRecordList->setCurrentRow(databaseManager->getCurrentFileIndex());
+	ui->masterRecordList->setCurrentRow(databaseManager->getCurrentFileIndex());*/
 	}
 
 void MainWindow::setDatabaseFolderName(const QString& name)
@@ -657,37 +657,37 @@ void MainWindow::setDatabaseFolderName(const QString& name)
 		return;
 	fil->write(buff);
 	fil->close();
-
+/*
 	databaseManager = new ZDatabaseManager;
 	databaseManager->setCheckTimeout(1000);
 	databaseManager->setFileName(QDir::currentPath()+"/"+name,"objectVersion");
 	connect(databaseManager,SIGNAL(databaseChanged()),this,SLOT(databaseChangeHandler()));
-	databaseManager->startChangeListener();
+	databaseManager->startChangeListener();*/
 	}
 
 
 void MainWindow::on_saveButton_clicked()
-	{ databaseManager->addFile(generateObjects()); updateRecordList(); }
+	{ /*databaseManager->addFile(generateObjects()); updateRecordList(); */}
 
 void MainWindow::on_backButton_clicked()
-	{
+	{/*
 	int backIndex = databaseManager->getCurrentFileIndex()-1;
 	if ( backIndex >= 0 )
-		databaseManager->setCurrentFileIndex(backIndex);
+		databaseManager->setCurrentFileIndex(backIndex);*/
 	}
 
 void MainWindow::on_forwardButton_clicked()
-	{
+	{/*
 	int nextIndex = databaseManager->getCurrentFileIndex()+1;
 	if (nextIndex < databaseManager->getSize() )
-		databaseManager->setCurrentFileIndex(nextIndex);
+		databaseManager->setCurrentFileIndex(nextIndex);*/
 	}
 
 void MainWindow::on_deleteTempButton_clicked()
-	{ databaseManager->removeFile(); }
+	{ /*databaseManager->removeFile();*/ }
 
 void MainWindow::on_loadMasterButton_clicked()
-	{ databaseManager->setCurrentFileIndex(ui->masterRecordList->currentRow()); }
+	{ /*databaseManager->setCurrentFileIndex(ui->masterRecordList->currentRow());*/ }
 
 void MainWindow::on_tabButton_clicked()
 	{

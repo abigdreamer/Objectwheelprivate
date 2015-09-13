@@ -22,19 +22,19 @@ RC_ICONS = icon.ico
 SOURCES += main.cpp\
         mainwindow.cpp \
     zdragdrop.cpp \
-    zdatabasemanager.cpp \
     loginwindow.cpp \
     zwebwidget.cpp \
     zwebbrowser.cpp \
-    zvisualregulator.cpp
+    zvisualregulator.cpp \
+    zcouchbasemanager.cpp
 
 HEADERS  += mainwindow.h \
     zdragdrop.h \
-    zdatabasemanager.h \
     loginwindow.h \
     zwebwidget.h \
     zwebbrowser.h \
-    zvisualregulator.h
+    zvisualregulator.h \
+    zcouchbasemanager.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui
@@ -96,3 +96,12 @@ mac{
 }
 }
 }
+
+# ADDED FOR JNI
+QMAKE_CXXFLAGS += -std=c++11 -pedantic-errors
+LIBS += -L $(JAVA_HOME)/jre/lib/amd64/server/ \
+	-ljvm
+INCLUDEPATH += -I $(JAVA_HOME)/include/ \
+	-I $(JAVA_HOME)/include/linux/ \
+
+# END

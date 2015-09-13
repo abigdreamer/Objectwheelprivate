@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include "zdragdrop.h"
-#include "zdatabasemanager.h"
 #include "zwebbrowser.h"
 #include "zvisualregulator.h"
 #include <QVector>
@@ -24,7 +23,7 @@ class MainWindow : public QMainWindow
 	private:
 		Ui::MainWindow *ui;
 		ZDragDrop* dragger; //For drag&drop
-		ZDatabaseManager* databaseManager;
+		///ZDatabaseManager* databaseManager;
 		QVector<QWidget*> createdObjects;
 		QVector<QRect> firstRects;
 		QSize initSizeOfDesingArea;

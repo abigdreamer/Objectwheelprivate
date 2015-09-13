@@ -2,6 +2,8 @@
 #include "ui_loginwindow.h"
 #include <QDesktopWidget>
 
+#include "zcouchbasemanager.h"
+
 LoginWindow::LoginWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::LoginWindow)
@@ -37,6 +39,9 @@ LoginWindow::LoginWindow(QWidget *parent) :
     ZVisualRegulator::regulateFont(ui->passEdit);
 #endif
 
+
+	ZCouchbaseManager* cb= new ZCouchbaseManager;
+	cb->setHostAddress("addDWoc");
 	}
 
 LoginWindow::~LoginWindow()

@@ -25,16 +25,14 @@ SOURCES += main.cpp\
     loginwindow.cpp \
     zwebwidget.cpp \
     zwebbrowser.cpp \
-    zvisualregulator.cpp \
-    zcouchbasemanager.cpp
+    zvisualregulator.cpp
 
 HEADERS  += mainwindow.h \
     zdragdrop.h \
     loginwindow.h \
     zwebwidget.h \
     zwebbrowser.h \
-    zvisualregulator.h \
-    zcouchbasemanager.h
+    zvisualregulator.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui
@@ -103,5 +101,11 @@ LIBS += -L $(JAVA_HOME)/jre/lib/amd64/server/ \
 	-ljvm
 INCLUDEPATH += -I $(JAVA_HOME)/include/ \
 	-I $(JAVA_HOME)/include/linux/ \
-
 # END
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/couchbase/c++/zcouchbasemanager/zcouchbasemanager/build-zcouchbasemanager/release/ -lzcouchbasemanager
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/couchbase/c++/zcouchbasemanager/zcouchbasemanager/build-zcouchbasemanager/debug/ -lzcouchbasemanager
+else:unix: LIBS += -L$$PWD/couchbase/c++/zcouchbasemanager/zcouchbasemanager/build-zcouchbasemanager/ -lzcouchbasemanager
+
+INCLUDEPATH += $$PWD/couchbase/c++/zcouchbasemanager/zcouchbasemanager
+DEPENDPATH += $$PWD/couchbase/c++/zcouchbasemanager/zcouchbasemanager

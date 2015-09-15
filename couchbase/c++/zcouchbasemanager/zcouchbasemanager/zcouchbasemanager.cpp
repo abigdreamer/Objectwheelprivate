@@ -1,6 +1,14 @@
 #include "zcouchbasemanager.h"
-
+ZCouchbaseManager* mContext;
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
+extern "C"{
+JNIEXPORT void JNICALL Java_syncgateway_ZDatabaseLayer_changedNativeCallBack
+(JNIEnv *, jobject)
+	{
+	mContext->receivedDataHandler();
+	}
+}
+
 JNIEnv* ZCouchbaseManager::CreateVM(JavaVM** jvm)
 	{
 	JNIEnv *env;
@@ -20,6 +28,7 @@ JNIEnv* ZCouchbaseManager::CreateVM(JavaVM** jvm)
 ZCouchbaseManager::ZCouchbaseManager(QObject *parent) : QObject(parent)
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
+	mContext=this;
 	JEnv.env = CreateVM(&JEnv.jvm);
 	if(JEnv.env == NULL)
 		{
@@ -167,12 +176,6 @@ const QString ZCouchbaseManager::getCurrentDoc()
 bool ZCouchbaseManager::addDoc(QString json)
 	{
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
-
-	QFile out("cikti.txt");
-	out.open(QIODevice::WriteOnly);
-	out.write(QByteArray().insert(0,json));
-	out.close();
-
 	jmethodID func=JEnv.env->GetMethodID(JEnv.jClass, "addDoc", "(Ljava/lang/String;)Z");
 	if (func == 0)
 		{

@@ -219,7 +219,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 	QFont fnt("Arial",9);
 
 	/// Iterating and creating all json object by ClassName
-	for (int i=0;i<allObjects.size();i++)
+	for (int i=0;i<allObjects.size()-3;i++)
 		{
 		const QJsonObject object = allObjects[QString("object%1").arg(i)].toObject();
 		const QString& className = object["objectClass"].toString();

@@ -1,6 +1,7 @@
 #ifndef ZCOUCHBASEMANAGER_H
 #define ZCOUCHBASEMANAGER_H
 
+#include "zcouchbasemanager_global.h"
 #include <QObject>
 
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
@@ -14,8 +15,9 @@ struct ZJavaEnvForPc
 	};
 #endif
 
-class ZCouchbaseManager : public QObject
+class ZCOUCHBASEMANAGERSHARED_EXPORT ZCouchbaseManager : public QObject
 	{
+
 		Q_OBJECT
 	private:
 #if !defined (Q_OS_ANDROID) && !defined (Q_OS_IOS)
@@ -44,5 +46,7 @@ class ZCouchbaseManager : public QObject
 		void databaseChanged();
 	public slots:
 	};
+
+
 
 #endif // ZCOUCHBASEMANAGER_H

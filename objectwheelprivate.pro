@@ -15,7 +15,7 @@ qtHaveModule(webengine) {
 QT += quickwidgets
 }
 
-TARGET = ObjectWheelPrivate
+TARGET = objectwheelprivate
 TEMPLATE = app
 
 RC_ICONS = icon.ico

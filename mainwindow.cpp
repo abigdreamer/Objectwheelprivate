@@ -190,7 +190,10 @@ MainWindow::~MainWindow()
 	}
 
 void MainWindow::databaseChangeHandler()
-	{ this->createObjects(QByteArray().insert(0,databaseManager->getCurrentDoc())); updateRecordList();}
+	{
+	this->createObjects(QByteArray().insert(0,databaseManager->getCurrentDoc()));
+	updateRecordList();
+	}
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* event)
 	{
@@ -219,7 +222,7 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 	QFont fnt("Arial",9);
 
 	/// Iterating and creating all json object by ClassName
-	for (int i=0;i<allObjects.size()-3;i++)
+	for (int i=0;i<allObjects.size()-1;i++)
 		{
 		const QJsonObject object = allObjects[QString("object%1").arg(i)].toObject();
 		const QString& className = object["objectClass"].toString();
@@ -652,11 +655,12 @@ void MainWindow::setDatabaseName(const QString& name)
 	databaseManager->startSync();
 	databaseManager->startChangeListener();
 	connect(databaseManager,SIGNAL(databaseChanged()),this,SLOT(databaseChangeHandler()));
+	databaseChangeHandler();
 	}
 
 
 void MainWindow::on_saveButton_clicked()
-	{ databaseManager->addDoc(generateObjects()); updateRecordList(); }
+	{ databaseManager->addDoc(generateObjects());updateRecordList(); }
 
 void MainWindow::on_backButton_clicked()
 	{
@@ -673,7 +677,15 @@ void MainWindow::on_forwardButton_clicked()
 	}
 
 void MainWindow::on_deleteTempButton_clicked()
-	{ databaseManager->delCurrentDoc(); }
+	{
+	if (databaseManager->getCurrentDocId()>0)
+		databaseManager->delCurrentDoc();
+	else if (databaseManager->docCount()>1)
+		{
+		databaseManager->setCurrentDoc(1);
+		databaseManager->delCurrentDoc();
+		}
+	}
 
 void MainWindow::on_loadMasterButton_clicked()
 	{ databaseManager->setCurrentDoc( ui->masterRecordList->currentRow()); }

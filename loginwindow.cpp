@@ -51,7 +51,7 @@ void LoginWindow::on_forwardButton_clicked()
 	if (!ui->emailEdit->text().isEmpty() && !ui->passEdit->text().isEmpty())
 		{
 		QString generatedHash = QCryptographicHash::hash(QByteArray().append(ui->emailEdit->text()+ui->passEdit->text()),QCryptographicHash::Md5).toHex();
-		QDir dir(QDir::currentPath()+"/"+generatedHash);
+		QDir dir(QDir::currentPath()+"/data/data/com.couchbase.lite.test/files/"+generatedHash);
 		if (dir.exists())
 			{
 			mainScreen = new MainWindow;
@@ -71,7 +71,6 @@ void LoginWindow::on_forwardButton_clicked()
 			switch (ret)
 				{
 				case QMessageBox::Ok :
-					dir.mkpath(QDir::currentPath()+"/"+generatedHash);
 					mainScreen->setDatabaseName(generatedHash);
 					mainScreen->move( QApplication::desktop()->availableGeometry().center() - mainScreen->rect().center() );
 					mainScreen->show();

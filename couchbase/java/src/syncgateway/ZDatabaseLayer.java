@@ -207,6 +207,51 @@ public class ZDatabaseLayer {
         Replication pushReplication = database.createPushReplication(syncUrl);
         pushReplication.setContinuous(true);
       
+      	//Push & Pull Replication changeListeners
+        pushReplication.addChangeListener(new Replication.ChangeListener() {
+            @Override
+            public void changed(Replication.ChangeEvent event) {
+                // will be called back when the push replication status changes
+                Replication replication = event.getSource();
+                PrintLog.info(TAG+ "Push Replication : " + replication + " changed.");
+                if (!replication.isRunning()) {
+                    String msg = String.format("Push Replicator %s not running", replication);
+                    PrintLog.info(TAG+ msg);
+                }
+                else {
+                    int processed = replication.getCompletedChangesCount();
+                    int total = replication.getChangesCount();
+                    String msg = String.format("Push Replicator processed %d / %d", processed, total);
+                    PrintLog.info(TAG+ msg);
+                }
+                if (event.getError() != null) {
+                    PrintLog.info("Push Sync error--"+ event.getError().toString());
+                }
+            }
+        });
+        
+        pullReplication.addChangeListener(new Replication.ChangeListener() {
+            @Override
+            public void changed(Replication.ChangeEvent event) {
+                // will be called back when the pull replication status changes
+                Replication replication = event.getSource();
+                PrintLog.info(TAG+ "Pull Replication : " + replication + " changed.");
+                if (!replication.isRunning()) {
+                    String msg = String.format("Pull Replicator %s not running", replication);
+                    PrintLog.info(TAG+ msg);
+                }
+                else {
+                    int processed = replication.getCompletedChangesCount();
+                    int total = replication.getChangesCount();
+                    String msg = String.format("Pull Replicator processed %d / %d", processed, total);
+                    PrintLog.info(TAG+ msg);
+                }
+                if (event.getError() != null) {
+                    PrintLog.info("Pull Sync error--"+ event.getError().toString());
+                }
+            }
+        });
+
         database.addReplication(pushReplication);
         database.addReplication(pullReplication);
         startSync();

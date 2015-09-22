@@ -650,7 +650,7 @@ void MainWindow::setDatabaseName(const QString& name)
 	{
 	databaseManager = new ZCouchbaseManager;
 	databaseManager->setDatabaseName(name);
-	databaseManager->setHostAddress("http://127.0.0.1:4984/owdatabase");
+	databaseManager->setHostAddress("http://54.176.51.160:4980/owdatabase");
 	databaseManager->open();
 	databaseManager->startSync();
 	databaseManager->startChangeListener();

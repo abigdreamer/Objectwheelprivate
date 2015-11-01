@@ -96,7 +96,6 @@ mac{
 }
 
 # ADDED FOR JNI
-QMAKE_CXXFLAGS += -std=c++11 -pedantic-errors
 LIBS += -L $(JAVA_HOME)/jre/lib/amd64/server/ \
 	-ljvm
 INCLUDEPATH += -I $(JAVA_HOME)/include/ \

@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QCheckBox>
+#include <QRadioButton>
 #include <QComboBox>
 #include <QDir>
 #include <QFrame>
@@ -12,6 +13,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QProgressBar>
+#include <QLCDNumber>
+#include <QSpinBox>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -88,6 +91,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	dragger->addToolBoxObject(ui->lineEdit);
 	dragger->addToolBoxObject(ui->label_2);
 	dragger->addToolBoxObject(ui->label_3);
+	dragger->addToolBoxObject(ui->radioButton);
+	dragger->addToolBoxObject(ui->progressBar);
+	dragger->addToolBoxObject(ui->lcdNumber);
+	dragger->addToolBoxObject(ui->spinBox);
+	dragger->addToolBoxObject(ui->toolButton);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 	ui->tabButton->setIconSize(QSize(32,32));
@@ -243,7 +251,6 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			createdObjects.append(obj);
 			///  Showing object
 
-
 			obj->setFont(fnt);
 			obj->show();
 
@@ -321,7 +328,36 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			firstRects.append(obj->geometry());
 
 			}
+		else if ( className == "QSpinBox")
+			{
+			QSpinBox* obj = new QSpinBox(ui->widget);
+			obj->setObjectName(object["objectName"].toString());
+			obj->setValue(object["value"].toInt());
+			obj->setEnabled(object["enabled"].toBool());
+			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
+					object["geometry"].toObject()["y"].toInt(),
+					object["geometry"].toObject()["width"].toInt(),
+					object["geometry"].toObject()["height"].toInt());
+			obj->setStyleSheet(object["styleSheet"].toString());
+			obj->setFocusPolicy(Qt::NoFocus);
+			/// Adding object to createdObject
+			createdObjects.append(obj);
 
+			///  Showing object
+			obj->setFont(fnt);
+			obj->show();
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Custom,1.5);
+#else
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Pc);
+#endif
+
+			firstRects.append(obj->geometry());
+
+			}
 		else if ( className == "QLabel")
 			{
 			QLabel* obj = new QLabel(ui->widget);
@@ -394,7 +430,96 @@ void MainWindow::createObjects(const QByteArray& jsonData)
 			firstRects.append(obj->geometry());
 
 			}
+		else if ( className == "QLCDNumber")
+			{
+			QLCDNumber* obj = new QLCDNumber(ui->widget);
+			obj->setObjectName(object["objectName"].toString());
+			obj->display(object["value"].toInt());
+			obj->setEnabled(object["enabled"].toBool());
 
+			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
+					object["geometry"].toObject()["y"].toInt(),
+					object["geometry"].toObject()["width"].toInt(),
+					object["geometry"].toObject()["height"].toInt());
+			obj->setStyleSheet(object["styleSheet"].toString());
+			obj->setFocusPolicy(Qt::NoFocus);
+			/// Adding object to createdObject
+			createdObjects.append(obj);
+
+			///  Showing object
+
+			obj->setFont(fnt);
+			obj->show();
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Custom,1.5);
+#else
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Pc);
+#endif
+			firstRects.append(obj->geometry());
+
+			}
+		else if ( className == "QRadioButton")
+			{
+			QRadioButton* obj = new QRadioButton(ui->widget);
+			obj->setObjectName(object["objectName"].toString());
+			obj->setText(object["text"].toString());
+			obj->setEnabled(object["enabled"].toBool());
+			if (object["checked"].toBool())
+				obj->setChecked(true);
+			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
+					object["geometry"].toObject()["y"].toInt(),
+					object["geometry"].toObject()["width"].toInt(),
+					object["geometry"].toObject()["height"].toInt());
+			obj->setStyleSheet(object["styleSheet"].toString());
+			obj->setFocusPolicy(Qt::NoFocus);
+			/// Adding object to createdObject
+			createdObjects.append(obj);
+
+			///  Showing object
+
+			obj->setFont(fnt);
+			obj->show();
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Custom,1.5);
+#else
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Pc);
+#endif
+			firstRects.append(obj->geometry());
+
+			}
+		else if ( className == "QProgressBar")
+			{
+			QProgressBar* obj = new QProgressBar(ui->widget);
+			obj->setObjectName(object["objectName"].toString());
+			obj->setValue(object["value"].toInt());
+			obj->setEnabled(object["enabled"].toBool());
+			obj->setGeometry(object["geometry"].toObject()["x"].toInt(),
+					object["geometry"].toObject()["y"].toInt(),
+					object["geometry"].toObject()["width"].toInt(),
+					object["geometry"].toObject()["height"].toInt());
+			obj->setStyleSheet(object["styleSheet"].toString());
+			obj->setFocusPolicy(Qt::NoFocus);
+			/// Adding object to createdObject
+			createdObjects.append(obj);
+
+			///  Showing object
+
+			obj->setFont(fnt);
+			obj->show();
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Custom,1.5);
+#else
+			ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
+			ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Pc);
+#endif
+			firstRects.append(obj->geometry());
+
+			}
 		else if ( className == "ZWebBrowser")
 			{
 			ZWebBrowser* obj = new ZWebBrowser(ui->widget);
@@ -582,6 +707,92 @@ QByteArray MainWindow::generateObjects() const
 			object.insert("text",obj->text());
 			object.insert("enabled",obj->isEnabled());
 			object.insert("checked",obj->isChecked());
+			object.insert("geometry",geometry);
+			object.insert("styleSheet",obj->styleSheet());
+
+			mainObject.insert(QString("object%1").arg(i),object);
+
+			}
+		else if ( className == "QLCDNumber")
+			{
+			QLCDNumber* obj = reinterpret_cast<QLCDNumber*>(createdObjects.at(i));
+
+			QJsonObject geometry;
+			geometry.insert("x",obj->x());
+			geometry.insert("y",obj->y());
+			geometry.insert("width",obj->width());
+			geometry.insert("height",obj->height());
+
+			QJsonObject object;
+			object.insert("objectClass",className);
+			object.insert("objectName",obj->objectName());
+			object.insert("value",obj->value());
+			object.insert("enabled",obj->isEnabled());
+			object.insert("geometry",geometry);
+			object.insert("styleSheet",obj->styleSheet());
+
+			mainObject.insert(QString("object%1").arg(i),object);
+
+			}
+		else if ( className == "QRadioButton")
+			{
+			QRadioButton* obj = reinterpret_cast<QRadioButton*>(createdObjects.at(i));
+
+			QJsonObject geometry;
+			geometry.insert("x",obj->x());
+			geometry.insert("y",obj->y());
+			geometry.insert("width",obj->width());
+			geometry.insert("height",obj->height());
+
+			QJsonObject object;
+			object.insert("objectClass",className);
+			object.insert("objectName",obj->objectName());
+			object.insert("text",obj->text());
+			object.insert("enabled",obj->isEnabled());
+			object.insert("checked",obj->isChecked());
+			object.insert("geometry",geometry);
+			object.insert("styleSheet",obj->styleSheet());
+
+			mainObject.insert(QString("object%1").arg(i),object);
+
+			}
+		else if ( className == "QProgressBar")
+			{
+			QProgressBar* obj = reinterpret_cast<QProgressBar*>(createdObjects.at(i));
+
+			QJsonObject geometry;
+			geometry.insert("x",obj->x());
+			geometry.insert("y",obj->y());
+			geometry.insert("width",obj->width());
+			geometry.insert("height",obj->height());
+
+			QJsonObject object;
+			object.insert("objectClass",className);
+			object.insert("objectName",obj->objectName());
+			object.insert("value",obj->value());
+			object.insert("enabled",obj->isEnabled());
+			object.insert("geometry",geometry);
+			object.insert("styleSheet",obj->styleSheet());
+
+			mainObject.insert(QString("object%1").arg(i),object);
+
+			}
+
+		else if ( className == "QSpinBox")
+			{
+			QSpinBox* obj = reinterpret_cast<QSpinBox*>(createdObjects.at(i));
+
+			QJsonObject geometry;
+			geometry.insert("x",obj->x());
+			geometry.insert("y",obj->y());
+			geometry.insert("width",obj->width());
+			geometry.insert("height",obj->height());
+
+			QJsonObject object;
+			object.insert("objectClass",className);
+			object.insert("objectName",obj->objectName());
+			object.insert("value",obj->value());
+			object.insert("enabled",obj->isEnabled());
 			object.insert("geometry",geometry);
 			object.insert("styleSheet",obj->styleSheet());
 

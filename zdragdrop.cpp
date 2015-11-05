@@ -71,16 +71,6 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 			olderWidget->setParent(ui->widget);
 			olderWidget->show();
 
-			ZWebBrowser* obj = new ZWebBrowser(ui->widget);
-			obj->setObjectName(olderWidget->objectName());
-			obj->setEnabled(true);
-			obj->setGeometry(olderWidget->geometry());
-			obj->setStyleSheet(QString("#%1 {border: 1px solid rgba(0,0,0,190);border-radius: 5px;background-color: rgba(0, 0, 0, 90);}").arg(olderWidget->objectName()));
-
-			createdObjects->append(obj);
-			firstRects->append(obj->geometry());
-			obj->show();
-			return true;
 			QUiLoader yeni;
 			QWidget* unnamed = yeni.createWidget(olderWidget->metaObject()->className(),toolPage);
 			((QVBoxLayout*)toolPage->layout())->insertWidget(toolIndex,unnamed);
@@ -104,16 +94,35 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 			olderWidget->setMaximumSize(cache->maximumSize());
 			olderWidget->setEnabled(true);
 
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+			olderWidget->setGeometry(olderWidget->x(),olderWidget->y(),
+									 olderWidget->width()*(1.5/MOBILE_SCALE_FACTOR),
+									 olderWidget->height()*(1.5/MOBILE_SCALE_FACTOR));
+			ZVisualRegulator::regulateFont(olderWidget,ZVisualRegulator::Custom,(1.5/(MOBILE_SCALE_FACTOR*ZVisualRegulator::getRatio())));
+
+			if (createdObjects->indexOf(olderWidget) >= 0)
+				(*firstRects)[createdObjects->indexOf(olderWidget)] = QRect(olderWidget->x(),
+																			olderWidget->y(),
+																			olderWidget->width(),
+																			olderWidget->height());
+#endif
+
+
+
+
 			if (olderWidget->metaObject()->className()==QString("QToolButton"))
 				{
-				ZWebBrowser* obj = new ZWebBrowser(ui->widget);
+				QQuickWidget* obj = new QQuickWidget(ui->widget);
 				obj->setObjectName(olderWidget->objectName());
 				obj->setEnabled(true);
 				obj->setGeometry(olderWidget->geometry());
 				obj->setStyleSheet(QString("#%1 {border: 1px solid rgba(0,0,0,190);border-radius: 5px;background-color: rgba(0, 0, 0, 90);}").arg(olderWidget->objectName()));
+				obj->setFocusPolicy(Qt::NoFocus);
+				//obj->goUrl("www.google.com");
 
 				createdObjects->append(obj);
-				firstRects->append(obj->geometry());
+
+				///  Showing object
 				obj->show();
 
 				for (int i=0;i<obj->children().size();i++)
@@ -141,34 +150,26 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 					else if (QString(((QWidget*)obj->children().at(i))->metaObject()->className())=="QLineEdit")
 						((QWidget*)obj->children().at(i))->setFocusPolicy(Qt::StrongFocus);
 					}
-				olderWidget->close();
-	#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 				ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Custom,false,1.5);
 				ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Custom,1.5);
 				QRect r = this->frameGeometry();
 				this->setGeometry(1,1,1,1);
 				this->setGeometry(r);
-	#else
+#else
 				ZVisualRegulator::regulateWidget(obj,ZVisualRegulator::Pc,false);
 				ZVisualRegulator::regulateFont(obj,ZVisualRegulator::Pc);
-	#endif
+#endif
 
+				firstRects->remove(createdObjects->indexOf(olderWidget));
+				createdObjects->remove(createdObjects->indexOf(olderWidget));
+				olderWidget->close();
+
+				firstRects->append(obj->geometry());
+				obj->show();
 				}
 
-
-
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-			olderWidget->setGeometry(olderWidget->x(),olderWidget->y(),
-									 olderWidget->width()*(1.5/MOBILE_SCALE_FACTOR),
-									 olderWidget->height()*(1.5/MOBILE_SCALE_FACTOR));
-			ZVisualRegulator::regulateFont(olderWidget,ZVisualRegulator::Custom,(1.5/(MOBILE_SCALE_FACTOR*ZVisualRegulator::getRatio())));
-
-			if (createdObjects->indexOf(olderWidget) >= 0)
-				(*firstRects)[createdObjects->indexOf(olderWidget)] = QRect(olderWidget->x(),
-																			olderWidget->y(),
-																			olderWidget->width(),
-																			olderWidget->height());
-#endif
 			scaleDesignArea(ui->autoFit->value(),mainWindow);
 			cache->close();
 			delete cache;
@@ -178,6 +179,7 @@ bool ZDragDrop::updateWidget(QEvent* event, Ui::MainWindow* ui, QMainWindow* mai
 			olderWidget->setParent(toolPage);
 			((QVBoxLayout*)((QWidget*)olderWidget->parent())->layout())->insertWidget(toolIndex,olderWidget);
 			}
+
 
 		olderWidget=NULL;
 		pressed=false;
